@@ -395,20 +395,20 @@ export default function Page() {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-white text-[#111827] font-sans antialiased text-[16px] select-none">
+    <div className="flex h-screen w-screen overflow-hidden bg-white text-[#111827] font-sans antialiased text-[11.5px] select-none">
       
       {/* LEFT COLUMN: Sidebar Navigation (Exact Brand match style) */}
       <aside className="w-[18%] border-r border-neutral-200/40 bg-[#F9FAFB] flex flex-col justify-between flex-shrink-0 select-none">
         <div>
           {/* Logo Header */}
-          <div className="h-24 px-8 flex items-center border-b border-neutral-100 select-none">
-            <img src="/logo.png" alt="Karixa Logo" className="h-[52px] w-auto object-contain" />
+          <div className="h-16 px-8 flex items-center border-b border-neutral-100 select-none">
+            <img src="/logo.png" alt="Karixa Logo" className="h-[26px] w-auto object-contain" />
           </div>
 
           {/* Navigation Links */}
-          <div className="px-5 py-5 space-y-6">
+          <div className="px-5 py-5 space-y-4">
             <div>
-              <div className="text-[17.5px] uppercase font-bold tracking-widest text-[#94A3B8] px-3.5 mb-4">
+              <div className="text-[10px] uppercase font-bold tracking-widest text-[#94A3B8] px-3.5 mb-4">
                 Workspace
               </div>
               <div className="space-y-2">
@@ -442,7 +442,7 @@ export default function Page() {
                         }
                       }}
                       className={cn(
-                        "w-full text-left px-4 py-3.5 rounded-xl transition-all flex items-center justify-between text-[14.5px] hover:bg-[#F1F5F9]/40 hover:scale-[1.01] duration-150",
+                        "w-full text-left px-4 py-2 rounded-xl transition-all flex items-center justify-between text-[10px] hover:bg-[#F1F5F9]/40 hover:scale-[1.01] duration-150",
                         item.active
                           ? "bg-[#F1F5F9] text-[#0F172A] font-bold shadow-xs"
                           : "text-[#64748B] hover:text-[#0F172A]"
@@ -450,13 +450,13 @@ export default function Page() {
                     >
                       <div className="flex items-center gap-3.5">
                         <IconComponent className={cn(
-                          "w-4.5 h-4.5",
+                          "w-3 h-3",
                           item.active ? "text-[#0F172A]" : "text-[#94A3B8]"
                         )} />
-                        <span className="text-[16px]">{item.label}</span>
+                        <span className="text-[11.5px]">{item.label}</span>
                       </div>
                       {item.count && (
-                        <span className="bg-white border border-[#E2E8F0] text-[#475569] px-2.5 py-0.5 rounded-full text-[17.5px] font-bold font-mono">
+                        <span className="bg-white border border-[#E2E8F0] text-[#475569] px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono">
                           {item.count}
                         </span>
                       )}
@@ -469,14 +469,14 @@ export default function Page() {
         </div>
 
         {/* Sidebar Footer Info */}
-        <div className="p-5 space-y-4 border-t border-neutral-100">
+        <div className="p-4 space-y-4 border-t border-neutral-100">
           {/* GxP audit mode */}
           <div className="p-4.5 bg-[#F8FAFC]/75 border border-[#E2E8F0]/40 rounded-[14px] space-y-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
-            <div className="flex items-center gap-2 text-[14.5px] font-semibold text-[#1E293B]">
+            <div className="flex items-center gap-2 text-[10px] font-semibold text-[#1E293B]">
               <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
               <span>GxP audit mode</span>
             </div>
-            <p className="text-[16px] text-[#64748B] leading-relaxed">
+            <p className="text-[11.5px] text-[#64748B] leading-relaxed">
               Every AI step is logged and inspection-ready.
             </p>
           </div>
@@ -484,12 +484,12 @@ export default function Page() {
           {/* User profile and Exit */}
           <div className="flex items-center justify-between pt-2">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-9 h-9 rounded-full bg-[#090D1A] flex items-center justify-center font-bold text-[15px] text-white tracking-wider">
+              <div className="w-9 h-9 rounded-full bg-[#090D1A] flex items-center justify-center font-bold text-[10.5px] text-white tracking-wider">
                 AR
               </div>
               <div className="min-w-0">
-                <div className="font-bold text-[16px] text-[#0F172A] truncate">Dr. Anita Rao</div>
-                <div className="text-[16px] text-[#94A3B8] truncate">Quality investigator</div>
+                <div className="font-bold text-[11.5px] text-[#0F172A] truncate">Dr. Anita Rao</div>
+                <div className="text-[11.5px] text-[#94A3B8] truncate">Quality investigator</div>
               </div>
             </div>
             
@@ -498,7 +498,7 @@ export default function Page() {
               className="p-2 text-[#94A3B8] hover:text-[#475569] hover:bg-neutral-50 rounded-xl transition-all"
               title="Reset View"
             >
-              <LogOut className="w-4.5 h-4.5" />
+              <LogOut className="w-3 h-3" />
             </button>
           </div>
         </div>
@@ -523,7 +523,7 @@ export default function Page() {
               {/* Top Page Header */}
               <header className="px-12 pt-10 pb-6 space-y-5 bg-white flex-shrink-0 select-none">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 font-mono text-[12px] font-bold text-[#64748B] tracking-tight">
+                  <div className="flex items-center gap-2 font-mono text-[10px] font-bold text-[#64748B] tracking-tight">
                     <span>{activeCaseId === "case-1" ? "DV-24081" : "DV-24082"}</span>
                     <span>·</span>
                     <span>BATCH {activeCaseId === "case-1" ? "PX-2041" : "PX-9022"}</span>
@@ -533,7 +533,7 @@ export default function Page() {
 
                   {/* View Switcher Controls */}
                   <div className="flex items-center gap-3.5">
-                    <div className="flex items-center gap-2.5 bg-[#F1F5F9] rounded-full px-3.5 py-1.5 font-bold text-[#2C52F5] text-[14.5px]">
+                    <div className="flex items-center gap-2.5 bg-[#F1F5F9] rounded-full px-3.5 py-1.5 font-bold text-[#2C52F5] text-[10px]">
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7B94FF] opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2C52F5]"></span>
@@ -544,26 +544,26 @@ export default function Page() {
                     <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                       <button
                         onClick={() => setViewMode("home")}
-                        className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[14.5px] shadow-xs relative z-10"
+                        className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
                       >
                         Command Center
                       </button>
                       <button
                         onClick={() => setViewMode("review")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[14.5px] transition-colors relative z-10"
+                        className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[10px] transition-colors relative z-10"
                       >
                         Document Review
                       </button>
                       <button
                         onClick={() => setViewMode("timeline")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                        className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                       >
                         Timeline Story
                       </button>
                       {isConflictResolved && (
                         <button
                           onClick={() => setViewMode("revision-summary")}
-                          className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[14.5px] transition-colors relative z-10"
+                          className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
                         >
                           Revision Summary
                         </button>
@@ -571,14 +571,14 @@ export default function Page() {
                       {signatureHash && (
                         <button
                           onClick={() => setViewMode("complete")}
-                          className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[14.5px] transition-colors relative z-10"
+                          className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
                         >
                           Inspection Package
                         </button>
                       )}
                     </div>
 
-                    <button className="px-4.5 py-2.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[14.5px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                    <button className="px-4.5 py-1.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[10px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                       Export
                     </button>
                     
@@ -587,7 +587,7 @@ export default function Page() {
                         if (signatureHash) return
                         setShowSignModal(true)
                       }}
-                      className="px-6 py-2.5 bg-[#090D1A] hover:bg-[#1f2937] text-white font-bold rounded-xl text-[14.5px] transition-colors shadow-sm"
+                      className="px-6 py-1.5 bg-[#090D1A] hover:bg-[#1f2937] text-white font-bold rounded-xl text-[10px] transition-colors shadow-sm"
                     >
                       {signatureHash ? "Locked & Approved" : "Approve investigation"}
                     </button>
@@ -598,15 +598,15 @@ export default function Page() {
                   <h1 className="text-4xl font-extrabold tracking-tight text-[#0F172A] leading-tight">
                     {activeCaseId === "case-1" ? "Temperature excursion investigation" : "Product sterile filter deviation"}
                   </h1>
-                  <p className="text-[17.5px] text-[#64748B] leading-relaxed">
+                  <p className="text-[10px] text-[#64748B] leading-relaxed">
                     AI investigation draft is ready - review the analysis and approve the proposed root cause.
                   </p>
                 </div>
               </header>
 
               {/* 5-Card Metrics Row */}
-              <div className="px-12 grid grid-cols-5 gap-5">
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 flex items-center gap-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px]">
+              <div className="px-12 grid grid-cols-5 gap-4">
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 flex items-center gap-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px]">
                   <div className="relative w-14 h-14 flex-shrink-0">
                     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                       <path
@@ -628,21 +628,21 @@ export default function Page() {
                         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                       />
                     </svg>
-                    <div className="absolute inset-0 flex items-center justify-center font-extrabold text-[16px] text-[#0F172A]">
+                    <div className="absolute inset-0 flex items-center justify-center font-extrabold text-[11.5px] text-[#0F172A]">
                       {dynamicConfidence}
                     </div>
                   </div>
                   <div className="space-y-0.5">
-                    <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Confidence</div>
-                    <div className="text-[14.5px] font-bold text-[#64748B]">Strong evidence</div>
+                    <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Confidence</div>
+                    <div className="text-[10px] font-bold text-[#64748B]">Strong evidence</div>
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 flex flex-col justify-between hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px]">
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 flex flex-col justify-between hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px]">
                   <div className="flex justify-between items-start">
                     <div className="space-y-0.5">
-                      <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Excursion</div>
-                      <div className="text-2xl font-extrabold text-[#0F172A]">38 min</div>
+                      <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Excursion</div>
+                      <div className="text-[19px] font-extrabold text-[#0F172A]">38 min</div>
                     </div>
                   </div>
                   <div className="h-8 w-full mt-2 relative overflow-hidden">
@@ -674,25 +674,25 @@ export default function Page() {
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between">
-                  <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Peak temp</div>
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between">
+                  <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Peak temp</div>
                   <div className="flex items-baseline gap-1.5 mt-1">
-                    <span className="text-2xl font-extrabold text-[#0F172A]">
+                    <span className="text-[19px] font-extrabold text-[#0F172A]">
                       {activeCaseId === "case-1" ? "10.4°" : "42.0 psi"}
                     </span>
-                    <span className="text-[17.5px] font-bold text-[#EF4444] font-mono">
+                    <span className="text-[10px] font-bold text-[#EF4444] font-mono">
                       {activeCaseId === "case-1" ? "+2.4°" : "+2.0 psi"}
                     </span>
                   </div>
-                  <div className="text-[17.5px] text-[#64748B] font-mono mt-0.5">
+                  <div className="text-[10px] text-[#64748B] font-mono mt-0.5">
                     Validated max - {activeCaseId === "case-1" ? "8.0°" : "40.0 psi"}
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between space-y-2">
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between space-y-2">
                   <div>
-                    <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Evidence</div>
-                    <div className="text-2xl font-extrabold text-[#0F172A] mt-0.5">18 docs</div>
+                    <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Evidence</div>
+                    <div className="text-[19px] font-extrabold text-[#0F172A] mt-0.5">18 docs</div>
                   </div>
                   <div className="flex gap-0.5 h-2 w-full">
                     <div className="flex-1 bg-[#2C52F5] rounded-l-sm" />
@@ -704,10 +704,10 @@ export default function Page() {
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between space-y-2">
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between space-y-2">
                   <div>
-                    <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Progress</div>
-                    <div className="text-2xl font-extrabold text-[#0F172A] mt-0.5">5 / 6</div>
+                    <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Progress</div>
+                    <div className="text-[19px] font-extrabold text-[#0F172A] mt-0.5">5 / 6</div>
                   </div>
                   <div className="flex gap-0.5 h-2 w-full">
                     {[1, 2, 3, 4, 5].map((i) => (
@@ -719,17 +719,17 @@ export default function Page() {
               </div>
 
               {/* Split Content layout */}
-              <div className="px-12 py-8 grid grid-cols-12 gap-8 items-start">
+              <div className="px-12 py-8 grid grid-cols-12 gap-6 items-start">
                 
                 {/* Left Main (70%) */}
-                <div className="col-span-8 space-y-8">
-                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-8 shadow-sm">
+                <div className="col-span-8 space-y-4">
+                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-6 shadow-sm">
                     <div className="flex items-center justify-between border-b border-neutral-100 pb-5 mb-5 select-none">
                       <div>
-                        <h3 className="text-[16px] font-extrabold text-[#0F172A] uppercase tracking-wider">
+                        <h3 className="text-[11.5px] font-extrabold text-[#0F172A] uppercase tracking-wider">
                           {activeCaseId === "case-1" ? "Sensor temperature - overnight hold" : "Skid Bubble Point Telemetry"}
                         </h3>
-                        <span className="text-[16px] font-mono text-[#94A3B8] uppercase tracking-tight block mt-1">
+                        <span className="text-[11.5px] font-mono text-[#94A3B8] uppercase tracking-tight block mt-1">
                           {activeCaseId === "case-1" ? "Cold unit 3 · Batch PX-2041 · 14 Jun · 22:00-02:00 IST" : "Sterilization Skid FL-9022 · 18 Jun"}
                         </span>
                       </div>
@@ -737,7 +737,7 @@ export default function Page() {
                         <button
                           onClick={() => setActiveChartTab("temperature")}
                           className={cn(
-                            "px-3.5 py-1.5 text-[14.5px] font-semibold rounded-lg transition-colors",
+                            "px-3.5 py-1.5 text-[10px] font-semibold rounded-lg transition-colors",
                             activeChartTab === "temperature" ? "bg-white text-neutral-900 shadow-xs" : "text-neutral-500 hover:text-neutral-850"
                           )}
                         >
@@ -746,7 +746,7 @@ export default function Page() {
                         <button
                           onClick={() => setActiveChartTab("evidence")}
                           className={cn(
-                            "px-3.5 py-1.5 text-[14.5px] font-semibold rounded-lg transition-colors",
+                            "px-3.5 py-1.5 text-[10px] font-semibold rounded-lg transition-colors",
                             activeChartTab === "evidence" ? "bg-white text-neutral-900 shadow-xs" : "text-neutral-500 hover:text-neutral-850"
                           )}
                         >
@@ -756,16 +756,16 @@ export default function Page() {
                     </div>
 
                     <div className="relative pt-6 h-80 select-none">
-                      <div className="absolute inset-x-0 top-0 border-t border-neutral-100 flex justify-between text-[17.5px] text-neutral-400 font-mono pt-1">
+                      <div className="absolute inset-x-0 top-0 border-t border-neutral-100 flex justify-between text-[10px] text-neutral-400 font-mono pt-1">
                         <span>10°</span>
                       </div>
-                      <div className="absolute inset-x-0 top-1/3 border-t border-neutral-100 flex justify-between text-[17.5px] text-neutral-400 font-mono pt-1">
+                      <div className="absolute inset-x-0 top-1/3 border-t border-neutral-100 flex justify-between text-[10px] text-neutral-400 font-mono pt-1">
                         <span>8°</span>
                       </div>
-                      <div className="absolute inset-x-0 top-2/3 border-t border-neutral-100 flex justify-between text-[17.5px] text-neutral-400 font-mono pt-1">
+                      <div className="absolute inset-x-0 top-2/3 border-t border-neutral-100 flex justify-between text-[10px] text-neutral-400 font-mono pt-1">
                         <span>6°</span>
                       </div>
-                      <div className="absolute inset-x-0 bottom-8 border-b border-neutral-200 flex justify-between text-[17.5px] text-neutral-400 font-mono pb-1.5">
+                      <div className="absolute inset-x-0 bottom-8 border-b border-neutral-200 flex justify-between text-[10px] text-neutral-400 font-mono pb-1.5">
                         <span>4°</span>
                       </div>
 
@@ -813,14 +813,14 @@ export default function Page() {
                         />
                       </svg>
 
-                      <div className="absolute right-4 top-[108px] text-[15px] font-mono font-bold text-[#EF4444]">
+                      <div className="absolute right-4 top-[108px] text-[10.5px] font-mono font-bold text-[#EF4444]">
                         VALIDATED MAX 8.0°
                       </div>
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 1.6 }}
-                        className="absolute left-[272px] top-[86px] text-[15px] font-mono font-bold text-[#EF4444] text-center w-28 bg-[#FEF2F2] border border-[#FEE2E2]/60 px-1 py-0.5 rounded shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
+                        className="absolute left-[272px] top-[86px] text-[10.5px] font-mono font-bold text-[#EF4444] text-center w-28 bg-[#FEF2F2] border border-[#FEE2E2]/60 px-1 py-0.5 rounded shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
                       >
                         38 MIN ABOVE LIMIT
                       </motion.div>
@@ -830,11 +830,11 @@ export default function Page() {
                         transition={{ delay: 1.6 }}
                         className="absolute left-[302px] top-2 z-10 flex flex-col items-center"
                       >
-                        <div className="bg-[#0F172A] text-white rounded-md px-3 py-1.5 text-[17.5px] font-mono font-bold shadow-md tracking-tight">
+                        <div className="bg-[#0F172A] text-white rounded-md px-3 py-1.5 text-[10px] font-mono font-bold shadow-md tracking-tight">
                           10.4° · 01:05
                         </div>
                       </motion.div>
-                      <div className="absolute inset-x-0 bottom-0 flex justify-between px-1 font-mono text-[17.5px] text-[#94A3B8] pt-2 select-none border-t border-neutral-100">
+                      <div className="absolute inset-x-0 bottom-0 flex justify-between px-1 font-mono text-[10px] text-[#94A3B8] pt-2 select-none border-t border-neutral-100">
                         <span>22:00</span>
                         <span>23:00</span>
                         <span>00:00</span>
@@ -845,26 +845,26 @@ export default function Page() {
                   </div>
 
                   {/* Linked Evidence Table */}
-                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-8 shadow-sm space-y-5">
+                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-6 shadow-sm space-y-5">
                     <div className="flex items-center justify-between select-none">
-                      <h3 className="text-[16px] font-extrabold text-[#0F172A] uppercase tracking-wider">
+                      <h3 className="text-[11.5px] font-extrabold text-[#0F172A] uppercase tracking-wider">
                         Linked evidence
                       </h3>
-                      <span className="text-[15px] font-mono text-neutral-455">
+                      <span className="text-[10.5px] font-mono text-neutral-455">
                         18 documents · 5 sources
                       </span>
                     </div>
                     <div className="overflow-hidden border border-neutral-200/60 rounded-xl">
-                      <table className="w-full text-[14.5px] font-mono text-left">
+                      <table className="w-full text-[10px] font-mono text-left">
                         <thead>
-                          <tr className="bg-neutral-50 border-b border-neutral-100 text-neutral-400 text-[15px] uppercase font-bold">
+                          <tr className="bg-neutral-50 border-b border-neutral-100 text-neutral-400 text-[10.5px] uppercase font-bold">
                             <th className="p-4">Document</th>
                             <th className="p-4">Source</th>
                             <th className="p-4">Captured</th>
                             <th className="p-4 text-right">Confidence</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-neutral-100 text-[15px] text-neutral-600">
+                        <tbody className="divide-y divide-neutral-100 text-[10.5px] text-neutral-600">
                           {[
                             { doc: "MES_Bioreactor_4_Logs.csv", source: "MES Automation Skid B4", time: "14 Jun 22:15", conf: "96%" },
                             { doc: "LIMS_pH_Verification.pdf", source: "Quality Control Lab #4", time: "14 Jun 22:30", conf: "94%" },
@@ -873,7 +873,7 @@ export default function Page() {
                           ].map((row, i) => (
                             <tr key={i} className="hover:bg-neutral-50/50 transition-colors">
                               <td className="p-4 font-semibold text-neutral-808 flex items-center gap-2">
-                                <FileText className="w-4 h-4 text-neutral-400" />
+                                <FileText className="w-3 h-3 text-neutral-400" />
                                 <span>{row.doc}</span>
                               </td>
                               <td className="p-4">{row.source}</td>
@@ -888,34 +888,34 @@ export default function Page() {
                 </div>
 
                 {/* Right Column */}
-                <div className="col-span-4 space-y-6">
-                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-8 shadow-sm space-y-6">
+                <div className="col-span-4 space-y-4">
+                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-6 shadow-sm space-y-4">
                     <div>
-                      <span className="text-[15px] uppercase font-bold tracking-widest text-[#64748B] font-mono">
+                      <span className="text-[10.5px] uppercase font-bold tracking-widest text-[#64748B] font-mono">
                         AI Proposed Root Cause
                       </span>
-                      <p className="text-[16px] text-[#0F172A] leading-relaxed mt-4 font-medium">
+                      <p className="text-[11.5px] text-[#0F172A] leading-relaxed mt-4 font-medium">
                         A refrigeration valve failed to fully close during the overnight hold, allowing intermittent warm-air ingress. The resulting instability pushed Batch PX-2041 outside its validated range for ≈38 minutes, producing the specification deviation.
                       </p>
                     </div>
                     <div className="grid grid-cols-3 gap-2 border-t border-neutral-100 pt-5 text-center">
                       <div className="space-y-0.5">
                         <div className="text-lg font-bold text-[#0F172A]">Strong</div>
-                        <div className="text-[15px] text-neutral-400 font-mono">Evidence</div>
+                        <div className="text-[10.5px] text-neutral-400 font-mono">Evidence</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-lg font-bold text-amber-600">Medium</div>
-                        <div className="text-[15px] text-neutral-400 font-mono">Residual risk</div>
+                        <div className="text-[10.5px] text-neutral-400 font-mono">Residual risk</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-lg font-bold text-[#0F172A]">{dynamicConfidence}</div>
-                        <div className="text-[15px] text-neutral-400 font-mono">Confidence</div>
+                        <div className="text-[10.5px] text-neutral-400 font-mono">Confidence</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-8 shadow-sm space-y-6">
-                    <span className="text-[15px] uppercase font-bold tracking-wider text-neutral-450 font-mono">
+                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-6 shadow-sm space-y-4">
+                    <span className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-450 font-mono">
                       Investigation Steps
                     </span>
                     <div className="space-y-4 pl-1">
@@ -927,13 +927,13 @@ export default function Page() {
                         "Proposed root cause"
                       ].map((step, idx) => (
                         <div key={idx} className="flex items-center gap-3.5">
-                          <Check className="w-4.5 h-4.5 text-[#0F172A] stroke-[2.5]" />
-                          <span className="text-[16px] font-semibold text-neutral-750">{step}</span>
+                          <Check className="w-3 h-3 text-[#0F172A] stroke-[2.5]" />
+                          <span className="text-[11.5px] font-semibold text-neutral-750">{step}</span>
                         </div>
                       ))}
                       <div className="flex items-center gap-3.5">
                         <span className="w-2 h-2 rounded-full bg-[#2C52F5] animate-ping ml-1 mr-1.5" />
-                        <span className="text-[16px] font-bold text-[#0F172A]">
+                        <span className="text-[11.5px] font-bold text-[#0F172A]">
                           {signatureHash ? "Verification Closed" : "Waiting for investigator approval"}
                         </span>
                       </div>
@@ -942,11 +942,11 @@ export default function Page() {
 
                   {!isConflictResolved && (
                     <div className="border border-amber-200 bg-amber-50/45 rounded-2xl p-6 space-y-5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] select-none">
-                      <div className="flex gap-3 text-[17.5px] font-semibold text-amber-850 leading-relaxed font-sans">
+                      <div className="flex gap-3 text-[10px] font-semibold text-amber-850 leading-relaxed font-sans">
                         <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                         <p>Maintenance records from 14 June contain conflicting timestamps that should be confirmed before sign-off.</p>
                       </div>
-                      <div className="grid grid-cols-2 gap-2.5 text-[14.5px]">
+                      <div className="grid grid-cols-2 gap-2.5 text-[10px]">
                         <button
                           onClick={() => {
                             setSelectedPreviewDoc({
@@ -990,16 +990,16 @@ export default function Page() {
                 <div className="flex items-center gap-4 min-w-0">
                   <button
                     onClick={() => setViewMode("home")}
-                    className="inline-flex items-center gap-1.5 text-[14.5px] font-semibold text-neutral-505 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-2 py-1 rounded-lg transition-all"
+                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-neutral-505 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-2 py-1 rounded-lg transition-all"
                   >
-                    <ArrowLeft className="w-3.5 h-3.5" />
+                    <ArrowLeft className="w-3 h-3" />
                     <span>Back</span>
                   </button>
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className="font-bold text-[16px] text-neutral-900 truncate">Deviation investigation</span>
-                    <span className="font-mono text-[14.5px] text-neutral-400">DV-24081</span>
-                    <span className="inline-flex items-center gap-1.5 bg-[#F3F4F6] border border-[#E5E7EB] rounded-full px-2.5 py-0.5 text-[16px] font-semibold text-neutral-750">
+                    <span className="font-bold text-[11.5px] text-neutral-900 truncate">Deviation investigation</span>
+                    <span className="font-mono text-[10px] text-neutral-400">DV-24081</span>
+                    <span className="inline-flex items-center gap-1.5 bg-[#F3F4F6] border border-[#E5E7EB] rounded-full px-2.5 py-0.5 text-[11.5px] font-semibold text-neutral-750">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1]" />
                       <span>{signatureHash ? "Locked & Approved" : "AI draft · in review"}</span>
                     </span>
@@ -1010,26 +1010,26 @@ export default function Page() {
                   <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                     <button
                       onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Command Center
                     </button>
                     <button
                       onClick={() => setViewMode("review")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[14.5px] shadow-xs relative z-10"
+                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
                     >
                       Document Review
                     </button>
                     <button
                       onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Timeline Story
                     </button>
                     {isConflictResolved && (
                       <button
                         onClick={() => setViewMode("revision-summary")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-850 font-semibold text-[14.5px] transition-colors relative z-10"
+                        className="px-4 py-2 text-neutral-505 hover:text-neutral-850 font-semibold text-[10px] transition-colors relative z-10"
                       >
                         Revision Summary
                       </button>
@@ -1037,7 +1037,7 @@ export default function Page() {
                     {signatureHash && (
                       <button
                         onClick={() => setViewMode("complete")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[14.5px] transition-colors relative z-10"
+                        className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
                       >
                         Inspection Package
                       </button>
@@ -1046,7 +1046,7 @@ export default function Page() {
 
                   <div className="w-px h-6 bg-neutral-200" />
                   
-                  <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg px-4 py-2 text-[14.5px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                  <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                     Save draft
                   </button>
                   
@@ -1055,7 +1055,7 @@ export default function Page() {
                       if (signatureHash) return
                       setShowSignModal(true)
                     }}
-                    className="bg-neutral-900 hover:bg-neutral-808 text-white rounded-lg px-4.5 py-2 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
+                    className="bg-neutral-900 hover:bg-neutral-808 text-white rounded-lg px-4.5 py-2 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
                   >
                     {signatureHash ? "Locked & Approved" : "Approve Final Investigation"}
                   </button>
@@ -1065,7 +1065,7 @@ export default function Page() {
               <div className="flex-1 flex overflow-hidden">
                 {/* Left Outline Panel */}
                 <nav className="w-[260px] border-r border-neutral-200/40 flex-shrink-0 p-6 overflow-y-auto bg-[#F9FAFB] select-none">
-                  <div className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-455 mb-4.5 font-mono">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-455 mb-4.5 font-mono">
                     Report contents
                   </div>
                   <div className="space-y-1">
@@ -1085,12 +1085,12 @@ export default function Page() {
                             setEditingReviewId(null)
                           }}
                           className={cn(
-                            "w-full flex items-baseline gap-3 text-left p-2.5 rounded-lg text-[17.5px] transition-all",
+                            "w-full flex items-baseline gap-3 text-left p-2.5 rounded-lg text-[10px] transition-all",
                             isActive ? "bg-neutral-100 text-neutral-900 font-bold" : "text-neutral-505 hover:text-neutral-909 hover:bg-neutral-50/50"
                           )}
                         >
                           <span className={cn(
-                            "font-bold font-mono text-[16px]",
+                            "font-bold font-mono text-[11.5px]",
                             isActive ? "text-[#2C52F5]" : "text-neutral-300"
                           )}>
                             {item.num}
@@ -1103,12 +1103,12 @@ export default function Page() {
 
                   <div className="h-px bg-neutral-105 my-6" />
 
-                  <div className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-455 mb-4 font-mono">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-455 mb-4 font-mono">
                     Draft health
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <div className="flex justify-between items-center text-[15px] mb-2">
+                      <div className="flex justify-between items-center text-[10.5px] mb-2">
                         <span className="text-neutral-500">Overall confidence</span>
                         <span className="font-bold text-neutral-900">{dynamicConfidence}</span>
                       </div>
@@ -1119,11 +1119,11 @@ export default function Page() {
                         />
                       </div>
                     </div>
-                    <div className="flex justify-between text-[15px] font-semibold">
+                    <div className="flex justify-between text-[10.5px] font-semibold">
                       <span className="text-neutral-500">Sections approved</span>
                       <span className="text-neutral-900">{signatureHash ? "5 / 5" : "0 / 5"}</span>
                     </div>
-                    <div className="flex justify-between text-[15px] font-semibold">
+                    <div className="flex justify-between text-[10.5px] font-semibold">
                       <span className="text-neutral-500">Needs review</span>
                       <span className={cn("font-bold", isConflictResolved || signatureHash ? "text-emerald-600" : "text-[#B45309]")}>
                         {isConflictResolved || signatureHash ? "0 items" : "1 item"}
@@ -1136,14 +1136,14 @@ export default function Page() {
                 <main className="flex-1 overflow-y-auto bg-[#F8F9FC] border-r border-neutral-200/40">
                   <div className="max-w-[800px] mx-auto px-12 py-14 space-y-12 pb-32 my-8 bg-white border border-neutral-200/35 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_10px_40px_rgba(0,0,0,0.015)]">
                     <div className="space-y-5">
-                      <div className="inline-flex items-center gap-2 bg-[#F5F3FF] border border-[#E0E7FF] rounded-full px-3.5 py-1 text-[14.5px] font-semibold text-[#2C52F5] select-none">
-                        <Sparkles className="w-3.5 h-3.5 text-[#2C52F5]" />
+                      <div className="inline-flex items-center gap-2 bg-[#F5F3FF] border border-[#E0E7FF] rounded-full px-3.5 py-1 text-[10px] font-semibold text-[#2C52F5] select-none">
+                        <Sparkles className="w-3 h-3 text-[#2C52F5]" />
                         <span>{signatureHash ? "Approved & Locked" : "Drafted by Klarixa AI"}</span>
                       </div>
                       <h1 className="text-4xl font-extrabold tracking-tight text-neutral-900 leading-tight">
                         Temperature excursion - Batch PX-2041
                       </h1>
-                      <p className="text-[15px] text-neutral-400 leading-relaxed select-none">
+                      <p className="text-[10.5px] text-neutral-400 leading-relaxed select-none">
                         Investigation report · Approved 14 June 2026, 17:30 IST · Version 4 · Signed by Dr. Anita Rao
                       </p>
                     </div>
@@ -1165,8 +1165,8 @@ export default function Page() {
                         <div key={sec.id} className="space-y-4">
                           {showHeader && (
                             <div className="flex items-baseline gap-3.5 pt-6 select-none">
-                              <span className="font-mono text-[14.5px] font-bold text-neutral-300">{sec.sectionNum}</span>
-                              <h2 className="text-2xl font-bold text-neutral-900 tracking-tight">{sec.sectionTitle}</h2>
+                              <span className="font-mono text-[10px] font-bold text-neutral-300">{sec.sectionNum}</span>
+                              <h2 className="text-[19px] font-bold text-neutral-900 tracking-tight">{sec.sectionTitle}</h2>
                             </div>
                           )}
 
@@ -1174,12 +1174,12 @@ export default function Page() {
                             layout="position"
                             onClick={() => setSelectedReviewId(sec.id)}
                             className={cn(
-                              "group rounded-r-xl border-l-2 p-5 transition-all duration-200 cursor-pointer -mx-5 px-5 relative",
+                              "group rounded-r-xl border-l-2 p-4 transition-all duration-200 cursor-pointer -mx-5 px-5 relative",
                               isSelected ? "border-[#2C52F5] bg-[#FAFAFE] shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]" : "border-transparent hover:bg-neutral-50/50"
                             )}
                           >
                             {sec.paraTitle && (
-                              <div className="text-[17.5px] font-bold text-neutral-450 uppercase tracking-wider mb-2 font-mono select-none">
+                              <div className="text-[10px] font-bold text-neutral-450 uppercase tracking-wider mb-2 font-mono select-none">
                                 {sec.paraTitle}
                               </div>
                             )}
@@ -1193,7 +1193,7 @@ export default function Page() {
                                     handleSaveText(sec.id, e.currentTarget.value)
                                   }
                                 }}
-                                className="w-full text-[17.5px] leading-relaxed text-neutral-805 bg-white border border-neutral-200 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-[#2C52F5] font-sans"
+                                className="w-full text-[10px] leading-relaxed text-neutral-805 bg-white border border-neutral-200 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-[#2C52F5] font-sans"
                                 autoFocus
                               />
                             ) : (
@@ -1202,7 +1202,7 @@ export default function Page() {
                                 sec.id === "rec1" ? "text-[19.5px] text-neutral-900 font-normal" : "text-[17px]"
                               )}>
                                 {contentToRender}
-                                <span className="inline-flex items-center justify-center font-bold text-[15px] text-[#2C52F5] bg-[#EEF2FF] rounded px-1 ml-1.5 cursor-pointer font-sans select-none vertical-super">
+                                <span className="inline-flex items-center justify-center font-bold text-[10.5px] text-[#2C52F5] bg-[#EEF2FF] rounded px-1 ml-1.5 cursor-pointer font-sans select-none vertical-super">
                                   {idx + 1}
                                 </span>
                               </p>
@@ -1214,10 +1214,10 @@ export default function Page() {
                                   initial={{ opacity: 0, height: 0 }}
                                   animate={{ opacity: 1, height: "auto" }}
                                   exit={{ opacity: 0, height: 0 }}
-                                  className="flex items-center gap-4 mt-4 select-none text-[12px] text-neutral-400 overflow-hidden"
+                                  className="flex items-center gap-4 mt-4 select-none text-[10px] text-neutral-400 overflow-hidden"
                                 >
                                   <span className="inline-flex items-center gap-1 text-[#2C52F5] font-semibold">
-                                    <Sparkles className="w-3.5 h-3.5 text-[#2C52F5]" />
+                                    <Sparkles className="w-3 h-3 text-[#2C52F5]" />
                                     <span>AI generated</span>
                                   </span>
                                   <span>{dynamicConfidence} confidence</span>
@@ -1235,9 +1235,9 @@ export default function Page() {
                       {signatureHash ? (
                         <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl p-4 w-full">
                           <Shield className="w-5 h-5 text-emerald-600" />
-                          <div className="text-[14.5px]">
+                          <div className="text-[10px]">
                             <div className="font-bold text-emerald-800">Approved & Locked via 21 CFR Part 11 electronic signature.</div>
-                            <div className="text-[17.5px] text-emerald-600 mt-0.5 font-mono truncate">{signatureHash}</div>
+                            <div className="text-[10px] text-emerald-600 mt-0.5 font-mono truncate">{signatureHash}</div>
                           </div>
                         </div>
                       ) : (
@@ -1247,11 +1247,11 @@ export default function Page() {
                               if (signatureHash) return
                               setShowSignModal(true)
                             }}
-                            className="bg-neutral-900 hover:bg-neutral-850 text-white rounded-xl px-6 py-3.5 text-[16px] font-bold shadow-xs transition-colors"
+                            className="bg-neutral-900 hover:bg-neutral-850 text-white rounded-xl px-6 py-2 text-[11.5px] font-bold shadow-xs transition-colors"
                           >
                             Approve Final Investigation
                           </button>
-                          <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-5 py-3.5 text-[16px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors">
+                          <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-5 py-2 text-[11.5px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors">
                             Request AI revision
                           </button>
                         </>
@@ -1272,19 +1272,19 @@ export default function Page() {
                       className="divide-y divide-neutral-200/60"
                     >
                       <div className="p-6 select-none">
-                        <div className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-455 mb-2 font-mono">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-455 mb-2 font-mono">
                           Reviewing
                         </div>
                         <div className="font-bold text-neutral-900 text-lg tracking-tight mb-1">
                           {activeReviewSection.sectionNum} · {activeReviewSection.sectionTitle}
                         </div>
-                        <div className="text-[15px] text-neutral-455 font-mono">
+                        <div className="text-[10.5px] text-neutral-455 font-mono">
                           {activeReviewSection.paraTitle}
                         </div>
                       </div>
 
                       <div className="p-6 space-y-4 select-none">
-                        <div className="flex justify-between items-center text-[17.5px] uppercase font-bold tracking-wider text-neutral-455 font-mono">
+                        <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-neutral-455 font-mono">
                           <span>Confidence breakdown</span>
                           <span className="text-neutral-900 text-xl font-extrabold normal-case">
                             {dynamicConfidence}
@@ -1292,8 +1292,8 @@ export default function Page() {
                         </div>
                         <div className="space-y-3.5 font-mono">
                           {activeReviewSection.confBars.map((bar, i) => (
-                            <div key={i} className="text-[14.5px]">
-                              <div className="flex justify-between mb-1.5 text-neutral-600 text-[15px]">
+                            <div key={i} className="text-[10px]">
+                              <div className="flex justify-between mb-1.5 text-neutral-600 text-[10.5px]">
                                 <span>{bar.label}</span>
                                 <span className="font-semibold text-neutral-400">{bar.pct}</span>
                               </div>
@@ -1311,11 +1311,11 @@ export default function Page() {
                       </div>
 
                       <div className="p-6 space-y-4">
-                        <div className="flex items-center gap-1.5 text-[17.5px] uppercase font-bold tracking-wider text-neutral-455 font-mono select-none">
-                          <Sparkles className="w-4 h-4 text-[#2C52F5]" />
+                        <div className="flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-neutral-455 font-mono select-none">
+                          <Sparkles className="w-3 h-3 text-[#2C52F5]" />
                           <span>AI reasoning</span>
                         </div>
-                        <p className="text-[16px] leading-relaxed text-neutral-700 font-sans">
+                        <p className="text-[11.5px] leading-relaxed text-neutral-700 font-sans">
                           {(isConflictResolved || signatureHash) && activeReviewSection.id === "root1"
                             ? "I confirmed the corrected maintenance timestamp from CMMS Work Order WO-8841 (14:02 IST) after reconciliation, indicating service took place before the temperature excursion. Residual uncertainty decreased from 6% to 2%."
                             : activeReviewSection.reasoning
@@ -1325,7 +1325,7 @@ export default function Page() {
 
                       {activeReviewSection.evidence.length > 0 && (
                         <div className="p-6 space-y-5">
-                          <div className="flex justify-between items-center text-[17.5px] uppercase font-bold tracking-wider text-neutral-455 font-mono select-none">
+                          <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-neutral-455 font-mono select-none">
                             <span>Supporting evidence</span>
                             <span className="text-neutral-500 font-bold">
                               {isConflictResolved || signatureHash ? "9 documents" : activeReviewSection.evidenceCount}
@@ -1344,10 +1344,10 @@ export default function Page() {
                                 }}
                                 className="flex items-start gap-3.5 p-2.5 hover:bg-neutral-100/50 rounded-xl cursor-pointer transition-colors"
                               >
-                                <FileText className="w-4.5 h-4.5 text-neutral-400 flex-shrink-0 mt-0.5" />
+                                <FileText className="w-3 h-3 text-neutral-400 flex-shrink-0 mt-0.5" />
                                 <div className="min-w-0 font-sans">
-                                  <div className="font-semibold text-neutral-855 text-[15px] truncate leading-tight">{ev.title}</div>
-                                  <div className="text-[17.5px] text-neutral-400 font-mono mt-0.5">{ev.meta}</div>
+                                  <div className="font-semibold text-neutral-855 text-[10.5px] truncate leading-tight">{ev.title}</div>
+                                  <div className="text-[10px] text-neutral-400 font-mono mt-0.5">{ev.meta}</div>
                                 </div>
                               </div>
                             ))}
@@ -1377,13 +1377,13 @@ export default function Page() {
               <header className="h-[60px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-8 bg-white sticky top-0 z-30 select-none">
                 <div className="flex items-center gap-6">
                   <div className="flex items-center gap-2">
-                    <img src="/logo.png" alt="Karixa Logo" className="h-[36px] w-auto object-contain" />
+                    <img src="/logo.png" alt="Karixa Logo" className="h-[26px] w-auto object-contain" />
                   </div>
                   <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-4 text-[14.5px] font-semibold text-[#64748B]">
-                    <button onClick={() => setViewMode("home")} className="hover:text-neutral-955 text-[17.5px]">Investigations</button>
+                  <div className="flex items-center gap-4 text-[10px] font-semibold text-[#64748B]">
+                    <button onClick={() => setViewMode("home")} className="hover:text-neutral-955 text-[10px]">Investigations</button>
                     <span>/</span>
-                    <span className="text-neutral-900 text-[17.5px]">DV-24081</span>
+                    <span className="text-neutral-900 text-[10px]">DV-24081</span>
                   </div>
                 </div>
 
@@ -1391,26 +1391,26 @@ export default function Page() {
                   <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                     <button
                       onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Command Center
                     </button>
                     <button
                       onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Document Review
                     </button>
                     <button
                       onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[14.5px] shadow-xs relative z-10"
+                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
                     >
                       Timeline Story
                     </button>
                     {isConflictResolved && (
                       <button
                         onClick={() => setViewMode("revision-summary")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-850 font-semibold text-[14.5px] transition-colors relative z-10"
+                        className="px-4 py-2 text-neutral-505 hover:text-neutral-850 font-semibold text-[10px] transition-colors relative z-10"
                       >
                         Revision Summary
                       </button>
@@ -1418,7 +1418,7 @@ export default function Page() {
                     {signatureHash && (
                       <button
                         onClick={() => setViewMode("complete")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[14.5px] transition-colors relative z-10"
+                        className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
                       >
                         Inspection Package
                       </button>
@@ -1426,7 +1426,7 @@ export default function Page() {
                   </div>
 
                   <div className="w-px h-6 bg-neutral-200" />
-                  <span className="inline-flex items-center gap-1.5 text-[14.5px] font-semibold text-[#6B7280]">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#6B7280]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                     <span>AI agent active</span>
                   </span>
@@ -1435,7 +1435,7 @@ export default function Page() {
                       if (signatureHash) return
                       setShowSignModal(true)
                     }}
-                    className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg px-4.5 py-2 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
+                    className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg px-4.5 py-2 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
                   >
                     {signatureHash ? "Approved" : "Approve"}
                   </button>
@@ -1452,7 +1452,7 @@ export default function Page() {
                   className="max-w-[800px] flex-1 pb-32"
                 >
                   <div className="mb-16 select-none">
-                    <div className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-400 font-mono mb-4">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 font-mono mb-4">
                       Deviation investigation · DV-24081
                     </div>
                     <h1 className="text-neutral-905 font-medium tracking-tight leading-tight mb-6" style={{ fontFamily: "Newsreader, serif", fontSize: "46px" }}>
@@ -1462,7 +1462,7 @@ export default function Page() {
                       Over four hours, the AI agent reconstructed what happened - gathering logs, tracing the sensor record, weighing historical precedent, and proposing a root cause. Here is the investigation, in order.
                     </p>
                     
-                    <div className="flex items-center gap-4 flex-wrap text-[14.5px] text-neutral-455 font-mono">
+                    <div className="flex items-center gap-4 flex-wrap text-[10px] text-neutral-455 font-mono">
                       <span className="text-[#B91C1C] font-semibold">High severity</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-neutral-200" />
                       <span>{dynamicConfidence} confidence</span>
@@ -1477,8 +1477,8 @@ export default function Page() {
                     {/* Event 1 */}
                     <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }} className="relative">
                       <div className="absolute left-[-184px] top-1 text-right w-28 select-none font-mono">
-                        <div className="font-bold text-neutral-900 text-[16px]">23:58</div>
-                        <div className="text-[17.5px] text-neutral-400 mt-0.5">14 Jun</div>
+                        <div className="font-bold text-neutral-900 text-[11.5px]">23:58</div>
+                        <div className="text-[10px] text-neutral-400 mt-0.5">14 Jun</div>
                       </div>
                       <span className="absolute left-[-60px] top-0 w-6 h-6 rounded-full bg-white border border-[#DC2626] flex items-center justify-center shadow-xs">
                         <span className="w-1.5 h-1.5 bg-[#DC2626] rounded-full" />
@@ -1487,11 +1487,11 @@ export default function Page() {
                         <h2 className="text-neutral-955 font-medium tracking-tight" style={{ fontFamily: "Newsreader, serif", fontSize: "26px" }}>
                           Excursion detected
                         </h2>
-                        <p className="text-[16.5px] leading-relaxed text-neutral-700">
+                        <p className="text-[11.5px] leading-relaxed text-neutral-700">
                           Cold unit 3 reported temperatures rising past the validated 8.0°C ceiling. The reading peaked at 10.4°C at 01:05 and stayed above limit for roughly 38 minutes before recovering.
                         </p>
                         <div className="border border-neutral-200 rounded-2xl p-6 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
-                          <div className="flex justify-between items-center text-[14.5px] font-semibold mb-4 select-none">
+                          <div className="flex justify-between items-center text-[10px] font-semibold mb-4 select-none">
                             <span className="text-neutral-900">Sensor temperature trace</span>
                             <span className="text-neutral-400 font-mono">22:00 - 02:00 IST</span>
                           </div>
@@ -1513,13 +1513,13 @@ export default function Page() {
                               />
                               <circle cx="375" cy="20" r="3.5" fill="white" stroke="#DC2626" strokeWidth="2.2" />
                             </svg>
-                            <div className="absolute right-2 top-[80px] text-[14.5px] font-mono font-bold text-[#EF4444] select-none">
+                            <div className="absolute right-2 top-[80px] text-[10px] font-mono font-bold text-[#EF4444] select-none">
                               VALIDATED MAX 8.0°
                             </div>
-                            <div className="absolute left-[370px] top-1 bg-neutral-900 text-white rounded px-2 py-0.5 text-[14.5px] font-mono font-bold shadow select-none">
+                            <div className="absolute left-[370px] top-1 bg-neutral-900 text-white rounded px-2 py-0.5 text-[10px] font-mono font-bold shadow select-none">
                               10.4° · 01:05
                             </div>
-                            <div className="flex justify-between border-t border-neutral-100 pt-1 text-[15px] font-mono text-neutral-400 select-none mt-1">
+                            <div className="flex justify-between border-t border-neutral-100 pt-1 text-[10.5px] font-mono text-neutral-400 select-none mt-1">
                               <span>22:00</span>
                               <span>00:00</span>
                               <span>02:00</span>
@@ -1532,16 +1532,16 @@ export default function Page() {
                     {/* Event 2 */}
                     <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }} className="relative">
                       <div className="absolute left-[-184px] top-1 text-right w-28 select-none font-mono">
-                        <div className="font-bold text-neutral-905 text-[16px]">00:05</div>
+                        <div className="font-bold text-neutral-905 text-[11.5px]">00:05</div>
                       </div>
                       <span className="absolute left-[-60px] top-0 w-6 h-6 rounded-full bg-[#090D1A] flex items-center justify-center shadow-xs">
-                        <Check className="w-3.5 h-3.5 text-white" />
+                        <Check className="w-3 h-3 text-white" />
                       </span>
                       <div className="space-y-4">
                         <h2 className="text-neutral-905 font-medium tracking-tight" style={{ fontFamily: "Newsreader, serif", fontSize: "26px" }}>
                           Gathered manufacturing logs
                         </h2>
-                        <p className="text-[16.5px] leading-relaxed text-neutral-700 font-sans">
+                        <p className="text-[11.5px] leading-relaxed text-neutral-700 font-sans">
                           Pulled the batch record and equipment activity for the hold window from the MES and maintenance systems, then aligned them to the sensor timeline.
                         </p>
                       </div>
@@ -1550,16 +1550,16 @@ export default function Page() {
                     {/* Event 3 */}
                     <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }} className="relative">
                       <div className="absolute left-[-184px] top-1 text-right w-28 select-none font-mono">
-                        <div className="font-bold text-neutral-905 text-[16px]">00:12</div>
+                        <div className="font-bold text-neutral-905 text-[11.5px]">00:12</div>
                       </div>
                       <span className="absolute left-[-60px] top-0 w-6 h-6 rounded-full bg-[#090D1A] flex items-center justify-center shadow-xs">
-                        <Check className="w-3.5 h-3.5 text-white" />
+                        <Check className="w-3 h-3 text-white" />
                       </span>
                       <div className="space-y-4">
                         <h2 className="text-neutral-905 font-medium tracking-tight" style={{ fontFamily: "Newsreader, serif", fontSize: "26px" }}>
                           Retrieved laboratory reports
                         </h2>
-                        <p className="text-[16.5px] leading-relaxed text-neutral-700">
+                        <p className="text-[11.5px] leading-relaxed text-neutral-700">
                           The stability report confirms the batch remained within assay and impurity limits, but flags the storage-condition deviation for formal investigation.
                         </p>
                       </div>
@@ -1568,16 +1568,16 @@ export default function Page() {
                     {/* Event 4 */}
                     <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }} className="relative">
                       <div className="absolute left-[-184px] top-1 text-right w-28 select-none font-mono">
-                        <div className="font-bold text-neutral-905 text-[16px]">00:20</div>
+                        <div className="font-bold text-neutral-905 text-[11.5px]">00:20</div>
                       </div>
                       <span className="absolute left-[-60px] top-0 w-6 h-6 rounded-full bg-[#090D1A] flex items-center justify-center shadow-xs">
-                        <Check className="w-3.5 h-3.5 text-white" />
+                        <Check className="w-3 h-3 text-white" />
                       </span>
                       <div className="space-y-4 font-sans">
                         <h2 className="text-neutral-905 font-medium tracking-tight" style={{ fontFamily: "Newsreader, serif", fontSize: "26px" }}>
                           Reviewed historical deviations
                         </h2>
-                        <p className="text-[16.5px] leading-relaxed text-neutral-700 font-sans">
+                        <p className="text-[11.5px] leading-relaxed text-neutral-700 font-sans">
                           Three prior cold-chain events on this line resolved to mechanical valve faults. The closest precedent, CAPA-2208, describes the same intermittent-seal failure mode.
                         </p>
                       </div>
@@ -1586,13 +1586,13 @@ export default function Page() {
                     {/* Event 5 */}
                     <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }} className="relative">
                       <div className="absolute left-[-184px] top-1 text-right w-28 select-none font-mono">
-                        <div className="font-bold text-neutral-905 text-[16px]">00:41</div>
+                        <div className="font-bold text-neutral-905 text-[11.5px]">00:41</div>
                       </div>
                       <span className="absolute left-[-60px] top-0 w-6 h-6 rounded-full bg-[#2C52F5] flex items-center justify-center shadow-xs">
-                        <Cpu className="w-3.5 h-3.5 text-white" />
+                        <Cpu className="w-3 h-3 text-white" />
                       </span>
                       <div className="space-y-5">
-                        <div className="text-[17.5px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono select-none">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono select-none">
                           AI proposed root cause
                         </div>
                         <p className="text-neutral-900 font-normal leading-relaxed text-wrap:pretty" style={{ fontFamily: "Newsreader, serif", fontSize: "27.5px" }}>
@@ -1604,19 +1604,19 @@ export default function Page() {
                     {/* Event 6 */}
                     <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }} className="relative">
                       <div className="absolute left-[-184px] top-1 text-right w-28 select-none font-mono">
-                        <div className="font-bold text-neutral-905 text-[16px]">Now</div>
+                        <div className="font-bold text-neutral-905 text-[11.5px]">Now</div>
                       </div>
                       <span className={cn(
                         "absolute left-[-60px] top-0 w-6 h-6 rounded-full flex items-center justify-center shadow-xs",
                         signatureHash ? "bg-emerald-600" : "bg-amber-50 border border-amber-600 animate-pulse"
                       )}>
-                        {signatureHash ? <Check className="w-3.5 h-3.5 text-white" /> : <AlertOctagon className="w-3.5 h-3.5 text-amber-600" />}
+                        {signatureHash ? <Check className="w-3 h-3 text-white" /> : <AlertOctagon className="w-3 h-3 text-amber-600" />}
                       </span>
                       <div className="space-y-4">
                         <h2 className="text-neutral-905 font-medium tracking-tight" style={{ fontFamily: "Newsreader, serif", fontSize: "26px" }}>
                           {signatureHash ? "Investigation Approved & Closed" : "Waiting for final approval"}
                         </h2>
-                        <p className="text-[16.5px] leading-relaxed text-neutral-700 font-sans">
+                        <p className="text-[11.5px] leading-relaxed text-neutral-700 font-sans">
                           {signatureHash
                             ? "This investigation has been locked and certified in accordance with electronic audit compliance regulations."
                             : "All timestamp conflicts have been reconciled. The report has been updated with 98% confidence and is ready for QA sign-off."
@@ -1626,14 +1626,14 @@ export default function Page() {
                           {signatureHash ? (
                             <button
                               onClick={() => setViewMode("complete")}
-                              className="bg-neutral-900 hover:bg-neutral-850 text-white rounded-xl px-6 py-3.5 text-[17.5px] font-bold shadow-xs"
+                              className="bg-neutral-900 hover:bg-neutral-850 text-white rounded-xl px-6 py-2 text-[10px] font-bold shadow-xs"
                             >
                               Open Inspection Package
                             </button>
                           ) : (
                             <button
                               onClick={() => setShowSignModal(true)}
-                              className="bg-neutral-900 hover:bg-neutral-855 text-white rounded-xl px-6 py-3.5 text-[17.5px] font-bold shadow-xs"
+                              className="bg-neutral-900 hover:bg-neutral-855 text-white rounded-xl px-6 py-2 text-[10px] font-bold shadow-xs"
                             >
                               Approve Final Investigation
                             </button>
@@ -1645,10 +1645,10 @@ export default function Page() {
                 </motion.article>
 
                 <aside className="w-[260px] flex-shrink-0 select-none">
-                  <div className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-450 mb-4.5 font-mono">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-450 mb-4.5 font-mono">
                     At a glance
                   </div>
-                  <div className="divide-y divide-neutral-100 border-b border-neutral-100 text-[15px] mb-10">
+                  <div className="divide-y divide-neutral-100 border-b border-neutral-100 text-[10.5px] mb-10">
                     {[
                       { label: "Confidence", val: dynamicConfidence },
                       { label: "Evidence strength", val: "Strong" },
@@ -1679,49 +1679,49 @@ export default function Page() {
               {/* 4. RECONCILIATION WORKSPACE: SIDE-BY-SIDE RESOLUTION WORKSPACE                 */}
               {/* ============================================================================== */}
               
-              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-5">
+              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-4">
                   <button
                     onClick={() => setViewMode("home")}
-                    className="inline-flex items-center gap-1.5 text-[14.5px] font-semibold text-neutral-550 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-3 py-1.5 rounded-lg transition-all"
+                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-neutral-550 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-3 py-1.5 rounded-lg transition-all"
                   >
-                    <ArrowLeft className="w-4 h-4" />
+                    <ArrowLeft className="w-3 h-3" />
                     <span>Back to workspace</span>
                   </button>
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-[16.5px] text-neutral-900">Evidence Reconciliation Workspace</span>
-                    <span className="font-mono text-[14.5px] text-neutral-400">Conflict #1 · Maintenance Timestamps</span>
+                    <span className="font-bold text-[11.5px] text-neutral-900">Evidence Reconciliation Workspace</span>
+                    <span className="font-mono text-[10px] text-neutral-400">Conflict #1 · Maintenance Timestamps</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 text-[14.5px] font-semibold text-amber-800">
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+                  <span className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 text-[10px] font-semibold text-amber-800">
+                    <AlertTriangle className="w-3 h-3 text-amber-600" />
                     <span>Action required</span>
                   </span>
                 </div>
               </header>
 
-              <div className="px-10 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36">
+              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36">
                 <div className="space-y-3">
-                  <span className="text-[15px] uppercase font-bold tracking-widest text-[#2C52F5] font-mono">Reconciliation Queue</span>
-                  <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">
+                  <span className="text-[10.5px] uppercase font-bold tracking-widest text-[#2C52F5] font-mono">Reconciliation Queue</span>
+                  <h1 className="text-[24px] font-extrabold text-neutral-900 tracking-tight">
                     Confirm Cold Unit 3 valve maintenance completion time
                   </h1>
-                  <p className="text-[17.5px] text-neutral-600 max-w-[850px] leading-relaxed">
+                  <p className="text-[10px] text-neutral-600 max-w-[850px] leading-relaxed">
                     Klarixa detected conflicting timestamps between the digital work log and automatic event triggers. Review the raw logs, select the correct record, or request additional evidence to resolve this block.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-12 gap-8 items-stretch">
+                <div className="grid grid-cols-12 gap-6 items-stretch">
                   {/* Left Column: Record A */}
                   <div className="col-span-4 bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col justify-between hover:shadow-sm transition-shadow">
                     <div className="space-y-5">
                       <div className="flex items-center justify-between border-b border-neutral-100 pb-3 select-none">
-                        <span className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Record A</span>
-                        <span className="inline-flex items-center gap-1 bg-[#EEF2FF] text-[#2C52F5] text-[15px] font-bold uppercase px-2 py-0.5 rounded font-mono">CMMS Work Order</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Record A</span>
+                        <span className="inline-flex items-center gap-1 bg-[#EEF2FF] text-[#2C52F5] text-[10.5px] font-bold uppercase px-2 py-0.5 rounded font-mono">CMMS Work Order</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/50 rounded-xl p-4.5 font-mono text-[16px] text-neutral-655 space-y-2 select-text whitespace-pre-line leading-relaxed">
+                      <div className="bg-[#F8FAFC] border border-neutral-200/50 rounded-xl p-4.5 font-mono text-[11.5px] text-neutral-655 space-y-2 select-text whitespace-pre-line leading-relaxed">
                         <span className="text-neutral-400 font-bold block mb-1">--- CMMS EXPORT ---</span>
                         {"WO-8841: Preventive Valve Replacement\nAsset ID: "}
                         <span className="bg-neutral-200/70 px-1 py-0.2 rounded font-bold text-neutral-900">VALVE-03-PM</span>
@@ -1730,15 +1730,15 @@ export default function Page() {
                         {"\nSign-off verified: Verified by Calib-Operator"}
                       </div>
                       <div className="space-y-3 pt-3">
-                        <div className="flex justify-between text-[14.5px] font-semibold">
+                        <div className="flex justify-between text-[10px] font-semibold">
                           <span className="text-neutral-500">Timestamp</span>
                           <span className="text-neutral-900 font-mono">14:02:18 IST</span>
                         </div>
-                        <div className="flex justify-between text-[14.5px] font-semibold">
+                        <div className="flex justify-between text-[10px] font-semibold">
                           <span className="text-neutral-500">Technician</span>
                           <span className="text-neutral-900">J. Kapoor (Tech-402)</span>
                         </div>
-                        <div className="flex justify-between text-[14.5px] font-semibold">
+                        <div className="flex justify-between text-[10px] font-semibold">
                           <span className="text-neutral-500">Equipment ID</span>
                           <span className="text-neutral-900 font-mono">VALVE-03-PM</span>
                         </div>
@@ -1748,13 +1748,13 @@ export default function Page() {
                       <button
                         onClick={() => setReconciliationChoice("A")}
                         className={cn(
-                          "w-full py-3.5 rounded-xl font-bold text-[14.5px] transition-all shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center justify-center gap-2",
+                          "w-full py-2 rounded-xl font-bold text-[10px] transition-all shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center justify-center gap-2",
                           reconciliationChoice === "A"
                             ? "bg-[#2C52F5] text-white shadow-xs"
                             : "bg-white hover:bg-neutral-50 border border-neutral-205 text-neutral-700"
                         )}
                       >
-                        {reconciliationChoice === "A" && <Check className="w-4 h-4" />}
+                        {reconciliationChoice === "A" && <Check className="w-3 h-3" />}
                         <span>Choose Record A</span>
                       </button>
                     </div>
@@ -1762,20 +1762,20 @@ export default function Page() {
 
                   {/* Center comparison summary */}
                   <div className="col-span-4 bg-[#FCFCFD] border border-neutral-200/80 rounded-2xl p-6 flex flex-col justify-between shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] select-none">
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                       <div className="border-b border-neutral-100 pb-3">
-                        <span className="text-[17.5px] font-bold uppercase tracking-wider text-[#94A3B8] font-mono">Side-by-Side Comparison</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] font-mono">Side-by-Side Comparison</span>
                       </div>
                       <div className="space-y-5">
                         <div className="border border-amber-100 bg-amber-50/20 rounded-xl p-3.5 space-y-2">
-                          <div className="flex justify-between items-center text-[15px] uppercase font-bold tracking-widest text-[#B45309] font-mono">
+                          <div className="flex justify-between items-center text-[10.5px] uppercase font-bold tracking-widest text-[#B45309] font-mono">
                             <span>Service Time</span>
                             <span className="inline-flex items-center gap-1">
-                              <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+                              <AlertTriangle className="w-3 h-3 text-amber-600" />
                               <span>Conflict</span>
                             </span>
                           </div>
-                          <div className="flex justify-between items-center font-mono text-[17.5px] font-bold text-neutral-900 pt-1">
+                          <div className="flex justify-between items-center font-mono text-[10px] font-bold text-neutral-900 pt-1">
                             <span className="text-[#2C52F5]">14:02</span>
                             <span className="text-neutral-400 font-normal">vs</span>
                             <span className="text-amber-700">16:40</span>
@@ -1784,36 +1784,36 @@ export default function Page() {
 
                         <div className="border border-neutral-200/60 bg-white rounded-xl p-3.5 flex justify-between items-center">
                           <div>
-                            <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Technician</div>
-                            <div className="font-semibold text-neutral-808 text-[15px] mt-0.5">J. Kapoor</div>
+                            <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Technician</div>
+                            <div className="font-semibold text-neutral-808 text-[10.5px] mt-0.5">J. Kapoor</div>
                           </div>
-                          <div className="flex items-center gap-1 text-emerald-600 text-[14.5px] font-bold font-mono">
-                            <CheckCircle2 className="w-4 h-4" />
+                          <div className="flex items-center gap-1 text-emerald-600 text-[10px] font-bold font-mono">
+                            <CheckCircle2 className="w-3 h-3" />
                             <span>Same</span>
                           </div>
                         </div>
 
                         <div className="border border-neutral-200/60 bg-white rounded-xl p-3.5 flex justify-between items-center">
                           <div>
-                            <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Equipment ID</div>
-                            <div className="font-semibold text-neutral-808 text-[15px] mt-0.5 font-mono">VALVE-03-PM</div>
+                            <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Equipment ID</div>
+                            <div className="font-semibold text-neutral-808 text-[10.5px] mt-0.5 font-mono">VALVE-03-PM</div>
                           </div>
-                          <div className="flex items-center gap-1 text-emerald-600 text-[14.5px] font-bold font-mono">
-                            <CheckCircle2 className="w-4 h-4" />
+                          <div className="flex items-center gap-1 text-emerald-600 text-[10px] font-bold font-mono">
+                            <CheckCircle2 className="w-3 h-3" />
                             <span>Same</span>
                           </div>
                         </div>
 
                         <div className="border border-neutral-205 bg-white rounded-xl p-3.5 space-y-1">
-                          <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Difference detected</div>
-                          <p className="font-semibold text-neutral-808 text-[15px] leading-tight">
+                          <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Difference detected</div>
+                          <p className="font-semibold text-neutral-808 text-[10.5px] leading-tight">
                             Maintenance completion time (158-minute discrepancy)
                           </p>
                         </div>
                       </div>
                     </div>
                     <div className="pt-6 border-t border-neutral-100/60">
-                      <div className="text-[15px] text-neutral-455 leading-relaxed font-mono">
+                      <div className="text-[10.5px] text-neutral-455 leading-relaxed font-mono">
                         *Comparison aligned automatically by GxP document parser.
                       </div>
                     </div>
@@ -1823,10 +1823,10 @@ export default function Page() {
                   <div className="col-span-4 bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col justify-between hover:shadow-sm transition-shadow">
                     <div className="space-y-5">
                       <div className="flex items-center justify-between border-b border-neutral-100 pb-3 select-none">
-                        <span className="text-[17.5px] font-bold uppercase tracking-wider text-[#94A3B8] font-mono">Record B</span>
-                        <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-[15px] font-bold uppercase px-2 py-0.5 rounded font-mono">MES Log</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] font-mono">Record B</span>
+                        <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 text-[10.5px] font-bold uppercase px-2 py-0.5 rounded font-mono">MES Log</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/50 rounded-xl p-4.5 font-mono text-[16px] text-neutral-650 space-y-2 select-text whitespace-pre-line leading-relaxed">
+                      <div className="bg-[#F8FAFC] border border-neutral-200/50 rounded-xl p-4.5 font-mono text-[11.5px] text-neutral-650 space-y-2 select-text whitespace-pre-line leading-relaxed">
                         <span className="text-neutral-400 font-bold block mb-1">--- MES AUTOMATION LOG ---</span>
                         {"Line 4 Batch Hold sequence started: 22:00\nValve system override triggered: 14:02\nMaintenance action registered: "}
                         <span className="bg-neutral-200/70 px-1 py-0.2 rounded font-bold text-neutral-900">VALVE-03-PM</span>
@@ -1835,15 +1835,15 @@ export default function Page() {
                         {"\nOperator comment: 'Valve assembly replaced.'"}
                       </div>
                       <div className="space-y-3 pt-3">
-                        <div className="flex justify-between text-[14.5px] font-semibold">
+                        <div className="flex justify-between text-[10px] font-semibold">
                           <span className="text-neutral-500">Timestamp</span>
                           <span className="text-neutral-900 font-mono">16:40:02 IST</span>
                         </div>
-                        <div className="flex justify-between text-[14.5px] font-semibold">
+                        <div className="flex justify-between text-[10px] font-semibold">
                           <span className="text-neutral-500">Technician</span>
                           <span className="text-neutral-900">J. Kapoor (Tech-402)</span>
                         </div>
-                        <div className="flex justify-between text-[14.5px] font-semibold">
+                        <div className="flex justify-between text-[10px] font-semibold">
                           <span className="text-neutral-500">Equipment ID</span>
                           <span className="text-neutral-900 font-mono">VALVE-03-PM</span>
                         </div>
@@ -1853,13 +1853,13 @@ export default function Page() {
                       <button
                         onClick={() => setReconciliationChoice("B")}
                         className={cn(
-                          "w-full py-3.5 rounded-xl font-bold text-[14.5px] transition-all shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center justify-center gap-2",
+                          "w-full py-2 rounded-xl font-bold text-[10px] transition-all shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center justify-center gap-2",
                           reconciliationChoice === "B"
                             ? "bg-[#2C52F5] text-white shadow-xs"
                             : "bg-white hover:bg-neutral-50 border border-neutral-205 text-neutral-705"
                         )}
                       >
-                        {reconciliationChoice === "B" && <Check className="w-4 h-4" />}
+                        {reconciliationChoice === "B" && <Check className="w-3 h-3" />}
                         <span>Choose Record B</span>
                       </button>
                     </div>
@@ -1867,22 +1867,22 @@ export default function Page() {
                 </div>
 
                 {/* AI Recommendation & Matrix */}
-                <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-6.5 grid grid-cols-12 gap-8 items-start select-none">
+                <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 grid grid-cols-12 gap-6 items-start select-none">
                   <div className="col-span-7 space-y-3">
                     <div className="flex items-center gap-2 text-[#2C52F5]">
-                      <Sparkles className="w-4.5 h-4.5 text-[#2C52F5]" />
-                      <span className="text-[17.5px] font-bold uppercase tracking-wider font-mono">AI Recommendation & Assessment</span>
+                      <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider font-mono">AI Recommendation & Assessment</span>
                     </div>
-                    <p className="text-[14.5px] text-neutral-700 leading-relaxed font-sans font-medium text-[17.5px]">
+                    <p className="text-[10px] text-neutral-700 leading-relaxed font-sans font-medium text-[10px]">
                       "I found inconsistent timestamps between two maintenance systems. Both records reference the same valve and technician, but the completion time differs. I cannot confidently determine which record is correct."
                     </p>
-                    <p className="text-[14.5px] text-neutral-550 leading-relaxed font-sans text-[14.5px]">
+                    <p className="text-[10px] text-neutral-550 leading-relaxed font-sans text-[10px]">
                       *Note: Record A (14:02) correlates with the stability LIMS assay sampling window, suggesting the calibration was verified prior to the batch temperature excursion peak.
                     </p>
                   </div>
                   <div className="col-span-5 border-l border-neutral-200 pl-8 space-y-4">
-                    <div className="text-[15px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Confidence Impact analysis</div>
-                    <div className="space-y-3 font-mono text-[12px]">
+                    <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Confidence Impact analysis</div>
+                    <div className="space-y-3 font-mono text-[10px]">
                       <div className="flex justify-between items-center">
                         <span className="text-neutral-500">Current confidence:</span>
                         <span className="font-bold text-neutral-900 bg-white border border-neutral-200 px-2.5 py-0.5 rounded shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)]">94%</span>
@@ -1900,12 +1900,12 @@ export default function Page() {
                 </div>
 
                 {/* Additional decision actions */}
-                <div className="border-t border-neutral-200 pt-8 space-y-6">
+                <div className="border-t border-neutral-200 pt-8 space-y-4">
                   <div className="flex flex-wrap items-center gap-3 select-none">
                     <button
                       onClick={() => setReconciliationChoice("inconclusive")}
                       className={cn(
-                        "px-4.5 py-2.5 rounded-xl font-bold text-[14.5px] transition-colors border shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]",
+                        "px-4.5 py-1.5 rounded-xl font-bold text-[10px] transition-colors border shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]",
                         reconciliationChoice === "inconclusive"
                           ? "bg-neutral-900 border-neutral-900 text-white"
                           : "bg-white hover:bg-neutral-50 border-neutral-205 text-neutral-600"
@@ -1917,7 +1917,7 @@ export default function Page() {
                     <button
                       onClick={() => setReconciliationChoice("evidence")}
                       className={cn(
-                        "px-4.5 py-2.5 rounded-xl font-bold text-[14.5px] transition-colors border shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]",
+                        "px-4.5 py-1.5 rounded-xl font-bold text-[10px] transition-colors border shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]",
                         reconciliationChoice === "evidence"
                           ? "bg-neutral-900 border-neutral-900 text-white"
                           : "bg-white hover:bg-neutral-50 border-neutral-205 text-neutral-600"
@@ -1929,13 +1929,13 @@ export default function Page() {
                     <span className="text-neutral-300">|</span>
 
                     <div className="flex-1 min-w-[300px] flex items-center gap-2.5 border border-neutral-200 rounded-xl bg-white px-3.5 py-1 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
-                      <MessageSquare className="w-4 h-4 text-neutral-450" />
+                      <MessageSquare className="w-3 h-3 text-neutral-450" />
                       <input
                         type="text"
                         placeholder="Leave a review comment regarding this decision…"
                         value={reconciliationComment}
                         onChange={(e) => setReconciliationComment(e.target.value)}
-                        className="w-full text-[14.5px] text-neutral-700 placeholder-neutral-400 focus:outline-none py-1.5"
+                        className="w-full text-[10px] text-neutral-700 placeholder-neutral-400 focus:outline-none py-1.5"
                       />
                     </div>
                   </div>
@@ -1949,11 +1949,11 @@ export default function Page() {
                         className="bg-[#ECFDF5] border border-emerald-200 rounded-2xl p-6 flex items-center justify-between shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] select-none"
                       >
                         <div className="space-y-1">
-                          <div className="flex items-center gap-2 text-emerald-800 font-bold text-[16px]">
+                          <div className="flex items-center gap-2 text-emerald-800 font-bold text-[11.5px]">
                             <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                             <span>Conflict Resolved successfully</span>
                           </div>
-                          <p className="text-[14.5px] text-emerald-755 leading-relaxed font-sans pl-7 text-[15px]">
+                          <p className="text-[10px] text-emerald-755 leading-relaxed font-sans pl-7 text-[10.5px]">
                             Thank you. Klarixa will update the investigation draft and audit trail based on your decision to accept{" "}
                             <span className="font-bold uppercase font-mono">
                               {reconciliationChoice === "A"
@@ -1971,10 +1971,10 @@ export default function Page() {
                             resolveConflict();
                             setViewMode("revision-summary");
                           }}
-                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl px-5 py-3 text-[14.5px] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-1.5 font-sans animate-pulse"
+                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl px-5 py-3 text-[10px] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-1.5 font-sans animate-pulse"
                         >
                           <span>Accept & View AI Revision Summary</span>
-                          <ArrowRight className="w-4 h-4" />
+                          <ArrowRight className="w-3 h-3" />
                         </button>
                       </motion.div>
                     )}
@@ -1997,30 +1997,30 @@ export default function Page() {
               {/* 5. AI REVISION SUMMARY SCREEN (Final Screen)                                   */}
               {/* ============================================================================== */}
               
-              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-5">
+              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-4">
                   <button
                     onClick={() => setViewMode("home")}
-                    className="inline-flex items-center gap-1.5 text-[14.5px] font-semibold text-neutral-550 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-3 py-1.5 rounded-lg transition-all"
+                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-neutral-550 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-3 py-1.5 rounded-lg transition-all"
                   >
-                    <ArrowLeft className="w-4 h-4" />
+                    <ArrowLeft className="w-3 h-3" />
                     <span>Back to workspace</span>
                   </button>
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-[16.5px] text-[#111827]">AI Revision Summary</span>
-                    <span className="font-mono text-[14.5px] text-neutral-400">DV-24081 · Ready for Sign-off</span>
+                    <span className="font-bold text-[11.5px] text-[#111827]">AI Revision Summary</span>
+                    <span className="font-mono text-[10px] text-neutral-400">DV-24081 · Ready for Sign-off</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3.5">
                   <button
                     onClick={() => setViewMode("review")}
-                    className="px-4.5 py-2.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[14.5px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
+                    className="px-4.5 py-1.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[10px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
                   >
                     View Updated Report
                   </button>
-                  <button className="px-4.5 py-2.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[14.5px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                  <button className="px-4.5 py-1.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[10px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                     Export Inspection Package
                   </button>
                   <button
@@ -2028,87 +2028,87 @@ export default function Page() {
                       if (signatureHash) return
                       setShowSignModal(true)
                     }}
-                    className="px-6 py-2.5 bg-neutral-950 hover:bg-neutral-850 text-white font-bold rounded-xl text-[14.5px] transition-colors shadow-sm animate-pulse"
+                    className="px-6 py-1.5 bg-neutral-950 hover:bg-neutral-850 text-white font-bold rounded-xl text-[10px] transition-colors shadow-sm animate-pulse"
                   >
                     {signatureHash ? "Locked & Approved" : "Approve Final Investigation"}
                   </button>
                 </div>
               </header>
 
-              <div className="px-10 py-10 max-w-[1360px] mx-auto w-full grid grid-cols-12 gap-10 pb-36">
+              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full grid grid-cols-12 gap-7 pb-36">
                 
                 {/* Left Side: Summary & Diff Comparison (70%) */}
                 <div className="col-span-8 space-y-10">
                   <div className="space-y-3.5 select-none">
-                    <div className="inline-flex items-center gap-2 bg-[#ECFDF5] border border-emerald-200 rounded-full px-3.5 py-1 text-[14.5px] font-semibold text-emerald-800">
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <div className="inline-flex items-center gap-2 bg-[#ECFDF5] border border-emerald-200 rounded-full px-3.5 py-1 text-[10px] font-semibold text-emerald-800">
+                      <Check className="w-3 h-3 text-emerald-600" />
                       <span>Revision Complete</span>
                     </div>
-                    <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight leading-tight">
+                    <h1 className="text-[24px] font-extrabold text-neutral-900 tracking-tight leading-tight">
                       AI re-analysis and report updates complete
                     </h1>
-                    <p className="text-[17.5px] text-neutral-600 max-w-[800px] leading-relaxed">
+                    <p className="text-[10px] text-neutral-600 max-w-[800px] leading-relaxed">
                       Based on your reconciliation inputs (Accepting CMMS Record A), Klarixa AI completed a second review cycle, updating corresponding report chapters, aligning calibration logs, and resolving GxP validation blocks.
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-4 gap-5 select-none">
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
-                      <div className="text-[15px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Feedback status</div>
+                  <div className="grid grid-cols-4 gap-4 select-none">
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                      <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Feedback status</div>
                       <div className="text-lg font-extrabold text-neutral-900 mt-2 flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                        <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                         <span>Accepted A</span>
                       </div>
-                      <span className="text-[17.5px] text-neutral-450 block mt-1">CMMS timestamp fixed</span>
+                      <span className="text-[10px] text-neutral-450 block mt-1">CMMS timestamp fixed</span>
                     </div>
 
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
-                      <div className="text-[15px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Confidence Score</div>
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                      <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Confidence Score</div>
                       <div className="text-xl font-extrabold text-[#2C52F5] mt-2 flex items-baseline gap-1 font-mono">
                         <span>98%</span>
-                        <span className="text-[17.5px] text-neutral-455 font-normal">from 94%</span>
+                        <span className="text-[10px] text-neutral-455 font-normal">from 94%</span>
                       </div>
-                      <span className="text-[17.5px] text-emerald-655 font-semibold block mt-1">+4% improvement</span>
+                      <span className="text-[10px] text-emerald-655 font-semibold block mt-1">+4% improvement</span>
                     </div>
 
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
-                      <div className="text-[15px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Affected Sections</div>
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                      <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Affected Sections</div>
                       <div className="text-lg font-extrabold text-neutral-900 mt-2">
                         2 Updated
                       </div>
-                      <span className="text-[17.5px] text-neutral-450 block mt-1">Chapters 02 & 04 modified</span>
+                      <span className="text-[10px] text-neutral-450 block mt-1">Chapters 02 & 04 modified</span>
                     </div>
 
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-5 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
-                      <div className="text-[15px] uppercase font-bold tracking-wider text-neutral-450 font-mono">Supporting Evidence</div>
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                      <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-450 font-mono">Supporting Evidence</div>
                       <div className="text-lg font-extrabold text-neutral-900 mt-2">
                         +1 Log Added
                       </div>
-                      <span className="text-[17.5px] text-neutral-455 block mt-1">Reconciliation Certificate</span>
+                      <span className="text-[10px] text-neutral-455 block mt-1">Reconciliation Certificate</span>
                     </div>
                   </div>
 
                   <div className="space-y-5">
                     <div className="flex items-center justify-between border-b border-neutral-100 pb-3 select-none">
-                      <span className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Document Diffs (What's Changed)</span>
-                      <span className="text-[14.5px] text-neutral-455 font-mono">Only modified blocks displayed</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Document Diffs (What's Changed)</span>
+                      <span className="text-[10px] text-neutral-455 font-mono">Only modified blocks displayed</span>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                       <div className="border border-neutral-200/60 rounded-2xl overflow-hidden bg-white shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                         <div className="bg-neutral-50 px-5 py-3 border-b border-neutral-100 flex items-center justify-between select-none">
-                          <span className="font-bold text-neutral-800 text-[15px]">Chapter 02 · Root Cause Analysis (Primary root cause)</span>
-                          <span className="text-[15px] font-mono text-neutral-400">Section Diff</span>
+                          <span className="font-bold text-neutral-800 text-[10.5px]">Chapter 02 · Root Cause Analysis (Primary root cause)</span>
+                          <span className="text-[10.5px] font-mono text-neutral-400">Section Diff</span>
                         </div>
-                        <div className="grid grid-cols-2 divide-x divide-neutral-100 text-[14.5px]">
-                          <div className="p-5 space-y-2 bg-rose-50/20">
-                            <span className="text-[14.5px] uppercase font-bold tracking-wider text-rose-700 font-mono block select-none">Previous text</span>
+                        <div className="grid grid-cols-2 divide-x divide-neutral-100 text-[10px]">
+                          <div className="p-4 space-y-2 bg-rose-50/20">
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-rose-700 font-mono block select-none">Previous text</span>
                             <p className="text-neutral-600 leading-relaxed font-medium">
                               ...the maintenance record confirms the valve assembly was last serviced outside its scheduled interval <span className="bg-rose-105 text-rose-800 px-1 py-0.5 rounded font-bold line-through">[at an unconfirmed time].</span>
                             </p>
                           </div>
-                          <div className="p-5 space-y-2 bg-emerald-50/20">
-                            <span className="text-[14.5px] uppercase font-bold tracking-wider text-emerald-850 font-mono block select-none">Updated text</span>
+                          <div className="p-4 space-y-2 bg-emerald-50/20">
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-850 font-mono block select-none">Updated text</span>
                             <p className="text-neutral-900 leading-relaxed font-medium">
                               ...and <span className="bg-emerald-100 text-emerald-900 px-1 py-0.5 rounded font-bold">CMMS maintenance work order WO-8841 confirms the valve assembly service was completed at 14:02 IST, prior to the temperature peak.</span>
                             </p>
@@ -2118,18 +2118,18 @@ export default function Page() {
 
                       <div className="border border-neutral-200/60 rounded-2xl overflow-hidden bg-white shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                         <div className="bg-neutral-50 px-5 py-3 border-b border-neutral-100 flex items-center justify-between select-none">
-                          <span className="font-bold text-neutral-808 text-[15px]">Chapter 04 · Corrective & Preventive Action</span>
-                          <span className="text-[15px] font-mono text-neutral-400">Section Diff</span>
+                          <span className="font-bold text-neutral-808 text-[10.5px]">Chapter 04 · Corrective & Preventive Action</span>
+                          <span className="text-[10.5px] font-mono text-neutral-400">Section Diff</span>
                         </div>
-                        <div className="grid grid-cols-2 divide-x divide-neutral-100 text-[14.5px]">
-                          <div className="p-5 space-y-2 bg-rose-50/20">
-                            <span className="text-[14.5px] uppercase font-bold tracking-wider text-rose-700 font-mono block select-none">Previous text</span>
+                        <div className="grid grid-cols-2 divide-x divide-neutral-100 text-[10px]">
+                          <div className="p-4 space-y-2 bg-rose-50/20">
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-rose-700 font-mono block select-none">Previous text</span>
                             <p className="text-neutral-600 leading-relaxed font-medium">
                               Replace refrigeration valve assembly on cold-chain unit 3 and requalify.
                             </p>
                           </div>
-                          <div className="p-5 space-y-2 bg-emerald-50/20">
-                            <span className="text-[14.5px] uppercase font-bold tracking-wider text-emerald-850 font-mono block select-none">Updated text</span>
+                          <div className="p-4 space-y-2 bg-emerald-50/20">
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-850 font-mono block select-none">Updated text</span>
                             <p className="text-neutral-900 leading-relaxed font-medium">
                               Replace refrigeration valve assembly on cold-chain unit 3 <span className="bg-emerald-100 text-emerald-900 px-1 py-0.5 rounded font-bold">and enforce the 14:02 IST service completion window in calibration logs.</span>
                             </p>
@@ -2141,59 +2141,59 @@ export default function Page() {
                 </div>
 
                 {/* Right Side: AI Explanation & Audit Trail (30%) */}
-                <div className="col-span-4 space-y-8 select-none">
-                  <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-6.5 space-y-4">
+                <div className="col-span-4 space-y-4 select-none">
+                  <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 space-y-4">
                     <div className="flex items-center gap-2 text-[#2C52F5]">
-                      <Sparkles className="w-4.5 h-4.5 text-[#2C52F5]" />
-                      <span className="text-[15px] uppercase font-bold tracking-wider font-mono">AI re-analysis explanation</span>
+                      <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                      <span className="text-[10.5px] uppercase font-bold tracking-wider font-mono">AI re-analysis explanation</span>
                     </div>
-                    <p className="text-[14.5px] text-neutral-700 leading-relaxed font-sans font-medium text-[17.5px]">
+                    <p className="text-[10px] text-neutral-700 leading-relaxed font-sans font-medium text-[10px]">
                       "I reviewed the BMS logs, confirmed the corrected maintenance timestamp, updated the root cause analysis, and increased confidence from 94% to 98%."
                     </p>
                     <div className="flex items-center justify-between border-t border-neutral-200/60 pt-4.5">
-                      <div className="text-[17.5px] text-neutral-450 font-mono">Confidence boost:</div>
-                      <div className="flex items-center gap-2 font-mono font-bold text-[14.5px]">
+                      <div className="text-[10px] text-neutral-450 font-mono">Confidence boost:</div>
+                      <div className="flex items-center gap-2 font-mono font-bold text-[10px]">
                         <span className="text-neutral-450 line-through">94%</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
-                        <span className="text-[#2C52F5] text-[16px]">98%</span>
+                        <ArrowRight className="w-3 h-3 text-neutral-400" />
+                        <span className="text-[#2C52F5] text-[11.5px]">98%</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6.5 space-y-5">
+                  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-4 space-y-5">
                     <div className="border-b border-neutral-100 pb-3 flex justify-between items-center">
-                      <span className="text-[15px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Audit trail timeline</span>
-                      <span className="inline-flex items-center gap-1.5 text-[14.5px] text-neutral-455">
-                        <Clock className="w-3.5 h-3.5 text-neutral-400" />
+                      <span className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Audit trail timeline</span>
+                      <span className="inline-flex items-center gap-1.5 text-[10px] text-neutral-455">
+                        <Clock className="w-3 h-3 text-neutral-400" />
                         <span>GxP Log</span>
                       </span>
                     </div>
 
-                    <div className="relative border-l border-neutral-200 ml-3 pl-6 space-y-6 text-[14.5px]">
+                    <div className="relative border-l border-neutral-200 ml-3 pl-6 space-y-4 text-[10px]">
                       <div className="relative">
                         <span className="absolute left-[-29px] top-0 w-2.5 h-2.5 rounded-full bg-neutral-300" />
                         <div className="font-semibold text-neutral-850">Investigator requested review</div>
-                        <div className="text-[15px] text-neutral-400 font-mono mt-0.5">Today · 17:25</div>
+                        <div className="text-[10.5px] text-neutral-400 font-mono mt-0.5">Today · 17:25</div>
                       </div>
                       <div className="relative">
                         <span className="absolute left-[-29px] top-0 w-2.5 h-2.5 rounded-full bg-neutral-300" />
                         <div className="font-semibold text-neutral-855">Reconciliation Workspace resolved</div>
-                        <div className="text-[15px] text-neutral-400 font-mono mt-0.5">Today · 17:28</div>
+                        <div className="text-[10.5px] text-neutral-400 font-mono mt-0.5">Today · 17:28</div>
                       </div>
                       <div className="relative">
                         <span className="absolute left-[-29px] top-0 w-2.5 h-2.5 rounded-full bg-neutral-300" />
                         <div className="font-semibold text-neutral-855">AI re-analyzed additional evidence</div>
-                        <div className="text-[15px] text-neutral-400 font-mono mt-0.5">Today · 17:28</div>
+                        <div className="text-[10.5px] text-neutral-400 font-mono mt-0.5">Today · 17:28</div>
                       </div>
                       <div className="relative">
                         <span className="absolute left-[-29px] top-0 w-2.5 h-2.5 rounded-full bg-[#2C52F5]" />
                         <div className="font-bold text-neutral-909">Report updated & validated</div>
-                        <div className="text-[15px] text-[#64748B] font-mono font-bold mt-0.5">Today · 17:29</div>
+                        <div className="text-[10.5px] text-[#64748B] font-mono font-bold mt-0.5">Today · 17:29</div>
                       </div>
                       <div className="relative">
                         <span className="absolute left-[-29px] top-0 w-2.5 h-2.5 rounded-full bg-emerald-655 animate-pulse" />
                         <div className="font-bold text-emerald-800">Investigation ready for approval</div>
-                        <div className="text-[15px] text-emerald-600 font-mono font-bold mt-0.5">Now</div>
+                        <div className="text-[10.5px] text-emerald-600 font-mono font-bold mt-0.5">Now</div>
                       </div>
                     </div>
                   </div>
@@ -2216,15 +2216,15 @@ export default function Page() {
               {/* ============================================================================== */}
               
               {/* Header */}
-              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-5">
+              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
-                    <img src="/logo.png" alt="Karixa Logo" className="h-[38px] w-auto object-contain" />
+                    <img src="/logo.png" alt="Karixa Logo" className="h-[28px] w-auto object-contain" />
                   </div>
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-[16px] text-neutral-905">Investigation Package Locked</span>
-                    <span className="font-mono text-[14.5px] text-neutral-400">DV-24081</span>
+                    <span className="font-bold text-[11.5px] text-neutral-905">Investigation Package Locked</span>
+                    <span className="font-mono text-[10px] text-neutral-400">DV-24081</span>
                   </div>
                 </div>
 
@@ -2233,25 +2233,25 @@ export default function Page() {
                   <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                     <button
                       onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Command Center
                     </button>
                     <button
                       onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Document Review
                     </button>
                     <button
                       onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Timeline Story
                     </button>
                     <button
                       onClick={() => setViewMode("complete")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[14.5px] shadow-xs relative z-10"
+                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
                     >
                       Inspection Package
                     </button>
@@ -2259,41 +2259,41 @@ export default function Page() {
                 </div>
               </header>
 
-              <div className="px-10 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] my-6">
+              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] my-6">
                 
                 {/* Success Header (Calm FDA inspection-ready style) */}
-                <div className="bg-[#ECFDF5]/60 border border-emerald-250 rounded-3xl p-8 flex items-start gap-6 select-none shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                <div className="bg-[#ECFDF5]/60 border border-emerald-250 rounded-3xl p-6 flex items-start gap-6 select-none shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
                     <CheckCircle2 className="w-7 h-7 text-emerald-600" />
                   </div>
                   <div className="space-y-3.5">
                     <div className="flex items-baseline gap-2.5">
-                      <h1 className="text-3xl font-extrabold text-emerald-950 tracking-tight">✓ Investigation Successfully Closed</h1>
-                      <span className="text-[14.5px] font-mono font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">GxP SECURED</span>
+                      <h1 className="text-[24px] font-extrabold text-emerald-950 tracking-tight">✓ Investigation Successfully Closed</h1>
+                      <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">GxP SECURED</span>
                     </div>
-                    <p className="text-[17.5px] text-emerald-900 leading-relaxed font-sans max-w-[900px] font-medium">
+                    <p className="text-[10px] text-emerald-900 leading-relaxed font-sans max-w-[900px] font-medium">
                       Batch PX-2041 has been investigated, reviewed, approved, and archived. Completed in <span className="font-bold">3 hours</span> instead of the traditional 6-week manual investigation process.
                     </p>
                     
-                    <div className="grid grid-cols-5 gap-6 pt-3 border-t border-emerald-200/50 text-[14.5px] font-mono text-emerald-800">
+                    <div className="grid grid-cols-5 gap-6 pt-3 border-t border-emerald-200/50 text-[10px] font-mono text-emerald-800">
                       <div>
-                        <div className="text-[14.5px] uppercase font-bold tracking-wider text-emerald-600">Investigation ID</div>
+                        <div className="text-[10px] uppercase font-bold tracking-wider text-emerald-600">Investigation ID</div>
                         <div className="font-bold mt-0.5">DV-24081</div>
                       </div>
                       <div>
-                        <div className="text-[14.5px] uppercase font-bold tracking-wider text-emerald-600">Approval Date & Time</div>
+                        <div className="text-[10px] uppercase font-bold tracking-wider text-emerald-600">Approval Date & Time</div>
                         <div className="font-bold mt-0.5">14 Jun 2026, 17:30 IST</div>
                       </div>
                       <div>
-                        <div className="text-[14.5px] uppercase font-bold tracking-wider text-emerald-600">Approved By</div>
+                        <div className="text-[10px] uppercase font-bold tracking-wider text-emerald-600">Approved By</div>
                         <div className="font-bold mt-0.5">Dr. Anita Rao (QA)</div>
                       </div>
                       <div>
-                        <div className="text-[14.5px] uppercase font-bold tracking-wider text-emerald-600">AI Agent Version</div>
+                        <div className="text-[10px] uppercase font-bold tracking-wider text-emerald-600">AI Agent Version</div>
                         <div className="font-bold mt-0.5">v4.2-compliance</div>
                       </div>
                       <div>
-                        <div className="text-[14.5px] uppercase font-bold tracking-wider text-emerald-600">Investigation Status</div>
+                        <div className="text-[10px] uppercase font-bold tracking-wider text-emerald-600">Investigation Status</div>
                         <div className="font-bold mt-0.5 uppercase tracking-wider text-emerald-700">Archived & Locked</div>
                       </div>
                     </div>
@@ -2301,7 +2301,7 @@ export default function Page() {
                 </div>
 
                 {/* Two-Column split */}
-                <div className="grid grid-cols-12 gap-10 items-start">
+                <div className="grid grid-cols-12 gap-7 items-start">
                   
                   {/* Left Column: deliverables checklist & export actions (70%) */}
                   <div className="col-span-8 space-y-10">
@@ -2309,8 +2309,8 @@ export default function Page() {
                     {/* Inspection Package Deliverables */}
                     <div className="space-y-5">
                       <div className="border-b border-neutral-100 pb-3 select-none flex justify-between items-center">
-                        <span className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Regulator inspection package</span>
-                        <span className="text-[14.5px] text-emerald-600 font-bold font-mono">All files signed, hashed & ready</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Regulator inspection package</span>
+                        <span className="text-[10px] text-emerald-600 font-bold font-mono">All files signed, hashed & ready</span>
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
@@ -2325,20 +2325,20 @@ export default function Page() {
                           { title: "Version History", desc: "Complete tracking of report drafts V1 to V4.", size: "110 KB", hash: "SHA256-559B..D1" },
                           { title: "Regulatory Metadata", desc: "GxP compliance checklist validation certificate.", size: "65 KB", hash: "SHA256-F982..32" }
                         ].map((item, i) => (
-                          <div key={i} className="border border-neutral-200/60 rounded-2xl p-5 bg-white hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow flex items-start gap-4">
+                          <div key={i} className="border border-neutral-200/60 rounded-2xl p-4 bg-white hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow flex items-start gap-4">
                             <div className="w-10 h-10 rounded-xl bg-neutral-50 flex items-center justify-center flex-shrink-0">
                               <FileText className="w-5 h-5 text-neutral-450" />
                             </div>
                             <div className="min-w-0 space-y-1 w-full">
                               <div className="flex items-center justify-between select-none">
-                                <span className="font-bold text-neutral-900 text-[14.5px] truncate pr-2">{item.title}</span>
-                                <span className="flex items-center gap-0.5 text-emerald-600 text-[15px] font-bold font-mono">
+                                <span className="font-bold text-neutral-900 text-[10px] truncate pr-2">{item.title}</span>
+                                <span className="flex items-center gap-0.5 text-emerald-600 text-[10.5px] font-bold font-mono">
                                   <Check className="w-3 h-3 stroke-[2.5]" />
                                   <span>Ready</span>
                                 </span>
                               </div>
-                              <p className="text-[14.5px] text-neutral-500 leading-normal font-sans">{item.desc}</p>
-                              <div className="flex justify-between items-center text-[15px] font-mono text-neutral-400 pt-1 select-none">
+                              <p className="text-[10px] text-neutral-500 leading-normal font-sans">{item.desc}</p>
+                              <div className="flex justify-between items-center text-[10.5px] font-mono text-neutral-400 pt-1 select-none">
                                 <span>{item.size}</span>
                                 <span>{item.hash}</span>
                               </div>
@@ -2349,26 +2349,26 @@ export default function Page() {
                     </div>
 
                     {/* Knowledge Captured Panel (How it improves future cases) */}
-                    <div className="space-y-4 bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-6.5">
+                    <div className="space-y-4 bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
                       <div className="flex items-center gap-2 text-[#2C52F5] select-none">
-                        <Sparkles className="w-4.5 h-4.5 text-[#2C52F5]" />
-                        <span className="text-[17.5px] font-bold uppercase tracking-wider font-mono">Knowledge Captured (Continuous Improvement)</span>
+                        <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider font-mono">Knowledge Captured (Continuous Improvement)</span>
                       </div>
-                      <div className="grid grid-cols-2 gap-4.5 text-[14.5px] text-neutral-700">
+                      <div className="grid grid-cols-2 gap-4.5 text-[10px] text-neutral-700">
                         <div className="flex gap-2.5 items-start">
-                          <Check className="w-4 h-4 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                          <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                           <p><strong>Added as historical case:</strong> DV-24081 is now indexed to recommend parameters for future cold-chain deviations.</p>
                         </div>
                         <div className="flex gap-2.5 items-start">
-                          <Check className="w-4 h-4 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                          <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                           <p><strong>Root cause indexed:</strong> Valve-malfunction sensor drift pattern mapped to improve future AI telemetry scans.</p>
                         </div>
                         <div className="flex gap-2.5 items-start">
-                          <Check className="w-4 h-4 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                          <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                           <p><strong>CAPA database updated:</strong> Enforcing Service-Log windows in calibration schedules shared organization-wide.</p>
                         </div>
                         <div className="flex gap-2.5 items-start">
-                          <Check className="w-4 h-4 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                          <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                           <p><strong>Equipment history logged:</strong> Cold Unit 3 maintenance ledger updated with WO-8841 verification.</p>
                         </div>
                       </div>
@@ -2376,27 +2376,27 @@ export default function Page() {
 
                     {/* Export Action Controls */}
                     <div className="border-t border-neutral-200/60 pt-6.5 select-none space-y-4">
-                      <div className="text-[15px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Package Actions</div>
+                      <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Package Actions</div>
                       <div className="flex flex-wrap items-center gap-3">
-                        <button className="bg-neutral-950 hover:bg-neutral-850 text-white rounded-xl px-5 py-3.5 text-[14.5px] font-bold shadow-xs transition-colors flex items-center gap-2">
-                          <Download className="w-4 h-4" />
+                        <button className="bg-neutral-950 hover:bg-neutral-850 text-white rounded-xl px-5 py-2 text-[10px] font-bold shadow-xs transition-colors flex items-center gap-2">
+                          <Download className="w-3 h-3" />
                           <span>Download Inspection Package</span>
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-3.5 text-[14.5px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                           Export PDF Report
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-3.5 text-[14.5px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                           Export Audit Trail
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-3.5 text-[14.5px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                           Share with Quality Assurance
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-3.5 text-[14.5px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                           Open Investigation Archive
                         </button>
                         <button
                           onClick={handleReset}
-                          className="bg-[#2C52F5] hover:bg-[#2C52F5] text-white rounded-xl px-5 py-3.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors"
+                          className="bg-[#2C52F5] hover:bg-[#2C52F5] text-white rounded-xl px-5 py-2 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors"
                         >
                           Start New Investigation
                         </button>
@@ -2406,18 +2406,18 @@ export default function Page() {
                   </div>
 
                   {/* Right Column: Investigation summary & timeline (30%) */}
-                  <div className="col-span-4 space-y-8 select-none">
+                  <div className="col-span-4 space-y-4 select-none">
                     
                     {/* Investigation Summary Card (Elegant Typography instead of large block KPI cards) */}
                     <div className="bg-white border border-neutral-200 rounded-2xl p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] space-y-5">
                       <div className="border-b border-neutral-100 pb-3">
-                        <span className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Investigation Summary</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Investigation Summary</span>
                       </div>
 
-                      <div className="space-y-4 text-[14.5px] font-sans">
+                      <div className="space-y-4 text-[10px] font-sans">
                         <div className="space-y-1">
-                          <div className="text-[15px] uppercase font-bold text-neutral-400 font-mono">Final root cause</div>
-                          <p className="font-semibold text-neutral-850 leading-normal text-[15px]">
+                          <div className="text-[10.5px] uppercase font-bold text-neutral-400 font-mono">Final root cause</div>
+                          <p className="font-semibold text-neutral-850 leading-normal text-[10.5px]">
                             Mechanical failure of refrigeration valve VALVE-03-PM on Cold Store Unit 3.
                           </p>
                         </div>
@@ -2425,11 +2425,11 @@ export default function Page() {
                         <div className="space-y-3 pt-3 border-t border-neutral-100 font-medium text-neutral-700">
                           <div className="flex justify-between items-baseline">
                             <span className="text-neutral-500">Final confidence</span>
-                            <span className="font-bold text-[#2C52F5] font-mono text-[15px]">{dynamicConfidence}</span>
+                            <span className="font-bold text-[#2C52F5] font-mono text-[10.5px]">{dynamicConfidence}</span>
                           </div>
                           <div className="flex justify-between items-baseline">
                             <span className="text-neutral-500">Residual risk</span>
-                            <span className="font-bold text-emerald-600 font-mono text-[15px]">Negligible</span>
+                            <span className="font-bold text-emerald-600 font-mono text-[10.5px]">Negligible</span>
                           </div>
                           <div className="flex justify-between items-baseline">
                             <span className="text-neutral-500">Total evidence reviewed</span>
@@ -2452,16 +2452,16 @@ export default function Page() {
                     </div>
 
                     {/* Timeline Spine */}
-                    <div className="bg-white border border-neutral-200/60 rounded-2xl p-6.5 space-y-6">
+                    <div className="bg-white border border-neutral-200/60 rounded-2xl p-4 space-y-4">
                       <div className="border-b border-neutral-100 pb-3 flex justify-between items-center">
-                        <span className="text-[17.5px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Audit Timeline Spine</span>
-                        <span className="inline-flex items-center gap-1.5 text-[14.5px] text-neutral-400">
-                          <Clock className="w-3.5 h-3.5" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Audit Timeline Spine</span>
+                        <span className="inline-flex items-center gap-1.5 text-[10px] text-neutral-400">
+                          <Clock className="w-3 h-3" />
                           <span>GxP log</span>
                         </span>
                       </div>
 
-                      <div className="relative border-l border-neutral-200 ml-3 pl-6 space-y-6 text-[14.5px]">
+                      <div className="relative border-l border-neutral-200 ml-3 pl-6 space-y-4 text-[10px]">
                         {[
                           { title: "Deviation detected", time: "14 Jun · 23:58" },
                           { title: "AI investigation started", time: "15 Jun · 00:01" },
@@ -2479,7 +2479,7 @@ export default function Page() {
                               evt.color ? evt.color : "bg-neutral-300"
                             )} />
                             <div className={cn("text-neutral-800", evt.bold && "font-bold text-neutral-900")}>{evt.title}</div>
-                            <div className="text-[14.5px] text-neutral-405 font-mono mt-0.5">{evt.time}</div>
+                            <div className="text-[10px] text-neutral-405 font-mono mt-0.5">{evt.time}</div>
                           </div>
                         ))}
                       </div>
@@ -2503,12 +2503,12 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-hidden"
             >
               {/* Header */}
-              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-5">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[32px] w-auto object-contain" />
+              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-4">
+                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-[16.5px] text-neutral-905">Evidence Library</span>
+                    <span className="font-bold text-[11.5px] text-neutral-905">Evidence Library</span>
                   </div>
                 </div>
 
@@ -2516,25 +2516,25 @@ export default function Page() {
                   <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                     <button
                       onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Command Center
                     </button>
                     <button
                       onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Document Review
                     </button>
                     <button
                       onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Timeline Story
                     </button>
                     <button
                       onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[14.5px] shadow-xs relative z-10"
+                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
                     >
                       Evidence Library
                     </button>
@@ -2546,15 +2546,15 @@ export default function Page() {
               <div className="flex-1 flex overflow-hidden">
                 
                 {/* Left Filter Panel (240px) */}
-                <aside className="w-[240px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 overflow-y-auto select-none space-y-6">
-                  <div className="text-[13px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
+                <aside className="w-[240px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 overflow-y-auto select-none space-y-4">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
                     Filter Evidence
                   </div>
 
                   <div className="space-y-5">
                     {/* Filter Group 1: Doc Type */}
                     <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-neutral-600 block">Document Type</label>
+                      <label className="text-[11px] font-bold text-neutral-600 block">Document Type</label>
                       <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
                         <option>All Types</option>
                         <option>CSV Spreadsheets</option>
@@ -2566,7 +2566,7 @@ export default function Page() {
 
                     {/* Filter Group 2: Investigation */}
                     <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-neutral-600 block">Investigation</label>
+                      <label className="text-[11px] font-bold text-neutral-600 block">Investigation</label>
                       <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
                         <option>All Cases</option>
                         <option>DV-24081 (PX-2041)</option>
@@ -2577,7 +2577,7 @@ export default function Page() {
 
                     {/* Filter Group 3: Source */}
                     <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-neutral-600 block">Evidence Source</label>
+                      <label className="text-[11px] font-bold text-neutral-600 block">Evidence Source</label>
                       <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
                         <option>All Sources</option>
                         <option>MES Automation</option>
@@ -2589,7 +2589,7 @@ export default function Page() {
 
                     {/* Filter Group 4: Verified */}
                     <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-neutral-600 block">Verification Status</label>
+                      <label className="text-[11px] font-bold text-neutral-600 block">Verification Status</label>
                       <div className="space-y-2 pt-1">
                         <label className="flex items-center gap-2.5 text-[14px] text-neutral-700 font-medium cursor-pointer">
                           <input type="checkbox" defaultChecked className="rounded border-neutral-350 text-[#2C52F5] focus:ring-[#2C52F5]" />
@@ -2608,7 +2608,7 @@ export default function Page() {
 
                     {/* Filter Group 5: AI Confidence */}
                     <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-neutral-600 block">AI Confidence Threshold</label>
+                      <label className="text-[11px] font-bold text-neutral-600 block">AI Confidence Threshold</label>
                       <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
                         <option>All Levels</option>
                         <option>&gt; 95% High Confidence</option>
@@ -2620,72 +2620,72 @@ export default function Page() {
                 </aside>
 
                 {/* Center Content Workspace */}
-                <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-8 space-y-8">
+                <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-6 space-y-4">
                   {/* Evidence Library Title & Actions row */}
                   <div className="flex justify-between items-end select-none">
                     <div className="space-y-2">
-                      <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">Evidence Library</h1>
-                      <p className="text-[16px] text-neutral-500 leading-normal">
+                      <h1 className="text-[24px] font-extrabold text-neutral-900 tracking-tight">Evidence Library</h1>
+                      <p className="text-[11.5px] text-neutral-500 leading-normal">
                         Browse, search, and review all evidence collected across investigations.
                       </p>
                     </div>
 
                     <div className="flex items-center gap-3">
                       {/* AI Synced Badge */}
-                      <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-3.5 py-1.5 text-[14.5px] font-bold text-emerald-800">
+                      <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-3.5 py-1.5 text-[10px] font-bold text-emerald-800">
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                         <span>AI Synced</span>
                       </div>
 
                       <div className="flex items-center gap-2 border border-neutral-200 rounded-xl bg-white px-3 py-2 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] w-60">
-                        <Search className="w-4.5 h-4.5 text-neutral-400" />
+                        <Search className="w-3 h-3 text-neutral-400" />
                         <input
                           type="text"
                           placeholder="Search documents..."
-                          className="bg-transparent border-none text-[14.5px] focus:outline-none w-full"
+                          className="bg-transparent border-none text-[10px] focus:outline-none w-full"
                         />
                       </div>
 
-                      <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
-                        <Layers className="w-4.5 h-4.5 text-neutral-500" />
+                      <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
+                        <Layers className="w-3 h-3 text-neutral-500" />
                         <span>Filter</span>
                       </button>
 
-                      <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                      <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                         Upload evidence
                       </button>
                     </div>
                   </div>
 
                   {/* 4 Summary Cards (Light brand colored backgrounds) */}
-                  <div className="grid grid-cols-4 gap-5 select-none">
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                      <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Total Documents</div>
-                      <div className="text-3xl font-extrabold text-neutral-900 mt-2 font-mono">124 files</div>
-                      <span className="text-[13px] text-neutral-450 block mt-1">Telemetry, log & SOP index</span>
+                  <div className="grid grid-cols-4 gap-4 select-none">
+                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Total Documents</div>
+                      <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">124 files</div>
+                      <span className="text-[11px] text-neutral-450 block mt-1">Telemetry, log & SOP index</span>
                     </div>
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                      <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Evidence Sources</div>
-                      <div className="text-3xl font-extrabold text-neutral-900 mt-2 font-mono">8 systems</div>
-                      <span className="text-[13px] text-neutral-455 block mt-1">MES, LIMS, CMMS connected</span>
+                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Evidence Sources</div>
+                      <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">8 systems</div>
+                      <span className="text-[11px] text-neutral-455 block mt-1">MES, LIMS, CMMS connected</span>
                     </div>
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                      <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">AI Indexed</div>
-                      <div className="text-3xl font-extrabold text-[#2C52F5] mt-2 font-mono">98.4%</div>
-                      <span className="text-[13px] text-emerald-600 font-semibold block mt-1">Audit-ready validation</span>
+                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">AI Indexed</div>
+                      <div className="text-[24px] font-extrabold text-[#2C52F5] mt-2 font-mono">98.4%</div>
+                      <span className="text-[11px] text-emerald-600 font-semibold block mt-1">Audit-ready validation</span>
                     </div>
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                      <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Recently Added</div>
-                      <div className="text-3xl font-extrabold text-neutral-900 mt-2 font-mono">12 new</div>
-                      <span className="text-[13px] text-neutral-455 block mt-1">Last sync 4 min ago</span>
+                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Recently Added</div>
+                      <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">12 new</div>
+                      <span className="text-[11px] text-neutral-455 block mt-1">Last sync 4 min ago</span>
                     </div>
                   </div>
 
                   {/* Evidence Table Sheet (Notion-style elevated container) */}
-                  <div className="bg-white border border-neutral-200/35 rounded-3xl p-8 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)]">
-                    <table className="w-full text-[14.5px] text-left">
+                  <div className="bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)]">
+                    <table className="w-full text-[10px] text-left">
                       <thead>
-                        <tr className="border-b border-neutral-100 text-neutral-400 text-[13px] uppercase font-bold font-mono select-none">
+                        <tr className="border-b border-neutral-100 text-neutral-400 text-[11px] uppercase font-bold font-mono select-none">
                           <th className="pb-4">Document</th>
                           <th className="pb-4">Source System</th>
                           <th className="pb-4">Investigation ID</th>
@@ -2717,17 +2717,17 @@ export default function Page() {
                               )}
                             >
                               <td className="py-4 font-semibold text-neutral-850 flex items-center gap-2">
-                                <FileText className="w-4.5 h-4.5 text-neutral-450" />
+                                <FileText className="w-3 h-3 text-neutral-450" />
                                 <span>{row.file}</span>
                               </td>
-                              <td className="py-4 font-mono text-[13px]">{row.sys}</td>
-                              <td className="py-4 font-mono text-[13px]">{row.inv}</td>
+                              <td className="py-4 font-mono text-[11px]">{row.sys}</td>
+                              <td className="py-4 font-mono text-[11px]">{row.inv}</td>
                               <td className="py-4">{row.cat}</td>
                               <td className="py-4">{row.user}</td>
                               <td className="py-4 font-mono text-neutral-450 font-semibold">{row.conf}</td>
                               <td className="py-4 text-right">
-                                <span className="inline-flex items-center gap-1 text-emerald-600 text-[13px] font-bold font-mono">
-                                  <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                                <span className="inline-flex items-center gap-1 text-emerald-600 text-[11px] font-bold font-mono">
+                                  <Check className="w-3 h-3 stroke-[2.5]" />
                                   <span>{row.status}</span>
                                 </span>
                               </td>
@@ -2740,13 +2740,13 @@ export default function Page() {
                 </main>
 
                 {/* Right Preview Panel (340px) */}
-                <aside className="w-[340px] border-l border-neutral-200 flex-shrink-0 overflow-y-auto bg-[#FCFCFD] p-6 space-y-6">
+                <aside className="w-[340px] border-l border-neutral-200 flex-shrink-0 overflow-y-auto bg-[#FCFCFD] p-6 space-y-4">
                   <div className="border-b border-neutral-100 pb-3 flex justify-between items-center select-none">
-                    <span className="text-[13px] font-bold uppercase tracking-wider text-neutral-450 font-mono font-bold">Document Preview</span>
-                    <span className="text-[13px] text-neutral-455 font-mono">Metadata</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-450 font-mono font-bold">Document Preview</span>
+                    <span className="text-[11px] text-neutral-455 font-mono">Metadata</span>
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {/* Doc Title & Type */}
                     <div>
                       <div className="flex items-center gap-2.5">
@@ -2755,13 +2755,13 @@ export default function Page() {
                           {selectedEvidenceId}
                         </h3>
                       </div>
-                      <p className="text-[13px] text-neutral-400 font-mono mt-1.5">
+                      <p className="text-[11px] text-neutral-400 font-mono mt-1.5">
                         Size: 1.2 MB · Type: {selectedEvidenceId.endsWith(".csv") ? "CSV Spreadsheet" : "PDF Document"}
                       </p>
                     </div>
 
                     {/* Miniature Raw Preview */}
-                    <div className="border border-neutral-200/60 rounded-xl bg-neutral-50 p-4 font-mono text-[12.5px] text-neutral-600 leading-relaxed max-h-40 overflow-y-auto whitespace-pre select-text">
+                    <div className="border border-neutral-200/60 rounded-xl bg-neutral-50 p-4 font-mono text-[10.5px] text-neutral-600 leading-relaxed max-h-40 overflow-y-auto whitespace-pre select-text">
                       {selectedEvidenceId.endsWith(".csv")
                         ? "Timestamp,Sensor,Value,Status\n22:15:00,TEMP-B4,6.4C,NORMAL\n22:30:00,TEMP-B4,6.6C,NORMAL\n22:45:00,TEMP-B4,6.8C,NORMAL\n23:00:00,TEMP-B4,6.9C,NORMAL\n23:15:00,TEMP-B4,7.1C,NORMAL\n23:30:00,TEMP-B4,7.4C,NORMAL"
                         : "%PDF-1.4\n%•••••\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R >>\nendobj\n4 0 obj\n<< /Length 124 >>\nstream\nBT /F1 12 Tf 72 712 Td (Investigation Report: Excursion validated range summary...) Tj ET\nendstream\nendobj"}
@@ -2769,11 +2769,11 @@ export default function Page() {
 
                     {/* AI Summary */}
                     <div className="space-y-2">
-                      <div className="flex items-center gap-1.5 text-[13px] font-bold uppercase tracking-wider text-neutral-455 font-mono select-none">
-                        <Sparkles className="w-4 h-4 text-[#2C52F5]" />
+                      <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-neutral-455 font-mono select-none">
+                        <Sparkles className="w-3 h-3 text-[#2C52F5]" />
                         <span>AI Document Summary</span>
                       </div>
-                      <p className="text-[14.5px] leading-relaxed text-neutral-700 font-medium">
+                      <p className="text-[10px] leading-relaxed text-neutral-700 font-medium">
                         {selectedEvidenceId === "MES_Bioreactor_Logs.csv" && "Continuous temperature logs parsed from Line 4 bioreactor hold. Correlates with LIMS pH records, proving the hold was stabilized before raw sensor drift occurred."}
                         {selectedEvidenceId === "Sensor_Temperature_Trace.pdf" && "Automated alarm logger data for VALVE-03-PM. Confirms deviation breach timing at exactly 14:02 IST."}
                         {selectedEvidenceId === "Batch_Record_PX2041.pdf" && "Validated electronic batch record copy. Marks the run timeline, technician sign-offs, and critical process parameters."}
@@ -2786,7 +2786,7 @@ export default function Page() {
                     </div>
 
                     {/* Connections / References */}
-                    <div className="space-y-3.5 pt-3 border-t border-neutral-100 text-[14.5px] font-medium text-neutral-600">
+                    <div className="space-y-3.5 pt-3 border-t border-neutral-100 text-[10px] font-medium text-neutral-600">
                       <div className="flex justify-between">
                         <span className="text-neutral-500">Related Case:</span>
                         <span className="font-mono text-neutral-900 font-bold">DV-24081</span>
@@ -2813,20 +2813,20 @@ export default function Page() {
                               : "[PDF Content Excerpt: Validation protocol and temperature limits summary...]"
                           })
                         }}
-                        className="w-full bg-neutral-950 hover:bg-neutral-850 text-white rounded-xl py-3 text-[14.5px] font-bold shadow-xs transition-colors flex items-center justify-center gap-2"
+                        className="w-full bg-neutral-950 hover:bg-neutral-850 text-white rounded-xl py-3 text-[10px] font-bold shadow-xs transition-colors flex items-center justify-center gap-2"
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye className="w-3 h-3" />
                         <span>Open Document</span>
                       </button>
 
-                      <button className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl py-3 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors flex items-center justify-center gap-2">
-                        <Download className="w-4 h-4 text-neutral-500" />
+                      <button className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl py-3 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors flex items-center justify-center gap-2">
+                        <Download className="w-3 h-3 text-neutral-500" />
                         <span>Download File</span>
                       </button>
 
                       <button
                         onClick={() => setViewMode("review")}
-                        className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl py-3 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors"
+                        className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl py-3 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors"
                       >
                         View Investigation
                       </button>
@@ -2848,12 +2848,12 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-hidden"
             >
               {/* Header */}
-              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-5">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[32px] w-auto object-contain" />
+              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-4">
+                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-[16.5px] text-neutral-905">Knowledge Base</span>
+                    <span className="font-bold text-[11.5px] text-neutral-905">Knowledge Base</span>
                   </div>
                 </div>
 
@@ -2861,25 +2861,25 @@ export default function Page() {
                   <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                     <button
                       onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Command Center
                     </button>
                     <button
                       onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Document Review
                     </button>
                     <button
                       onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Timeline Story
                     </button>
                     <button
                       onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Evidence Library
                     </button>
@@ -2891,15 +2891,15 @@ export default function Page() {
               <div className="flex-1 flex overflow-hidden">
                 
                 {/* Left Knowledge Library Panel */}
-                <aside className="w-[360px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 overflow-y-auto select-none space-y-6">
-                  <div className="text-[13px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
+                <aside className="w-[360px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 overflow-y-auto select-none space-y-4">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
                     Knowledge Library
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {/* Failure Patterns */}
                     <div className="space-y-3">
-                      <div className="text-[13px] font-bold text-neutral-400 uppercase tracking-wider font-mono">Recurring Failure Patterns</div>
+                      <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider font-mono">Recurring Failure Patterns</div>
                       <div className="space-y-2">
                         {[
                           { id: "mech-1", label: "Mechanical Failures", count: 14, time: "2d ago", conf: "98%" },
@@ -2918,10 +2918,10 @@ export default function Page() {
                             )}
                           >
                             <div className="flex justify-between items-center">
-                              <span className="font-bold text-[14.5px]">{item.label}</span>
-                              <span className="font-mono text-[13px] text-[#2C52F5] font-bold">{item.conf}</span>
+                              <span className="font-bold text-[10px]">{item.label}</span>
+                              <span className="font-mono text-[11px] text-[#2C52F5] font-bold">{item.conf}</span>
                             </div>
-                            <div className="flex justify-between items-center text-[13px] text-neutral-400">
+                            <div className="flex justify-between items-center text-[11px] text-neutral-400">
                               <span>{item.count} cases linked</span>
                               <span>{item.time}</span>
                             </div>
@@ -2932,11 +2932,11 @@ export default function Page() {
 
                     {/* SOP Library */}
                     <div className="space-y-3">
-                      <div className="text-[13px] font-bold text-neutral-400 uppercase tracking-wider font-mono">SOP Library Mappings</div>
+                      <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider font-mono">SOP Library Mappings</div>
                       <div className="space-y-2">
                         {[
                           { id: "sop-204", label: "SOP-204 Cold Chain Monitoring", count: 42, time: "12 Jun 2026", conf: "95%" },
-                          { id: "sop-108", label: "SOP-108 Autoclave Sterility", count: 19, time: "01 May 2026", conf: "92%" }
+                          { id: "sop-78", label: "SOP-108 Autoclave Sterility", count: 19, time: "01 May 2026", conf: "92%" }
                         ].map(item => (
                           <div
                             key={item.id}
@@ -2949,10 +2949,10 @@ export default function Page() {
                             )}
                           >
                             <div className="flex justify-between items-center">
-                              <span className="font-bold text-[14.5px] truncate">{item.label}</span>
-                              <span className="font-mono text-[13px] text-[#2C52F5] font-bold">{item.conf}</span>
+                              <span className="font-bold text-[10px] truncate">{item.label}</span>
+                              <span className="font-mono text-[11px] text-[#2C52F5] font-bold">{item.conf}</span>
                             </div>
-                            <div className="flex justify-between items-center text-[13px] text-neutral-400">
+                            <div className="flex justify-between items-center text-[11px] text-neutral-400">
                               <span>{item.count} runs linked</span>
                               <span>{item.time}</span>
                             </div>
@@ -2963,7 +2963,7 @@ export default function Page() {
 
                     {/* CAPA Library */}
                     <div className="space-y-3">
-                      <div className="text-[13px] font-bold text-neutral-400 uppercase tracking-wider font-mono">CAPA Library</div>
+                      <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider font-mono">CAPA Library</div>
                       <div className="space-y-2">
                         {[
                           { id: "capa-2208", label: "CAPA-2208 Valve Calibration", count: 12, time: "Today", conf: "98%" },
@@ -2980,10 +2980,10 @@ export default function Page() {
                             )}
                           >
                             <div className="flex justify-between items-center">
-                              <span className="font-bold text-[14.5px] truncate">{item.label}</span>
-                              <span className="font-mono text-[13px] text-[#2C52F5] font-bold">{item.conf}</span>
+                              <span className="font-bold text-[10px] truncate">{item.label}</span>
+                              <span className="font-mono text-[11px] text-[#2C52F5] font-bold">{item.conf}</span>
                             </div>
-                            <div className="flex justify-between items-center text-[13px] text-neutral-400">
+                            <div className="flex justify-between items-center text-[11px] text-neutral-400">
                               <span>{item.count} cases linked</span>
                               <span>{item.time}</span>
                             </div>
@@ -2994,7 +2994,7 @@ export default function Page() {
 
                     {/* Equipment History */}
                     <div className="space-y-3">
-                      <div className="text-[13px] font-bold text-neutral-400 uppercase tracking-wider font-mono">Equipment History</div>
+                      <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider font-mono">Equipment History</div>
                       <div className="space-y-2">
                         {[
                           { id: "valve-03", label: "VALVE-03-PM Maintenance Log", count: 8, time: "Today", conf: "98%" },
@@ -3011,10 +3011,10 @@ export default function Page() {
                             )}
                           >
                             <div className="flex justify-between items-center">
-                              <span className="font-bold text-[14.5px] truncate">{item.label}</span>
-                              <span className="font-mono text-[13px] text-[#2C52F5] font-bold">{item.conf}</span>
+                              <span className="font-bold text-[10px] truncate">{item.label}</span>
+                              <span className="font-mono text-[11px] text-[#2C52F5] font-bold">{item.conf}</span>
                             </div>
-                            <div className="flex justify-between items-center text-[13px] text-neutral-400">
+                            <div className="flex justify-between items-center text-[11px] text-neutral-400">
                               <span>{item.count} logs linked</span>
                               <span>{item.time}</span>
                             </div>
@@ -3026,77 +3026,77 @@ export default function Page() {
                 </aside>
 
                 {/* Center / Right Content Workspace */}
-                <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-8 space-y-8 flex flex-col justify-between">
-                  <div className="space-y-8">
+                <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-6 space-y-4 flex flex-col justify-between">
+                  <div className="space-y-4">
                     {/* Header Title & Actions row */}
                     <div className="flex justify-between items-end select-none">
                       <div className="space-y-2">
-                        <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">Knowledge Base</h1>
-                        <p className="text-[16px] text-neutral-500 leading-normal">
+                        <h1 className="text-[24px] font-extrabold text-neutral-900 tracking-tight">Knowledge Base</h1>
+                        <p className="text-[11.5px] text-neutral-500 leading-normal">
                           Validated organizational knowledge used to improve future AI investigations.
                         </p>
                       </div>
 
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2 border border-neutral-200 rounded-xl bg-white px-3 py-2 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] w-60">
-                          <Search className="w-4.5 h-4.5 text-neutral-400" />
+                          <Search className="w-3 h-3 text-neutral-400" />
                           <input
                             type="text"
                             placeholder="Search Knowledge..."
-                            className="bg-transparent border-none text-[14.5px] focus:outline-none w-full"
+                            className="bg-transparent border-none text-[10px] focus:outline-none w-full"
                           />
                         </div>
 
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
-                          <Sparkles className="w-4.5 h-4.5 text-[#2C52F5]" />
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
+                          <Sparkles className="w-3 h-3 text-[#2C52F5]" />
                           <span>AI Semantic Search</span>
                         </button>
 
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                           Filter
                         </button>
 
-                        <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                           Add Knowledge
                         </button>
                       </div>
                     </div>
 
                     {/* 4 Summary Cards (Light brand colored backgrounds) */}
-                    <div className="grid grid-cols-4 gap-5 select-none">
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                        <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Validated Cases</div>
-                        <div className="text-3xl font-extrabold text-neutral-900 mt-2 font-mono">318 cases</div>
-                        <span className="text-[13px] text-neutral-450 block mt-1">SOP & CAPA cross-linked</span>
+                    <div className="grid grid-cols-4 gap-4 select-none">
+                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Validated Cases</div>
+                        <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">318 cases</div>
+                        <span className="text-[11px] text-neutral-450 block mt-1">SOP & CAPA cross-linked</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                        <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Root Cause Patterns</div>
-                        <div className="text-3xl font-extrabold text-neutral-900 mt-2 font-mono">14 patterns</div>
-                        <span className="text-[13px] text-neutral-455 block mt-1">Mapped to thermal anomalies</span>
+                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Root Cause Patterns</div>
+                        <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">14 patterns</div>
+                        <span className="text-[11px] text-neutral-455 block mt-1">Mapped to thermal anomalies</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                        <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">SOP References</div>
-                        <div className="text-3xl font-extrabold text-[#2C52F5] mt-2 font-mono">48 SOPs</div>
-                        <span className="text-[13px] text-emerald-600 font-semibold block mt-1">Active vault compliance</span>
+                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">SOP References</div>
+                        <div className="text-[24px] font-extrabold text-[#2C52F5] mt-2 font-mono">48 SOPs</div>
+                        <span className="text-[11px] text-emerald-600 font-semibold block mt-1">Active vault compliance</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5">
-                        <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">AI Knowledge Coverage</div>
-                        <div className="text-3xl font-extrabold text-neutral-900 mt-2 font-mono">94.2%</div>
-                        <span className="text-[13px] text-neutral-455 block mt-1">Accuracy rate on intake files</span>
+                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">AI Knowledge Coverage</div>
+                        <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">94.2%</div>
+                        <span className="text-[11px] text-neutral-455 block mt-1">Accuracy rate on intake files</span>
                       </div>
                     </div>
 
                     {/* Two-Column Detail Block */}
-                    <div className="grid grid-cols-5 gap-8 select-text">
+                    <div className="grid grid-cols-5 gap-6 select-text">
                       {/* Left 3/5: Knowledge Detail Sheet */}
-                      <div className="col-span-3 bg-white border border-neutral-200/35 rounded-3xl p-8 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-6">
+                      <div className="col-span-3 bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-4">
                         <div className="flex justify-between items-start border-b border-neutral-100 pb-4 select-none">
                           <div className="space-y-1">
-                            <span className="inline-flex items-center gap-1.5 bg-[#F1F5F9] border border-neutral-200/70 rounded-full px-3 py-1 text-[13px] font-bold text-[#2C52F5]">
-                              <Sparkles className="w-3.5 h-3.5 text-[#2C52F5]" />
+                            <span className="inline-flex items-center gap-1.5 bg-[#F1F5F9] border border-neutral-200/70 rounded-full px-3 py-1 text-[11px] font-bold text-[#2C52F5]">
+                              <Sparkles className="w-3 h-3 text-[#2C52F5]" />
                               <span>Used in 42 investigations</span>
                             </span>
-                            <h2 className="text-2xl font-extrabold text-neutral-900 mt-2">
+                            <h2 className="text-[19px] font-extrabold text-neutral-900 mt-2">
                               {selectedKnowledgeId.startsWith("mech") || selectedKnowledgeId.startsWith("valve") || selectedKnowledgeId.startsWith("capa-2208") || selectedKnowledgeId.startsWith("sop-204")
                                 ? "Valve Malfunction & Temperature Excursions"
                                 : "Sensor Calibration drift & Drift Telemetry Analysis"}
@@ -3106,8 +3106,8 @@ export default function Page() {
 
                         <div className="space-y-4">
                           <div>
-                            <h4 className="text-[13.5px] uppercase font-bold text-neutral-400 font-mono select-none">Summary</h4>
-                            <p className="text-[16px] text-neutral-800 font-medium leading-relaxed mt-1">
+                            <h4 className="text-[11.5px] uppercase font-bold text-neutral-400 font-mono select-none">Summary</h4>
+                            <p className="text-[11.5px] text-neutral-800 font-medium leading-relaxed mt-1">
                               {selectedKnowledgeId.startsWith("mech") || selectedKnowledgeId.startsWith("valve") || selectedKnowledgeId.startsWith("capa-2208") || selectedKnowledgeId.startsWith("sop-204")
                                 ? "Slow temperature hold drift during overnight warehouse sequences caused by refrigeration valve seal degradation."
                                 : "Environmental alarm logs flagging false temperature fluctuations due to thermocouple drift on Line 4 bioreactors."}
@@ -3115,8 +3115,8 @@ export default function Page() {
                           </div>
 
                           <div>
-                            <h4 className="text-[13.5px] uppercase font-bold text-neutral-400 font-mono select-none">AI Explanation</h4>
-                            <p className="text-[15px] text-neutral-650 leading-relaxed mt-1">
+                            <h4 className="text-[11.5px] uppercase font-bold text-neutral-400 font-mono select-none">AI Explanation</h4>
+                            <p className="text-[10.5px] text-neutral-650 leading-relaxed mt-1">
                               {selectedKnowledgeId.startsWith("mech") || selectedKnowledgeId.startsWith("valve") || selectedKnowledgeId.startsWith("capa-2208") || selectedKnowledgeId.startsWith("sop-204")
                                 ? "Overnight hold cycles display a characteristic 0.4°C/hour drift curve when the CMMS valve maintenance intervals exceed 180 days. AI models map this thermal profile to automate root cause analysis."
                                 : "Bioreactor sensors show high signal noise after continuous runs. Mappings recognize these electrical traces and suggest cleaning-in-place before formal maintenance tickets are triggered."}
@@ -3124,8 +3124,8 @@ export default function Page() {
                           </div>
 
                           <div>
-                            <h4 className="text-[13.5px] uppercase font-bold text-neutral-400 font-mono select-none">Recommended Preventive Actions</h4>
-                            <p className="text-[15px] text-neutral-650 leading-relaxed mt-1 font-semibold text-[#2C52F5]">
+                            <h4 className="text-[11.5px] uppercase font-bold text-neutral-400 font-mono select-none">Recommended Preventive Actions</h4>
+                            <p className="text-[10.5px] text-neutral-650 leading-relaxed mt-1 font-semibold text-[#2C52F5]">
                               {selectedKnowledgeId.startsWith("mech") || selectedKnowledgeId.startsWith("valve") || selectedKnowledgeId.startsWith("capa-2208") || selectedKnowledgeId.startsWith("sop-204")
                                 ? "Adjust CMMS calendar triggers to schedule automatic valve seal replacement upon 150 days elapsed or when valve seal telemetry shows >12% offset."
                                 : "Recalibrate Line 4 thermocouples every 90 days. Update the local SOP to force validation steps after clean-in-place operations."}
@@ -3135,13 +3135,13 @@ export default function Page() {
                       </div>
 
                       {/* Right 2/5: Connections & What the AI Learned */}
-                      <div className="col-span-2 space-y-6">
+                      <div className="col-span-2 space-y-4">
                         {/* Mapped Connections Panel */}
                         <div className="bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-4">
                           <div className="border-b border-neutral-100 pb-2 select-none">
-                            <h3 className="font-bold text-[15px] text-neutral-900">Connections Map</h3>
+                            <h3 className="font-bold text-[10.5px] text-neutral-900">Connections Map</h3>
                           </div>
-                          <div className="space-y-3.5 text-[14.5px] font-medium text-neutral-600">
+                          <div className="space-y-3.5 text-[10px] font-medium text-neutral-600">
                             <div className="flex justify-between">
                               <span className="text-neutral-500">Linked SOPs:</span>
                               <span className="text-neutral-900 font-bold">SOP-204 Cold Chain, SOP-311</span>
@@ -3164,25 +3164,25 @@ export default function Page() {
                         {/* What the AI Learned (Smart Insights) */}
                         <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-3xl p-6 space-y-4">
                           <div className="flex items-center gap-2 text-[#2C52F5] select-none">
-                            <Sparkles className="w-4.5 h-4.5 text-[#2C52F5]" />
-                            <h3 className="font-bold text-[15px] font-mono uppercase tracking-wider">What the AI learned</h3>
+                            <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                            <h3 className="font-bold text-[10.5px] font-mono uppercase tracking-wider">What the AI learned</h3>
                           </div>
 
-                          <div className="space-y-3.5 text-[14.5px] text-neutral-700 leading-relaxed font-medium">
+                          <div className="space-y-3.5 text-[10px] text-neutral-700 leading-relaxed font-medium">
                             <div className="flex gap-2.5">
-                              <Check className="w-4.5 h-4.5 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                              <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                               <p>This failure pattern has appeared 8 times in the last 18 months.</p>
                             </div>
                             <div className="flex gap-2.5">
-                              <Check className="w-4.5 h-4.5 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                              <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                               <p>92% of similar cases were caused by refrigeration valve degradation.</p>
                             </div>
                             <div className="flex gap-2.5">
-                              <Check className="w-4.5 h-4.5 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                              <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                               <p>This SOP reduced recurrence by 63% since calibration enforcement.</p>
                             </div>
                             <div className="flex gap-2.5">
-                              <Check className="w-4.5 h-4.5 text-[#2C52F5] flex-shrink-0 mt-0.5" />
+                              <Check className="w-3 h-3 text-[#2C52F5] flex-shrink-0 mt-0.5" />
                               <p>Future investigations will automatically reference this knowledge.</p>
                             </div>
                           </div>
@@ -3192,8 +3192,8 @@ export default function Page() {
 
                     {/* Bottom: Related Investigation Timeline */}
                     <div className="space-y-4 select-none">
-                      <div className="text-[13px] font-bold text-neutral-400 uppercase tracking-wider font-mono">Related Investigation Timeline</div>
-                      <div className="grid grid-cols-4 gap-5">
+                      <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider font-mono">Related Investigation Timeline</div>
+                      <div className="grid grid-cols-4 gap-4">
                         {[
                           { id: "DV-24081", date: "14 Jun 2026", cause: "Valve Failure", sev: "Major", status: "CAPA Created" },
                           { id: "DV-24082", date: "12 Jun 2026", cause: "Calibration Drift", sev: "Minor", status: "Closed" },
@@ -3205,17 +3205,17 @@ export default function Page() {
                             onClick={() => {
                               setSelectedKnowledgeId(timelineCase.cause.toLowerCase().includes("valve") ? "mech-1" : "cal-1");
                             }}
-                            className="bg-white border border-neutral-200/50 hover:border-[#2C52F5] hover:shadow-xs transition-all rounded-2xl p-5 cursor-pointer space-y-3"
+                            className="bg-white border border-neutral-200/50 hover:border-[#2C52F5] hover:shadow-xs transition-all rounded-2xl p-4 cursor-pointer space-y-3"
                           >
                             <div className="flex justify-between items-center">
-                              <span className="font-mono text-[13px] text-neutral-400 font-bold">{timelineCase.id}</span>
-                              <span className="text-[12px] uppercase font-bold text-neutral-400 font-mono">{timelineCase.date}</span>
+                              <span className="font-mono text-[11px] text-neutral-400 font-bold">{timelineCase.id}</span>
+                              <span className="text-[10px] uppercase font-bold text-neutral-400 font-mono">{timelineCase.date}</span>
                             </div>
                             <div>
-                              <div className="font-bold text-[14.5px] text-neutral-900">{timelineCase.cause}</div>
-                              <div className="text-[13px] text-neutral-500 mt-0.5">Severity: {timelineCase.sev}</div>
+                              <div className="font-bold text-[10px] text-neutral-900">{timelineCase.cause}</div>
+                              <div className="text-[11px] text-neutral-500 mt-0.5">Severity: {timelineCase.sev}</div>
                             </div>
-                            <div className="pt-2 border-t border-neutral-100 flex justify-between items-center text-[13.5px]">
+                            <div className="pt-2 border-t border-neutral-100 flex justify-between items-center text-[11.5px]">
                               <span className="text-neutral-400">Outcome:</span>
                               <span className="font-bold text-[#2C52F5]">{timelineCase.status}</span>
                             </div>
@@ -3241,12 +3241,12 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-y-auto"
             >
               {/* Header */}
-              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-5">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[32px] w-auto object-contain" />
+              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-4">
+                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-[16.5px] text-neutral-905">Executive Reports</span>
+                    <span className="font-bold text-[11.5px] text-neutral-905">Executive Reports</span>
                   </div>
                 </div>
 
@@ -3254,25 +3254,25 @@ export default function Page() {
                   <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                     <button
                       onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Command Center
                     </button>
                     <button
                       onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Document Review
                     </button>
                     <button
                       onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Timeline Story
                     </button>
                     <button
                       onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Evidence Library
                     </button>
@@ -3281,75 +3281,75 @@ export default function Page() {
               </header>
 
               {/* Main Content Dashboard */}
-              <div className="px-10 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] my-6">
+              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] my-6">
                 
                 {/* Reports Header Title & Actions Row */}
                 <div className="flex justify-between items-end select-none">
                   <div className="space-y-2">
-                    <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight">Reports Portal</h1>
-                    <p className="text-[16px] text-neutral-500 leading-normal">
+                    <h1 className="text-[24px] font-extrabold text-neutral-900 tracking-tight">Reports Portal</h1>
+                    <p className="text-[11.5px] text-neutral-500 leading-normal">
                       Monitor investigation trends, compliance metrics, and AI performance across your quality operations.
                     </p>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-neutral-500" />
+                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
+                      <Calendar className="w-3 h-3 text-neutral-500" />
                       <span>Last 30 Days</span>
                     </button>
 
-                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-750 rounded-xl px-4 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
-                      <Download className="w-4 h-4 text-neutral-500" />
+                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-750 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
+                      <Download className="w-3 h-3 text-neutral-500" />
                       <span>Export Report</span>
                     </button>
 
-                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl px-4 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                       Schedule Report
                     </button>
 
-                    <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-2.5 text-[14.5px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                    <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
                       Share Dashboard
                     </button>
                   </div>
                 </div>
 
                 {/* 4 Premium Executive Summary Cards */}
-                <div className="grid grid-cols-4 gap-5 select-none">
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Open Investigations</div>
+                <div className="grid grid-cols-4 gap-4 select-none">
+                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Open Investigations</div>
                     <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-3xl font-extrabold text-neutral-900 font-mono">18 active</div>
-                      <span className="text-[13.5px] text-amber-600 font-semibold">+3 vs last month</span>
+                      <div className="text-[24px] font-extrabold text-neutral-900 font-mono">18 active</div>
+                      <span className="text-[11.5px] text-amber-600 font-semibold">+3 vs last month</span>
                     </div>
                   </div>
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Average Investigation Time</div>
+                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Average Investigation Time</div>
                     <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-3xl font-extrabold text-neutral-900 font-mono">3.2 hours</div>
-                      <span className="text-[13.5px] text-emerald-600 font-semibold">-72% vs last month</span>
+                      <div className="text-[24px] font-extrabold text-neutral-900 font-mono">3.2 hours</div>
+                      <span className="text-[11.5px] text-emerald-600 font-semibold">-72% vs last month</span>
                     </div>
                   </div>
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">FDA Inspection Readiness</div>
+                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">FDA Inspection Readiness</div>
                     <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-3xl font-extrabold text-[#2C52F5] font-mono">99.8% score</div>
-                      <span className="text-[13.5px] text-emerald-600 font-semibold">+0.4% vs last month</span>
+                      <div className="text-[24px] font-extrabold text-[#2C52F5] font-mono">99.8% score</div>
+                      <span className="text-[11.5px] text-emerald-600 font-semibold">+0.4% vs last month</span>
                     </div>
                   </div>
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-5 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[13px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">AI Time Saved</div>
+                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">AI Time Saved</div>
                     <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-3xl font-extrabold text-neutral-900 font-mono">1,420 hours</div>
-                      <span className="text-[13.5px] text-[#2C52F5] font-semibold">+12% vs last month</span>
+                      <div className="text-[24px] font-extrabold text-neutral-900 font-mono">1,420 hours</div>
+                      <span className="text-[11.5px] text-[#2C52F5] font-semibold">+12% vs last month</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Main Dashboard Visualizations Row 1 */}
-                <div className="grid grid-cols-5 gap-8 select-none">
+                <div className="grid grid-cols-5 gap-6 select-none">
                   {/* Donut Chart Block (2/5) */}
-                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
-                    <h3 className="text-[15px] font-bold text-neutral-905 uppercase tracking-wider font-mono">Investigation Status</h3>
+                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-4 space-y-4">
+                    <h3 className="text-[10.5px] font-bold text-neutral-905 uppercase tracking-wider font-mono">Investigation Status</h3>
                     <div className="flex items-center gap-6 justify-center h-48">
                       {/* Donut Chart Illustration */}
                       <div className="relative w-36 h-36 flex-shrink-0">
@@ -3360,8 +3360,8 @@ export default function Page() {
                           <circle cx="18" cy="18" r="15.915" fill="none" stroke="#EF4444" strokeWidth="4.2" strokeDasharray="18 100" strokeDashoffset="-82" />
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                          <span className="text-3xl font-extrabold text-neutral-900 font-mono">124</span>
-                          <span className="text-[12px] text-neutral-400 font-bold uppercase mt-0.5">Total Cases</span>
+                          <span className="text-[24px] font-extrabold text-neutral-900 font-mono">124</span>
+                          <span className="text-[10px] text-neutral-400 font-bold uppercase mt-0.5">Total Cases</span>
                         </div>
                       </div>
                       <div className="space-y-2 text-[14px] font-semibold text-neutral-600">
@@ -3386,10 +3386,10 @@ export default function Page() {
                   </div>
 
                   {/* Monthly Trend Chart Block (3/5) */}
-                  <div className="col-span-3 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
+                  <div className="col-span-3 border border-neutral-100 rounded-2xl p-4 space-y-4">
                     <div className="flex justify-between items-baseline">
-                      <h3 className="text-[15px] font-bold text-neutral-905 uppercase tracking-wider font-mono">Monthly Investigation Trend</h3>
-                      <span className="text-[13px] text-amber-600 font-semibold">⚠️ Recurring seasonal spikes in summer holds</span>
+                      <h3 className="text-[10.5px] font-bold text-neutral-905 uppercase tracking-wider font-mono">Monthly Investigation Trend</h3>
+                      <span className="text-[11px] text-amber-600 font-semibold">⚠️ Recurring seasonal spikes in summer holds</span>
                     </div>
                     <div className="h-48 w-full relative">
                       <svg className="w-full h-full" viewBox="0 0 300 80" preserveAspectRatio="none">
@@ -3416,10 +3416,10 @@ export default function Page() {
                 </div>
 
                 {/* Dashboard Visualizations Row 2 */}
-                <div className="grid grid-cols-5 gap-8 select-text">
+                <div className="grid grid-cols-5 gap-6 select-text">
                   {/* Section 3: Most Common Root Causes (3/5) */}
-                  <div className="col-span-3 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
-                    <h3 className="text-[15px] font-bold text-neutral-905 uppercase tracking-wider font-mono select-none">Most Common Root Causes</h3>
+                  <div className="col-span-3 border border-neutral-100 rounded-2xl p-4 space-y-4">
+                    <h3 className="text-[10.5px] font-bold text-neutral-905 uppercase tracking-wider font-mono select-none">Most Common Root Causes</h3>
                     <div className="space-y-3.5 pt-1">
                       {[
                         { label: "Equipment Failure", count: 84, pct: "90%" },
@@ -3429,7 +3429,7 @@ export default function Page() {
                         { label: "Documentation Issue", count: 8, pct: "10%" }
                       ].map((item, i) => (
                         <div key={i} className="space-y-1.5">
-                          <div className="flex justify-between text-[13.5px] font-semibold text-neutral-700">
+                          <div className="flex justify-between text-[11.5px] font-semibold text-neutral-700">
                             <span>{item.label}</span>
                             <span className="font-mono text-neutral-400">{item.count} cases</span>
                           </div>
@@ -3442,8 +3442,8 @@ export default function Page() {
                   </div>
 
                   {/* Section 4: Compliance Overview Progress Indicators (2/5) */}
-                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
-                    <h3 className="text-[15px] font-bold text-neutral-905 uppercase tracking-wider font-mono select-none">Compliance Overview</h3>
+                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-4 space-y-4">
+                    <h3 className="text-[10.5px] font-bold text-neutral-905 uppercase tracking-wider font-mono select-none">Compliance Overview</h3>
                     <div className="space-y-4 pt-1">
                       {[
                         { label: "Investigation Completion Rate", val: "98%", pct: "98%" },
@@ -3453,7 +3453,7 @@ export default function Page() {
                         { label: "Human Review Compliance", val: "100%", pct: "100%" }
                       ].map((item, i) => (
                         <div key={i} className="space-y-1">
-                          <div className="flex justify-between text-[13px] font-semibold text-neutral-700">
+                          <div className="flex justify-between text-[11px] font-semibold text-neutral-700">
                             <span>{item.label}</span>
                             <span className="font-mono text-[#2C52F5] font-bold">{item.val}</span>
                           </div>
@@ -3468,8 +3468,8 @@ export default function Page() {
 
                 {/* Section 6: Recurring Risk Areas (5 Cards Row) */}
                 <div className="space-y-4 select-none">
-                  <h3 className="text-[15px] font-bold text-neutral-900 uppercase tracking-wider font-mono">Recurring Risk Areas</h3>
-                  <div className="grid grid-cols-5 gap-5">
+                  <h3 className="text-[10.5px] font-bold text-neutral-900 uppercase tracking-wider font-mono">Recurring Risk Areas</h3>
+                  <div className="grid grid-cols-5 gap-4">
                     {[
                       { area: "Cold Storage", cases: 42, trend: "+4%", risk: "High", color: "text-red-600 bg-red-50 border-red-200/50" },
                       { area: "Packaging Line 2", cases: 18, trend: "-2%", risk: "Low", color: "text-emerald-600 bg-emerald-50 border-emerald-250/30" },
@@ -3477,14 +3477,14 @@ export default function Page() {
                       { area: "Sterile Filling", cases: 12, trend: "0%", risk: "Low", color: "text-emerald-600 bg-emerald-50 border-emerald-250/30" },
                       { area: "Raw Warehouse", cases: 31, trend: "+1%", risk: "Medium", color: "text-amber-700 bg-amber-50 border-amber-250/30" }
                     ].map((item, i) => (
-                      <div key={i} className="bg-white border border-neutral-200/55 rounded-2xl p-5 hover:shadow-xs transition-shadow space-y-3">
+                      <div key={i} className="bg-white border border-neutral-200/55 rounded-2xl p-4 hover:shadow-xs transition-shadow space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="font-bold text-[15px] text-neutral-900">{item.area}</span>
-                          <span className={cn("text-[12px] px-2 py-0.5 border rounded-full font-bold font-mono", item.color)}>{item.risk}</span>
+                          <span className="font-bold text-[10.5px] text-neutral-900">{item.area}</span>
+                          <span className={cn("text-[10px] px-2 py-0.5 border rounded-full font-bold font-mono", item.color)}>{item.risk}</span>
                         </div>
                         <div className="flex justify-between items-baseline">
-                          <div className="text-2xl font-extrabold font-mono text-neutral-850">{item.cases} incidents</div>
-                          <span className={cn("text-[13px] font-semibold", item.trend.includes("+") ? "text-red-500" : "text-emerald-500")}>
+                          <div className="text-[19px] font-extrabold font-mono text-neutral-850">{item.cases} incidents</div>
+                          <span className={cn("text-[11px] font-semibold", item.trend.includes("+") ? "text-red-500" : "text-emerald-500")}>
                             {item.trend}
                           </span>
                         </div>
@@ -3495,11 +3495,11 @@ export default function Page() {
 
                 {/* Bottom Section: Recent Investigation Activity Table */}
                 <div className="space-y-4">
-                  <h3 className="text-[15px] font-bold text-neutral-900 uppercase tracking-wider font-mono select-none">Recent Investigation Activity</h3>
-                  <div className="bg-white border border-neutral-250/30 rounded-3xl p-6.5 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)]">
-                    <table className="w-full text-[14.5px] text-left">
+                  <h3 className="text-[10.5px] font-bold text-neutral-900 uppercase tracking-wider font-mono select-none">Recent Investigation Activity</h3>
+                  <div className="bg-white border border-neutral-250/30 rounded-3xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)]">
+                    <table className="w-full text-[10px] text-left">
                       <thead>
-                        <tr className="border-b border-neutral-100 text-neutral-400 text-[13px] uppercase font-bold font-mono select-none">
+                        <tr className="border-b border-neutral-100 text-neutral-400 text-[11px] uppercase font-bold font-mono select-none">
                           <th className="pb-4">Investigation ID</th>
                           <th className="pb-4">Root Cause</th>
                           <th className="pb-4">Status</th>
@@ -3519,20 +3519,20 @@ export default function Page() {
                             <td className="py-4 font-mono font-bold text-[#2C52F5] select-text">{row.id}</td>
                             <td className="py-4 font-semibold text-neutral-850 select-text">{row.cause}</td>
                             <td className="py-4">
-                              <span className="inline-flex items-center gap-1.5 bg-[#F1F5F9] border border-neutral-200/70 rounded-full px-2.5 py-0.5 text-[13px] font-bold text-[#2C52F5] select-none">
+                              <span className="inline-flex items-center gap-1.5 bg-[#F1F5F9] border border-neutral-200/70 rounded-full px-2.5 py-0.5 text-[11px] font-bold text-[#2C52F5] select-none">
                                 <span>{row.status}</span>
                               </span>
                             </td>
                             <td className="py-4">{row.owner}</td>
                             <td className="py-4 select-none">
                               <span className={cn(
-                                "text-[12.5px] font-bold font-mono px-2 py-0.5 rounded-md",
+                                "text-[10.5px] font-bold font-mono px-2 py-0.5 rounded-md",
                                 row.risk === "Critical" ? "text-red-700 bg-red-50" : row.risk === "Major" ? "text-amber-700 bg-amber-50" : "text-emerald-700 bg-emerald-50"
                               )}>
                                 {row.risk}
                               </span>
                             </td>
-                            <td className="py-4 text-right font-mono text-[13px] select-none">{row.date}</td>
+                            <td className="py-4 text-right font-mono text-[11px] select-none">{row.date}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -3554,12 +3554,12 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-hidden"
             >
               {/* Header */}
-              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-5">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[32px] w-auto object-contain" />
+              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-4">
+                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
                   <div className="w-px h-6 bg-neutral-200" />
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-[16.5px] text-neutral-905">System Settings</span>
+                    <span className="font-bold text-[11.5px] text-neutral-905">System Settings</span>
                   </div>
                 </div>
 
@@ -3567,25 +3567,25 @@ export default function Page() {
                   <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
                     <button
                       onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Command Center
                     </button>
                     <button
                       onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Document Review
                     </button>
                     <button
                       onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Timeline Story
                     </button>
                     <button
                       onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
                     >
                       Evidence Library
                     </button>
@@ -3597,8 +3597,8 @@ export default function Page() {
               <div className="flex-1 flex overflow-hidden">
                 
                 {/* Left Tabs Sidebar (240px) */}
-                <aside className="w-[240px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 select-none space-y-6">
-                  <div className="text-[13px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
+                <aside className="w-[240px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 select-none space-y-4">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
                     Settings Menu
                   </div>
 
@@ -3615,7 +3615,7 @@ export default function Page() {
                         key={tab.id}
                         onClick={() => setActiveSettingsTab(tab.id as any)}
                         className={cn(
-                          "w-full text-left px-4 py-3 rounded-xl transition-all text-[14.5px] font-semibold",
+                          "w-full text-left px-4 py-3 rounded-xl transition-all text-[10px] font-semibold",
                           activeSettingsTab === tab.id
                             ? "bg-[#F1F5F9] text-[#0F172A]"
                             : "text-neutral-505 hover:bg-neutral-100 hover:text-neutral-800"
@@ -3628,12 +3628,12 @@ export default function Page() {
                 </aside>
 
                 {/* Right Content Workspace */}
-                <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-10 select-text">
-                  <div className="max-w-[720px] bg-white border border-neutral-200/35 rounded-3xl p-10 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-8">
+                <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-7 select-text">
+                  <div className="max-w-[720px] bg-white border border-neutral-200/35 rounded-3xl p-7 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-4">
                     
                     {/* Header Details */}
                     <div className="border-b border-neutral-100 pb-5 select-none">
-                      <h2 className="text-2xl font-extrabold text-neutral-900 tracking-tight">
+                      <h2 className="text-[19px] font-extrabold text-neutral-900 tracking-tight">
                         {activeSettingsTab === "profile" && "User Profile"}
                         {activeSettingsTab === "ai" && "AI Preferences & Thresholds"}
                         {activeSettingsTab === "compliance" && "Compliance & FDA 21 CFR Part 11"}
@@ -3641,7 +3641,7 @@ export default function Page() {
                         {activeSettingsTab === "integrations" && "Connected Systems & Integrations"}
                         {activeSettingsTab === "audit" && "System Audit Logs"}
                       </h2>
-                      <p className="text-[15px] text-neutral-500 mt-1.5 leading-normal">
+                      <p className="text-[10.5px] text-neutral-500 mt-1.5 leading-normal">
                         {activeSettingsTab === "profile" && "Manage your professional identity and QA digital signature access."}
                         {activeSettingsTab === "ai" && "Set active confidence scores, automatic CMMS sync policies, and ingestion filters."}
                         {activeSettingsTab === "compliance" && "Manage cryptographic sign-off rules, audit logs, and electronic trace retention."}
@@ -3653,32 +3653,32 @@ export default function Page() {
 
                     {/* Tab Sub-views */}
                     {activeSettingsTab === "profile" && (
-                      <div className="space-y-6">
-                        <div className="grid grid-cols-2 gap-5">
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Full Name</label>
-                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-semibold text-neutral-750 text-[14.5px]">
+                            <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Full Name</label>
+                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-semibold text-neutral-750 text-[10px]">
                               Dr. Anita Rao
                             </div>
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Email Address</label>
-                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-mono text-[13.5px] text-neutral-750">
+                            <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Email Address</label>
+                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-mono text-[11.5px] text-neutral-750">
                               dr.rao@klarixa.ai
                             </div>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-5">
+                        <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">System Role</label>
-                            <div className="p-3 bg-[#EFF2FF] border border-[#C0D1FF] rounded-xl font-bold text-[#2C52F5] text-[13.5px] font-mono">
+                            <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 font-mono">System Role</label>
+                            <div className="p-3 bg-[#EFF2FF] border border-[#C0D1FF] rounded-xl font-bold text-[#2C52F5] text-[11.5px] font-mono">
                               QA Director / Sign-off Lead
                             </div>
                           </div>
                           <div className="space-y-1.5">
-                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">License Scope</label>
-                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-semibold text-neutral-750 text-[14.5px]">
+                            <label className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 font-mono">License Scope</label>
+                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-semibold text-neutral-750 text-[10px]">
                               Site-Wide GxP Compliance Auth
                             </div>
                           </div>
@@ -3687,32 +3687,32 @@ export default function Page() {
                     )}
 
                     {activeSettingsTab === "ai" && (
-                      <div className="space-y-6">
+                      <div className="space-y-4">
                         <div className="space-y-3.5">
                           <div className="flex justify-between items-center select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">Auto-Drafting Investigations</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Automatically ingest new deviations and write analysis drafts.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">Auto-Drafting Investigations</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Automatically ingest new deviations and write analysis drafts.</p>
                             </div>
                             <span className="w-11 h-6 bg-[#2C52F5] rounded-full flex items-center px-1 cursor-pointer">
-                              <span className="w-4 h-4 bg-white rounded-full translate-x-5" />
+                              <span className="w-3 h-3 bg-white rounded-full translate-x-5" />
                             </span>
                           </div>
 
                           <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">AI Confidence Threshold</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Confidence percentage required to propose a root cause without warnings.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">AI Confidence Threshold</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Confidence percentage required to propose a root cause without warnings.</p>
                             </div>
-                            <span className="font-mono text-[#2C52F5] font-bold text-[16px] bg-[#F1F5F9] px-3.5 py-1.5 rounded-xl border border-neutral-200/50">
+                            <span className="font-mono text-[#2C52F5] font-bold text-[11.5px] bg-[#F1F5F9] px-3.5 py-1.5 rounded-xl border border-neutral-200/50">
                               90% Minimum
                             </span>
                           </div>
 
                           <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">Reasoning Verbosity</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Toggle detailed annotation steps and references in draft logs.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">Reasoning Verbosity</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Toggle detailed annotation steps and references in draft logs.</p>
                             </div>
                             <select className="bg-white border border-neutral-200 rounded-xl px-3.5 py-2 font-semibold text-neutral-700 text-[14px]">
                               <option>Detailed Annotation</option>
@@ -3725,34 +3725,34 @@ export default function Page() {
                     )}
 
                     {activeSettingsTab === "compliance" && (
-                      <div className="space-y-6">
+                      <div className="space-y-4">
                         <div className="space-y-3.5">
                           <div className="flex justify-between items-center select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">FDA 21 CFR Part 11 Protocol</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Forces cryptographic sign-off with username and pin triggers.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">FDA 21 CFR Part 11 Protocol</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Forces cryptographic sign-off with username and pin triggers.</p>
                             </div>
-                            <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-250/30 rounded-full px-3 py-1 text-[13px] font-bold text-emerald-800 font-mono">
+                            <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-250/30 rounded-full px-3 py-1 text-[11px] font-bold text-emerald-800 font-mono">
                               Enforced
                             </span>
                           </div>
 
                           <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">Secure Audit Trail Locking</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Locks chronological updates from deletion or edit once approved.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">Secure Audit Trail Locking</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Locks chronological updates from deletion or edit once approved.</p>
                             </div>
                             <span className="w-11 h-6 bg-[#2C52F5] rounded-full flex items-center px-1">
-                              <span className="w-4 h-4 bg-white rounded-full translate-x-5" />
+                              <span className="w-3 h-3 bg-white rounded-full translate-x-5" />
                             </span>
                           </div>
 
                           <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">Archive Retention Span</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">FDA compliant digital record preservation settings.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">Archive Retention Span</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">FDA compliant digital record preservation settings.</p>
                             </div>
-                            <div className="p-3 bg-[#F1F5F9] border border-neutral-200/50 rounded-xl text-neutral-750 font-bold text-[13.5px] font-mono">
+                            <div className="p-3 bg-[#F1F5F9] border border-neutral-200/50 rounded-xl text-neutral-750 font-bold text-[11.5px] font-mono">
                               10 Years (GxP Standard)
                             </div>
                           </div>
@@ -3761,32 +3761,32 @@ export default function Page() {
                     )}
 
                     {activeSettingsTab === "security" && (
-                      <div className="space-y-6">
+                      <div className="space-y-4">
                         <div className="space-y-3.5">
                           <div className="flex justify-between items-center select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">Single Sign-On (SSO)</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Manage credentials using Active Directory (ADFS / Entra ID).</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">Single Sign-On (SSO)</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Manage credentials using Active Directory (ADFS / Entra ID).</p>
                             </div>
-                            <span className="inline-flex items-center gap-1 bg-[#EFF2FF] border border-[#C0D1FF] rounded-full px-3 py-1 text-[13px] font-bold text-[#2C52F5] font-mono">
+                            <span className="inline-flex items-center gap-1 bg-[#EFF2FF] border border-[#C0D1FF] rounded-full px-3 py-1 text-[11px] font-bold text-[#2C52F5] font-mono">
                               Connected
                             </span>
                           </div>
 
                           <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">Multi-Factor Authentication (MFA)</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Forces secondary authenticator codes during profile logins.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">Multi-Factor Authentication (MFA)</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Forces secondary authenticator codes during profile logins.</p>
                             </div>
                             <span className="w-11 h-6 bg-[#2C52F5] rounded-full flex items-center px-1">
-                              <span className="w-4 h-4 bg-white rounded-full translate-x-5" />
+                              <span className="w-3 h-3 bg-white rounded-full translate-x-5" />
                             </span>
                           </div>
 
                           <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
                             <div>
-                              <h4 className="font-bold text-[15px] text-neutral-800">Session Timeout limit</h4>
-                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Auto-logout duration when the workstation is left unattended.</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">Session Timeout limit</h4>
+                              <p className="text-[11.5px] text-neutral-450 mt-0.5">Auto-logout duration when the workstation is left unattended.</p>
                             </div>
                             <select className="bg-white border border-neutral-200 rounded-xl px-3.5 py-2 font-semibold text-neutral-700 text-[14px]">
                               <option>15 Minutes (FDA)</option>
@@ -3808,13 +3808,13 @@ export default function Page() {
                         ].map((intg, i) => (
                           <div key={i} className="flex justify-between items-center p-4 border border-neutral-100 rounded-2xl hover:bg-neutral-50 transition-colors">
                             <div className="space-y-0.5">
-                              <h4 className="font-bold text-[15px] text-neutral-800">{intg.name}</h4>
-                              <p className="text-[13px] text-neutral-400">{intg.desc}</p>
+                              <h4 className="font-bold text-[10.5px] text-neutral-800">{intg.name}</h4>
+                              <p className="text-[11px] text-neutral-400">{intg.desc}</p>
                             </div>
                             <div className="flex items-center gap-3.5">
-                              <span className="text-[13px] text-neutral-400 font-mono">Sync: {intg.time}</span>
-                              <span className="inline-flex items-center gap-1 text-emerald-600 text-[13px] font-bold font-mono">
-                                <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                              <span className="text-[11px] text-neutral-400 font-mono">Sync: {intg.time}</span>
+                              <span className="inline-flex items-center gap-1 text-emerald-600 text-[11px] font-bold font-mono">
+                                <Check className="w-3 h-3 stroke-[2.5]" />
                                 <span>{intg.status}</span>
                               </span>
                             </div>
@@ -3835,7 +3835,7 @@ export default function Page() {
                             <div key={i} className="relative">
                               <span className="absolute left-[-29px] top-1 w-2 h-2 rounded-full bg-neutral-300" />
                               <div className="text-neutral-800 leading-normal">{log.log}</div>
-                              <div className="text-[13px] text-neutral-400 font-mono mt-0.5">{log.time}</div>
+                              <div className="text-[11px] text-neutral-400 font-mono mt-0.5">{log.time}</div>
                             </div>
                           ))}
                         </div>
@@ -3863,19 +3863,19 @@ export default function Page() {
               className="w-full max-w-xl bg-white rounded-2xl shadow-xl border border-neutral-150 overflow-hidden flex flex-col max-h-[500px]"
             >
               <div className="p-4 border-b border-neutral-100 flex items-center justify-between select-none">
-                <div className="flex items-center gap-2.5 font-mono text-[14.5px] text-neutral-505">
-                  <FileText className="w-4 h-4 text-neutral-455" />
+                <div className="flex items-center gap-2.5 font-mono text-[10px] text-neutral-505">
+                  <FileText className="w-3 h-3 text-neutral-455" />
                   <span>{selectedPreviewDoc.title} ({selectedPreviewDoc.subtitle})</span>
                 </div>
                 <button
                   onClick={() => setSelectedPreviewDoc(null)}
                   className="p-1.5 text-neutral-400 hover:bg-neutral-50 rounded-full"
                 >
-                  <X className="w-4.5 h-4.5" />
+                  <X className="w-3 h-3" />
                 </button>
               </div>
               
-              <div className="p-6 overflow-y-auto font-mono text-[14.5px] text-neutral-650 leading-relaxed whitespace-pre bg-neutral-50 border-t border-neutral-50">
+              <div className="p-6 overflow-y-auto font-mono text-[10px] text-neutral-650 leading-relaxed whitespace-pre bg-neutral-50 border-t border-neutral-50">
                 {selectedPreviewDoc.content}
               </div>
             </motion.div>
@@ -3893,45 +3893,45 @@ export default function Page() {
               exit={{ scale: 0.95, opacity: 0, y: 15 }}
               transition={{ type: "spring", stiffness: 350, damping: 25 }}
               onSubmit={handleSignOff}
-              className="w-full max-w-xs border border-neutral-150 bg-white rounded-xl shadow-xl p-5 space-y-4 font-mono text-[14.5px] text-neutral-850"
+              className="w-full max-w-xs border border-neutral-150 bg-white rounded-xl shadow-xl p-4 space-y-4 font-mono text-[10px] text-neutral-850"
             >
               <div className="flex items-center gap-2 border-b border-neutral-100 pb-3">
-                <Shield className="w-4.5 h-4.5 text-emerald-600" />
+                <Shield className="w-3 h-3 text-emerald-600" />
                 <div>
-                  <h3 className="font-bold text-neutral-905 leading-none text-[14.5px]">Electronic Signature</h3>
-                  <span className="text-[12px] text-[#94A3B8] uppercase block mt-0.5">FDA 21 CFR Part 11 Protocol</span>
+                  <h3 className="font-bold text-neutral-905 leading-none text-[10px]">Electronic Signature</h3>
+                  <span className="text-[10px] text-[#94A3B8] uppercase block mt-0.5">FDA 21 CFR Part 11 Protocol</span>
                 </div>
               </div>
 
-              <p className="text-[17.5px] text-neutral-550 leading-relaxed font-sans">
+              <p className="text-[10px] text-neutral-550 leading-relaxed font-sans">
                 Enter credentials to sign and approve investigation.
               </p>
 
               <div className="space-y-2">
                 <div className="space-y-1">
-                  <label className="text-[12px] text-neutral-400 uppercase font-bold block">User ID</label>
+                  <label className="text-[10px] text-neutral-400 uppercase font-bold block">User ID</label>
                   <input
                     type="text"
                     value={credentials.username}
                     onChange={(e) => setCredentials((c) => ({ ...c, username: e.target.value }))}
-                    className="w-full p-2 border border-[#E2E8F0] rounded focus:outline-none focus:ring-1 focus:ring-[#2C52F5] text-[14.5px] font-mono bg-white"
+                    className="w-full p-2 border border-[#E2E8F0] rounded focus:outline-none focus:ring-1 focus:ring-[#2C52F5] text-[10px] font-mono bg-white"
                     required
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[12px] text-neutral-400 uppercase font-bold block">Pin Code</label>
+                  <label className="text-[10px] text-neutral-400 uppercase font-bold block">Pin Code</label>
                   <input
                     type="password"
                     placeholder="••••"
                     value={credentials.pin}
                     onChange={(e) => setCredentials((c) => ({ ...c, pin: e.target.value }))}
-                    className="w-full p-2 border border-[#E2E8F0] rounded focus:outline-none focus:ring-1 focus:ring-[#2C52F5] text-[14.5px] font-mono bg-white"
+                    className="w-full p-2 border border-[#E2E8F0] rounded focus:outline-none focus:ring-1 focus:ring-[#2C52F5] text-[10px] font-mono bg-white"
                     required
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-2 border-t border-neutral-100 font-mono text-[14.5px]">
+              <div className="flex justify-end gap-2.5 pt-2 border-t border-neutral-100 font-mono text-[10px]">
                 <button
                   type="button"
                   onClick={() => setShowSignModal(false)}
@@ -3951,7 +3951,7 @@ export default function Page() {
                     </>
                   ) : (
                     <>
-                      <Check className="w-3.5 h-3.5" />
+                      <Check className="w-3 h-3" />
                       <span>Authorize</span>
                     </>
                   )}
