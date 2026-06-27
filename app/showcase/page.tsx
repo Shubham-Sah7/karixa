@@ -191,7 +191,7 @@ function PrincipleCard({
           height: 36,
           borderRadius: 10,
           background: "#EFF2FF",
-          color: "#2C52F5",
+          color: "#111111",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
