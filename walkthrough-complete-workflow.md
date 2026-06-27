@@ -20,62 +20,42 @@ We have successfully finalized the entire interactive deviation investigation an
 
 ---
 
+## 🚀 Resolving Vercel Deployment & Runtime Errors
+
+We resolved two critical deployment blocks:
+1. **Prisma Client Generation**: Added the client-generation hook to the Next.js build script in `package.json` (`"build": "prisma generate && next build"`), since `/lib/generated/prisma` is correctly ignored in git.
+2. **Conditional Clerk Middleware (500 Error Fix)**:
+   * Next.js 16 renames `middleware.ts` to `proxy.ts`. 
+   * In `proxy.ts`, Clerk's `clerkMiddleware()` was intercepting all requests. However, because Vercel did not contain Clerk publishable and secret keys, the middleware crashed on load with a `Missing publishableKey` exception, returning a `500 Internal Server Error`.
+   * Modified `proxy.ts` to run Clerk dynamically *only* if the environment variables are declared:
+     ```typescript
+     export default function middleware(request: NextRequest, event: any) {
+       const hasClerkKeys = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY;
+       if (hasClerkKeys) {
+         return clerkMiddleware()(request, event);
+       }
+       return NextResponse.next();
+     }
+     ```
+   * This allows the deployment to load immediately, bypassing auth-redirects until keys are configured on Vercel.
+
+---
+
 ## ⚙️ Settings Page (`viewMode === "settings"`)
 
-We created a simple, elegant settings view that reinforces governance, enterprise control, and FDA compliance:
+We created a simple, GxP-oriented settings view:
 * **Left Menu Tabs**: Profile Details, AI Preferences, Compliance & GxP, Security & MFA, Integrations (LIMS), and Audit Logs.
-* **Profile**: Shows Dr. Anita Rao's name, email, and scope as Site-Wide GxP Compliance sign-off lead.
-* **AI Preferences**: Slide toggles for Auto-Drafting, minimum confidence thresholds (90%), and reasoning verbosity dropdowns.
-* **Compliance**: Displays FDA 21 CFR Part 11 active rules, audit trail locking triggers, and archive retention settings (10-year GxP standard).
-* **Security**: Settings for SSO (connected to Entra ID), MFA rules, and inactivity auto-timeout configs.
-* **Integrations**: Live connection status logs for MES, LIMS QC Lab, CMMS Maintenance, and SAP ERP.
-* **Audit Logs**: A read-only chronological trail of system configuration edits and electronic signature authorizations.
 
 ---
 
 ## 💎 Design Refinements & Clutter Reduction
 
-We completed a comprehensive review from a Founding Designer's perspective to remove generic "AI dashboard templates" and replace them with a handcrafted interface:
-1. **Simplified Evidence Workspace**:
-   * Removed the row of 4 decorative cards from the top of the **Evidence Library** page, focusing the screen entirely on search, filters, and logs.
-   * Reduced the visual weight of AI confidence percentages in table records by changing text styling to a clean neutral slate (`text-neutral-450 font-semibold`).
-2. **Simplified Knowledge Base**:
-   * Removed the top summary cards to eliminate redundancy, prioritizing direct access to the active Knowledge Library folders and connections.
-3. **Calmer Reports Portal**:
-   * Removed SaaS analytics list components from the reports dashboard.
-   * Restructured Row 2 to place focus entirely on a 3/5 width **Most Common Root Causes** chart and a 2/5 width **Compliance Overview** block.
+We refined all views to remove boilerplate aesthetics and ensure the product feels handcrafted:
+1. **Simplified Evidence Workspace**: Removed the row of 4 decorative cards from the top, allowing the workspace search panel, filters, and file log tables to breathe.
+2. **Simplified Knowledge Base**: Removed the top summary cards to eliminate redundancy, prioritizing direct access to the active Knowledge Library folders and connections.
+3. **Calmer Reports Portal**: Restructured Row 2 to place focus entirely on a 3/5 width **Most Common Root Causes** chart and a 2/5 width **Compliance Overview** progress list.
 4. **Slate-Neutral Styling & No Purple Cast**:
    * Replaced low-opacity blue backgrounds with neutral slate-gray containers (`bg-[#F8FAFC]` with `border-neutral-200/60`).
-   * Used green strictly for completed/verified states.
-
----
-
-## 🎨 Branding Updates & Visual Identity
-
-We have applied the exact branding rules requested, matching the supplied `Karixa` logo:
-1. **Logo Integration & Sizing**: 
-   * Replaced the SVG text logo placeholder in the sidebar and headers with the official `Logo.png` located in the `public` directory.
-   * **Resized Logo elements**: Scaled up logo heights to match high-end corporate displays:
-     * **Sidebar logo**: Expanded to `h-[52px]` and set the container header height to `h-24`.
-     * **Timeline view header logo**: Increased to `h-[36px]` inside the 60px header.
-     * **Complete view header logo**: Increased to `h-[38px]` inside the 76px header.
-2. **Primary Brand Accent Blue (`#2C52F5`)**:
-   * Extracted the cobalt brand blue from the logo and replaced all previous purple/indigo colors with it.
-
----
-
-## 📖 Typography Scale & Readability Improvements
-
-We scaled up base and small text sizes by 15-20% throughout all components. This eliminates the "tiny text dashboard" feeling and improves readability for investigators.
-* **Standard Small Dash (`-`) Replacement**: Replaced all instances of long em-dashes (`—`) and en-dashes (`–`) with standard small hyphens/dashes (`-`) across all headers, status subtexts, and document logs to ensure clean GxP documentation format.
-
----
-
-## 📈 Excursion Sparkline Graph Optimization
-
-We replaced the generic, squished jagged path on the **Excursion (38 min)** card with a premium, financial-grade sparkline:
-1. **Smooth Cubic Bezier Curve**: Uses a custom bezier curve to render a smooth, natural fluctuation wave.
-2. **Faded Red Gradient Fill**: Applies a soft red/rose fade under the curve to provide contextual depth.
 
 ---
 
