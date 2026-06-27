@@ -258,11 +258,12 @@ export default function Page() {
   // "reconcile"        -> Reconciliation Workspace Screen
   // "revision-summary" -> AI Revision Summary Screen
   // "complete"         -> Investigation Approved & Inspection Package (Final Complete Screen)
-  const [viewMode, setViewMode] = useState<"home" | "review" | "timeline" | "reconcile" | "revision-summary" | "complete" | "evidence" | "knowledge" | "reports">("home")
+  const [viewMode, setViewMode] = useState<"home" | "review" | "timeline" | "reconcile" | "revision-summary" | "complete" | "evidence" | "knowledge" | "reports" | "settings">("home")
 
   const [activeCaseId, setActiveCaseId] = useState<string>("case-1")
   const [selectedEvidenceId, setSelectedEvidenceId] = useState<string>("MES_Bioreactor_Logs.csv")
   const [selectedKnowledgeId, setSelectedKnowledgeId] = useState<string>("mech-1")
+  const [activeSettingsTab, setActiveSettingsTab] = useState<"profile" | "ai" | "compliance" | "security" | "integrations" | "audit">("profile")
   
   // Interactive states
   const [expandedRiskId, setExpandedRiskId] = useState<string | null>("risk-1")
@@ -412,11 +413,11 @@ export default function Page() {
               </div>
               <div className="space-y-2">
                 {[
-                  { label: "Investigations", active: viewMode !== "evidence" && viewMode !== "knowledge" && viewMode !== "reports", count: 3, icon: Search },
+                  { label: "Investigations", active: viewMode !== "evidence" && viewMode !== "knowledge" && viewMode !== "reports" && viewMode !== "settings", count: 3, icon: Search },
                   { label: "Evidence", active: viewMode === "evidence", icon: Folder },
                   { label: "Knowledge", active: viewMode === "knowledge", icon: BookOpen },
                   { label: "Reports", active: viewMode === "reports", icon: BarChart2 },
-                  { label: "Settings", active: false, icon: Settings }
+                  { label: "Settings", active: viewMode === "settings", icon: Settings }
                 ].map((item) => {
                   const IconComponent = item.icon
                   return (
@@ -424,7 +425,7 @@ export default function Page() {
                       key={item.label}
                       onClick={() => {
                         if (item.label === "Investigations") {
-                          if (viewMode === "evidence" || viewMode === "knowledge" || viewMode === "reports") {
+                          if (viewMode === "evidence" || viewMode === "knowledge" || viewMode === "reports" || viewMode === "settings") {
                             setViewMode("home")
                           } else {
                             const nextCase = activeCaseId === "case-1" ? "case-2" : "case-1"
@@ -436,6 +437,8 @@ export default function Page() {
                           setViewMode("knowledge")
                         } else if (item.label === "Reports") {
                           setViewMode("reports")
+                        } else if (item.label === "Settings") {
+                          setViewMode("settings")
                         }
                       }}
                       className={cn(
@@ -2721,7 +2724,7 @@ export default function Page() {
                               <td className="py-4 font-mono text-[13px]">{row.inv}</td>
                               <td className="py-4">{row.cat}</td>
                               <td className="py-4">{row.user}</td>
-                              <td className="py-4 font-mono text-[#2C52F5] font-bold">{row.conf}</td>
+                              <td className="py-4 font-mono text-neutral-450 font-semibold">{row.conf}</td>
                               <td className="py-4 text-right">
                                 <span className="inline-flex items-center gap-1 text-emerald-600 text-[13px] font-bold font-mono">
                                   <Check className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -3414,8 +3417,8 @@ export default function Page() {
 
                 {/* Dashboard Visualizations Row 2 */}
                 <div className="grid grid-cols-5 gap-8 select-text">
-                  {/* Section 3: Most Common Root Causes (2/5) */}
-                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
+                  {/* Section 3: Most Common Root Causes (3/5) */}
+                  <div className="col-span-3 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
                     <h3 className="text-[15px] font-bold text-neutral-905 uppercase tracking-wider font-mono select-none">Most Common Root Causes</h3>
                     <div className="space-y-3.5 pt-1">
                       {[
@@ -3438,16 +3441,16 @@ export default function Page() {
                     </div>
                   </div>
 
-                  {/* Section 4: Compliance Overview Progress Indicators (1.5/5) */}
-                  <div className="col-span-1.5 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
+                  {/* Section 4: Compliance Overview Progress Indicators (2/5) */}
+                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-6.5 space-y-4">
                     <h3 className="text-[15px] font-bold text-neutral-905 uppercase tracking-wider font-mono select-none">Compliance Overview</h3>
                     <div className="space-y-4 pt-1">
                       {[
-                        { label: "Investigation Rate", val: "98%", pct: "98%" },
-                        { label: "On-time CAPA Rate", val: "94%", pct: "94%" },
-                        { label: "FDA Audit Readiness", val: "100%", pct: "100%" },
+                        { label: "Investigation Completion Rate", val: "98%", pct: "98%" },
+                        { label: "On-time CAPA Completion", val: "94%", pct: "94%" },
+                        { label: "Audit Readiness Score", val: "100%", pct: "100%" },
                         { label: "Evidence Completeness", val: "97%", pct: "97%" },
-                        { label: "Human Sign-off Compliance", val: "100%", pct: "100%" }
+                        { label: "Human Review Compliance", val: "100%", pct: "100%" }
                       ].map((item, i) => (
                         <div key={i} className="space-y-1">
                           <div className="flex justify-between text-[13px] font-semibold text-neutral-700">
@@ -3459,33 +3462,6 @@ export default function Page() {
                           </div>
                         </div>
                       ))}
-                    </div>
-                  </div>
-
-                  {/* Section 5: AI Performance Insights (1.5/5) */}
-                  <div className="col-span-1.5 border border-neutral-100 rounded-2xl p-6.5 space-y-4 select-none">
-                    <h3 className="text-[15px] font-bold text-neutral-905 uppercase tracking-wider font-mono">AI Accuracy & Mappings</h3>
-                    <div className="space-y-4.5 pt-2">
-                      <div className="flex justify-between items-baseline border-b border-neutral-50 pb-2">
-                        <span className="text-neutral-500 font-medium text-[14.5px]">Avg AI Confidence</span>
-                        <span className="font-bold text-neutral-900 font-mono text-[16px]">95.8%</span>
-                      </div>
-                      <div className="flex justify-between items-baseline border-b border-neutral-50 pb-2">
-                        <span className="text-neutral-500 font-medium text-[14.5px]">Evidence Mapped</span>
-                        <span className="font-bold text-neutral-900 font-mono text-[16px]">14.2 files</span>
-                      </div>
-                      <div className="flex justify-between items-baseline border-b border-neutral-50 pb-2">
-                        <span className="text-neutral-500 font-medium text-[14.5px]">Human Approval Rate</span>
-                        <span className="font-bold text-[#2C52F5] font-mono text-[16px]">97.4%</span>
-                      </div>
-                      <div className="flex justify-between items-baseline border-b border-neutral-50 pb-2">
-                        <span className="text-neutral-500 font-medium text-[14.5px]">Revision Cycles</span>
-                        <span className="font-bold text-neutral-900 font-mono text-[16px]">1.2 cycles</span>
-                      </div>
-                      <div className="flex justify-between items-baseline">
-                        <span className="text-neutral-500 font-medium text-[14.5px]">Avg Cycle Reduction</span>
-                        <span className="font-bold text-emerald-600 font-mono text-[16px]">86% saved</span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -3563,6 +3539,311 @@ export default function Page() {
                     </table>
                   </div>
                 </div>
+
+              </div>
+            </motion.div>
+          )}
+
+          {viewMode === "settings" && (
+            <motion.div
+              key="settings"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-hidden"
+            >
+              {/* Header */}
+              <header className="h-[76px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-10 bg-white sticky top-0 z-30 select-none">
+                <div className="flex items-center gap-5">
+                  <img src="/logo.png" alt="Karixa Logo" className="h-[32px] w-auto object-contain" />
+                  <div className="w-px h-6 bg-neutral-200" />
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold text-[16.5px] text-neutral-905">System Settings</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
+                    <button
+                      onClick={() => setViewMode("home")}
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[14.5px] transition-colors relative z-10"
+                    >
+                      Command Center
+                    </button>
+                    <button
+                      onClick={() => setViewMode("review")}
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                    >
+                      Document Review
+                    </button>
+                    <button
+                      onClick={() => setViewMode("timeline")}
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                    >
+                      Timeline Story
+                    </button>
+                    <button
+                      onClick={() => setViewMode("evidence")}
+                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[14.5px] transition-colors relative z-10"
+                    >
+                      Evidence Library
+                    </button>
+                  </div>
+                </div>
+              </header>
+
+              {/* Main Content Area */}
+              <div className="flex-1 flex overflow-hidden">
+                
+                {/* Left Tabs Sidebar (240px) */}
+                <aside className="w-[240px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 select-none space-y-6">
+                  <div className="text-[13px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
+                    Settings Menu
+                  </div>
+
+                  <div className="space-y-1">
+                    {[
+                      { id: "profile", label: "Profile Details" },
+                      { id: "ai", label: "AI Preferences" },
+                      { id: "compliance", label: "Compliance & GxP" },
+                      { id: "security", label: "Security & MFA" },
+                      { id: "integrations", label: "Integrations (LIMS)" },
+                      { id: "audit", label: "Audit Logs" }
+                    ].map(tab => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveSettingsTab(tab.id as any)}
+                        className={cn(
+                          "w-full text-left px-4 py-3 rounded-xl transition-all text-[14.5px] font-semibold",
+                          activeSettingsTab === tab.id
+                            ? "bg-[#F1F5F9] text-[#0F172A]"
+                            : "text-neutral-505 hover:bg-neutral-100 hover:text-neutral-800"
+                        )}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                </aside>
+
+                {/* Right Content Workspace */}
+                <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-10 select-text">
+                  <div className="max-w-[720px] bg-white border border-neutral-200/35 rounded-3xl p-10 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-8">
+                    
+                    {/* Header Details */}
+                    <div className="border-b border-neutral-100 pb-5 select-none">
+                      <h2 className="text-2xl font-extrabold text-neutral-900 tracking-tight">
+                        {activeSettingsTab === "profile" && "User Profile"}
+                        {activeSettingsTab === "ai" && "AI Preferences & Thresholds"}
+                        {activeSettingsTab === "compliance" && "Compliance & FDA 21 CFR Part 11"}
+                        {activeSettingsTab === "security" && "Security Protocols"}
+                        {activeSettingsTab === "integrations" && "Connected Systems & Integrations"}
+                        {activeSettingsTab === "audit" && "System Audit Logs"}
+                      </h2>
+                      <p className="text-[15px] text-neutral-500 mt-1.5 leading-normal">
+                        {activeSettingsTab === "profile" && "Manage your professional identity and QA digital signature access."}
+                        {activeSettingsTab === "ai" && "Set active confidence scores, automatic CMMS sync policies, and ingestion filters."}
+                        {activeSettingsTab === "compliance" && "Manage cryptographic sign-off rules, audit logs, and electronic trace retention."}
+                        {activeSettingsTab === "security" && "Configure single sign-on (SSO), session timeout durations, and credentials verification."}
+                        {activeSettingsTab === "integrations" && "Review live connections to manufacturing automation platforms and databases."}
+                        {activeSettingsTab === "audit" && "Read-only history of system configurations and electronic authorization events."}
+                      </p>
+                    </div>
+
+                    {/* Tab Sub-views */}
+                    {activeSettingsTab === "profile" && (
+                      <div className="space-y-6">
+                        <div className="grid grid-cols-2 gap-5">
+                          <div className="space-y-1.5">
+                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Full Name</label>
+                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-semibold text-neutral-750 text-[14.5px]">
+                              Dr. Anita Rao
+                            </div>
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Email Address</label>
+                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-mono text-[13.5px] text-neutral-750">
+                              dr.rao@klarixa.ai
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-5">
+                          <div className="space-y-1.5">
+                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">System Role</label>
+                            <div className="p-3 bg-[#EFF2FF] border border-[#C0D1FF] rounded-xl font-bold text-[#2C52F5] text-[13.5px] font-mono">
+                              QA Director / Sign-off Lead
+                            </div>
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-[13px] font-bold uppercase tracking-wider text-neutral-400 font-mono">License Scope</label>
+                            <div className="p-3 bg-neutral-50 border border-neutral-200 rounded-xl font-semibold text-neutral-750 text-[14.5px]">
+                              Site-Wide GxP Compliance Auth
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeSettingsTab === "ai" && (
+                      <div className="space-y-6">
+                        <div className="space-y-3.5">
+                          <div className="flex justify-between items-center select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">Auto-Drafting Investigations</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Automatically ingest new deviations and write analysis drafts.</p>
+                            </div>
+                            <span className="w-11 h-6 bg-[#2C52F5] rounded-full flex items-center px-1 cursor-pointer">
+                              <span className="w-4 h-4 bg-white rounded-full translate-x-5" />
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">AI Confidence Threshold</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Confidence percentage required to propose a root cause without warnings.</p>
+                            </div>
+                            <span className="font-mono text-[#2C52F5] font-bold text-[16px] bg-[#F1F5F9] px-3.5 py-1.5 rounded-xl border border-neutral-200/50">
+                              90% Minimum
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">Reasoning Verbosity</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Toggle detailed annotation steps and references in draft logs.</p>
+                            </div>
+                            <select className="bg-white border border-neutral-200 rounded-xl px-3.5 py-2 font-semibold text-neutral-700 text-[14px]">
+                              <option>Detailed Annotation</option>
+                              <option>Minimal Insights</option>
+                              <option>Raw Logs Only</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeSettingsTab === "compliance" && (
+                      <div className="space-y-6">
+                        <div className="space-y-3.5">
+                          <div className="flex justify-between items-center select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">FDA 21 CFR Part 11 Protocol</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Forces cryptographic sign-off with username and pin triggers.</p>
+                            </div>
+                            <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-250/30 rounded-full px-3 py-1 text-[13px] font-bold text-emerald-800 font-mono">
+                              Enforced
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">Secure Audit Trail Locking</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Locks chronological updates from deletion or edit once approved.</p>
+                            </div>
+                            <span className="w-11 h-6 bg-[#2C52F5] rounded-full flex items-center px-1">
+                              <span className="w-4 h-4 bg-white rounded-full translate-x-5" />
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">Archive Retention Span</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">FDA compliant digital record preservation settings.</p>
+                            </div>
+                            <div className="p-3 bg-[#F1F5F9] border border-neutral-200/50 rounded-xl text-neutral-750 font-bold text-[13.5px] font-mono">
+                              10 Years (GxP Standard)
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeSettingsTab === "security" && (
+                      <div className="space-y-6">
+                        <div className="space-y-3.5">
+                          <div className="flex justify-between items-center select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">Single Sign-On (SSO)</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Manage credentials using Active Directory (ADFS / Entra ID).</p>
+                            </div>
+                            <span className="inline-flex items-center gap-1 bg-[#EFF2FF] border border-[#C0D1FF] rounded-full px-3 py-1 text-[13px] font-bold text-[#2C52F5] font-mono">
+                              Connected
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">Multi-Factor Authentication (MFA)</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Forces secondary authenticator codes during profile logins.</p>
+                            </div>
+                            <span className="w-11 h-6 bg-[#2C52F5] rounded-full flex items-center px-1">
+                              <span className="w-4 h-4 bg-white rounded-full translate-x-5" />
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between items-center border-t border-neutral-100 pt-3.5 select-none">
+                            <div>
+                              <h4 className="font-bold text-[15px] text-neutral-800">Session Timeout limit</h4>
+                              <p className="text-[13.5px] text-neutral-450 mt-0.5">Auto-logout duration when the workstation is left unattended.</p>
+                            </div>
+                            <select className="bg-white border border-neutral-200 rounded-xl px-3.5 py-2 font-semibold text-neutral-700 text-[14px]">
+                              <option>15 Minutes (FDA)</option>
+                              <option>30 Minutes</option>
+                              <option>5 Minutes</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeSettingsTab === "integrations" && (
+                      <div className="space-y-4 select-none">
+                        {[
+                          { name: "MES Automation Vault", desc: "Digital batch recording logs", status: "Live", time: "4m ago" },
+                          { name: "LIMS Quality Control Lab", desc: "Chemical & purity assay results", status: "Live", time: "12m ago" },
+                          { name: "CMMS Maintenance Database", desc: "Equipment log repair tickets", status: "Live", time: "2m ago" },
+                          { name: "SAP ERP Enterprise Server", desc: "Material batch tracking codes", status: "Live", time: "1h ago" }
+                        ].map((intg, i) => (
+                          <div key={i} className="flex justify-between items-center p-4 border border-neutral-100 rounded-2xl hover:bg-neutral-50 transition-colors">
+                            <div className="space-y-0.5">
+                              <h4 className="font-bold text-[15px] text-neutral-800">{intg.name}</h4>
+                              <p className="text-[13px] text-neutral-400">{intg.desc}</p>
+                            </div>
+                            <div className="flex items-center gap-3.5">
+                              <span className="text-[13px] text-neutral-400 font-mono">Sync: {intg.time}</span>
+                              <span className="inline-flex items-center gap-1 text-emerald-600 text-[13px] font-bold font-mono">
+                                <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                                <span>{intg.status}</span>
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {activeSettingsTab === "audit" && (
+                      <div className="space-y-4">
+                        <div className="relative border-l border-neutral-200 ml-3 pl-6 space-y-4.5 text-[14px] font-medium text-neutral-600">
+                          {[
+                            { log: "User Dr. Anita Rao signed off Deviation DV-24081 (FDA Protocol)", time: "Today · 17:30 IST" },
+                            { log: "AI revised draft summary compiled for Case DV-24081", time: "Today · 17:28 IST" },
+                            { log: "User Dr. Anita Rao reconciled valve maintenance timestamps", time: "Today · 17:25 IST" },
+                            { log: "Automatic LIMS database sync completed for cold storage run", time: "Today · 14:02 IST" }
+                          ].map((log, i) => (
+                            <div key={i} className="relative">
+                              <span className="absolute left-[-29px] top-1 w-2 h-2 rounded-full bg-neutral-300" />
+                              <div className="text-neutral-800 leading-normal">{log.log}</div>
+                              <div className="text-[13px] text-neutral-400 font-mono mt-0.5">{log.time}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                  </div>
+                </main>
 
               </div>
             </motion.div>

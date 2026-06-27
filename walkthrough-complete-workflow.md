@@ -1,4 +1,4 @@
-# Klarixa AI Walkthrough: Complete End-to-End Workflow with Branding, Polish, Evidence, Knowledge & Reports
+# Klarixa AI Walkthrough: Complete End-to-End Workflow with Branding, Polish & Custom Pages
 
 We have successfully finalized the entire interactive deviation investigation and audit sign-off workflow:
 
@@ -20,31 +20,54 @@ We have successfully finalized the entire interactive deviation investigation an
 
 ---
 
-## 🎨 Branding Updates & Visual Identity (Purple Removal & Slate Neutralization)
+## ⚙️ Settings Page (`viewMode === "settings"`)
 
-To ensure the product feels highly professional, clinical, and enterprise-grade, we completely removed all purple/lavender background fills and shadows that can appear when using low-opacity brand blue on white containers:
-1. **Neutral Summary Cards**: Changed the background of metrics summary cards across all pages (Command Center, Reports, Evidence, and Knowledge Base) from `bg-[#2C52F5]/5` with a blue border to a clean slate-neutral `#F8FAFC` and standard `#E2E8F0` border.
-2. **Standardized Labels**: Changed the typography labels in the summary cards from `#2C52F5` (brand blue) to `#64748B` (neutral slate) to enhance editorial contrast.
-3. **Line Chart Area Fill Opacity**: Reduced the SVG line chart gradient fill opacity to `0.03` (`stopColor="#2C52F5"`), creating a soft, neutral, almost invisible background glow that highlights the deep blue trend line without casting a purple hue.
-4. **Soft Badges & Status Pills**: Replaced all light-blue background tags (`bg-[#EFF2FF]`) with standard slate badges (`bg-[#F1F5F9]` with `border-neutral-200/70` borders).
-
----
-
-## 📊 Executive Reports Dashboard (`viewMode === "reports"`)
-
-We created a brand-new **Reports** page that Quality Leadership can access by clicking "Reports" in the sidebar. This workspace maintains the same design system, typography, components, and brand blue visual elements.
+We created a simple, elegant settings view that reinforces governance, enterprise control, and FDA compliance:
+* **Left Menu Tabs**: Profile Details, AI Preferences, Compliance & GxP, Security & MFA, Integrations (LIMS), and Audit Logs.
+* **Profile**: Shows Dr. Anita Rao's name, email, and scope as Site-Wide GxP Compliance sign-off lead.
+* **AI Preferences**: Slide toggles for Auto-Drafting, minimum confidence thresholds (90%), and reasoning verbosity dropdowns.
+* **Compliance**: Displays FDA 21 CFR Part 11 active rules, audit trail locking triggers, and archive retention settings (10-year GxP standard).
+* **Security**: Settings for SSO (connected to Entra ID), MFA rules, and inactivity auto-timeout configs.
+* **Integrations**: Live connection status logs for MES, LIMS QC Lab, CMMS Maintenance, and SAP ERP.
+* **Audit Logs**: A read-only chronological trail of system configuration edits and electronic signature authorizations.
 
 ---
 
-## 🧠 Knowledge Base Page (`viewMode === "knowledge"`)
+## 💎 Design Refinements & Clutter Reduction
 
-We created an interactive organizational memory system letting quality teams query historical root causes, linked CAPAs, SOP mappings, and smart AI insights.
+We completed a comprehensive review from a Founding Designer's perspective to remove generic "AI dashboard templates" and replace them with a handcrafted interface:
+1. **Simplified Evidence Workspace**:
+   * Removed the row of 4 decorative cards from the top of the **Evidence Library** page, focusing the screen entirely on search, filters, and logs.
+   * Reduced the visual weight of AI confidence percentages in table records by changing text styling to a clean neutral slate (`text-neutral-450 font-semibold`).
+2. **Simplified Knowledge Base**:
+   * Removed the top summary cards to eliminate redundancy, prioritizing direct access to the active Knowledge Library folders and connections.
+3. **Calmer Reports Portal**:
+   * Removed SaaS analytics list components from the reports dashboard.
+   * Restructured Row 2 to place focus entirely on a 3/5 width **Most Common Root Causes** chart and a 2/5 width **Compliance Overview** block.
+4. **Slate-Neutral Styling & No Purple Cast**:
+   * Replaced low-opacity blue backgrounds with neutral slate-gray containers (`bg-[#F8FAFC]` with `border-neutral-200/60`).
+   * Used green strictly for completed/verified states.
 
 ---
 
-## 📁 Evidence Library Page (`viewMode === "evidence"`)
+## 🎨 Branding Updates & Visual Identity
 
-We created a central document library letting investigators search, filter, and inspect files uploaded across all cases.
+We have applied the exact branding rules requested, matching the supplied `Karixa` logo:
+1. **Logo Integration & Sizing**: 
+   * Replaced the SVG text logo placeholder in the sidebar and headers with the official `Logo.png` located in the `public` directory.
+   * **Resized Logo elements**: Scaled up logo heights to match high-end corporate displays:
+     * **Sidebar logo**: Expanded to `h-[52px]` and set the container header height to `h-24`.
+     * **Timeline view header logo**: Increased to `h-[36px]` inside the 60px header.
+     * **Complete view header logo**: Increased to `h-[38px]` inside the 76px header.
+2. **Primary Brand Accent Blue (`#2C52F5`)**:
+   * Extracted the cobalt brand blue from the logo and replaced all previous purple/indigo colors with it.
+
+---
+
+## 📖 Typography Scale & Readability Improvements
+
+We scaled up base and small text sizes by 15-20% throughout all components. This eliminates the "tiny text dashboard" feeling and improves readability for investigators.
+* **Standard Small Dash (`-`) Replacement**: Replaced all instances of long em-dashes (`—`) and en-dashes (`–`) with standard small hyphens/dashes (`-`) across all headers, status subtexts, and document logs to ensure clean GxP documentation format.
 
 ---
 
@@ -53,19 +76,6 @@ We created a central document library letting investigators search, filter, and 
 We replaced the generic, squished jagged path on the **Excursion (38 min)** card with a premium, financial-grade sparkline:
 1. **Smooth Cubic Bezier Curve**: Uses a custom bezier curve to render a smooth, natural fluctuation wave.
 2. **Faded Red Gradient Fill**: Applies a soft red/rose fade under the curve to provide contextual depth.
-3. **Thin & Clean Stroke**: Reduced stroke thickness to `1.8px` for crisp rendering.
-4. **Improved Verticals**: Expanded the sparkline's vertical viewport to prevent clipping.
-
----
-
-## 💎 Visual Polish & Enterprise Elevation (Inspired by Monday, Notion, Confluence, Ramp)
-
-We have polished the UI elements to feel crafted by a senior product designer for a Fortune 500 enterprise application:
-1. **Mixed Surfaces & Material Contrast**:
-   * Changed the sidebar background to a soft, modern off-white `#F9FAFB` to cleanly contrast with the main content sheet.
-2. **Notion/Coda-Style Document Sheets**:
-   * Set the Document Review and GxP Complete viewport backgrounds to a clean warm slate `#F8F9FC`.
-   * Elevated the actual reports and inspection packages as **physical sheets** (pure white cards with extremely soft shadows).
 
 ---
 
