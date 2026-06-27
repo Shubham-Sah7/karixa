@@ -20,72 +20,130 @@ We have successfully finalized the entire interactive deviation investigation an
 
 ---
 
+## 📈 Refined Reports Dashboard & Charts (Harmonious Color Palette)
+
+To resolve the color clutter and correct the line rendering issues inside the Reports Portal, we refactored the charts and summary metrics:
+* **Harmonious Monochromatic Status Doughnut**: Removed the bright clashing primary red, green, yellow, and blue circles. Replaced them with a unified, high-contrast slate and indigo system:
+  * **Completed**: Deep slate-900 (`#0F172A`).
+  * **In Review**: Core brand blue (`#2C52F5`).
+  * **Open**: Neutral gray-200 (`#E2E8F0`), representing unprocessed work.
+  * **Awaiting Sign-off**: Muted indigo-blue (`#818CF8`).
+  * This creates a focused, professional clinical layout with minimal accent distractions.
+* **Continuous Bezier Trend Curve**: Fixed the broken line segments and bottom axis clipping inside the monthly investigation graph:
+  * Redefined the SVG coordinates (`d="M 0 58 C 25 55, 50 35, 75 35..."`) to ensure the trace flows in a smooth cubic Bezier curve that stays entirely within safe viewBox boundaries (`y=22` to `y=62`).
+  * Added a fading brand blue area gradient fill (`fill="url(#trendGrad)"` at `8%` opacity) for visual weight, and aligned the indicator dots directly onto the peak wave coordinates.
+* **Muted Card Headers & Nowrap Values**: Upgraded the 4 reports summary cards to match the Command Center style, sizing the text down to `text-[18px]` to prevent metric descriptions (like `99.8% score` and `1,420 hours`) from wrapping onto multiple lines.
+
+---
+
+## 🎨 Polished Knowledge Base Workspace (Consistent Sizing & Alignment)
+
+To fix the visual crowding, overlapping action items, and text wrapping issues inside the Knowledge Base screen, we refactored the layout to match the Evidence Library system.
+
+---
+
+## 🎨 Symmetrical Dropdown Chevrons (Consistent Select Styling)
+
+To prevent the default browser down arrow from colliding with the right border or rendering inconsistently across different operating systems/browsers, we implemented a custom chevron solution for all select fields in the Evidence Library.
+
+---
+
+## 🎨 Clean Filter Sidebar Spacing & Control Sizing (Evidence Library)
+
+To resolve the loose, unaligned controls and default AI-generated spacing inside the Evidence Library's filter panel, we updated its styles.
+
+---
+
+## 💎 Header Branding Cleanups (No Redundant Header Logo)
+
+To clean up visual clutter and remove redundant branding, we updated the sub-page headers (Evidence Library, Knowledge Base, Reports, and Settings).
+
+---
+
+## ⚠️ Redesigned Warning Card (Fully Symmetrical / No Left Stroke)
+
+To make the "Timestamp Conflict" warning card sit naturally alongside other cards on the Command Center screen, we updated its borders.
+
+---
+
+## 💎 Removing AI Gimmick Icons (Zero Sparkles / Professional UI)
+
+To remove stereotypical, clichéd "AI chatbot/sparkle" styling and ensure the product feels like a professional GxP compliance tool, we completely removed the `Sparkles` (star) icon from all views.
+
+---
+
+## 🔮 Contextual AI Assistant ("Need clarification?")
+
+To surface AI support as a secondary, workflow-embedded "Explain" feature (matching Notion AI, Linear AI, and Granola) rather than a chat interface, we introduced a contextual assistant card.
+
+---
+
+## 💎 Border Cleanups (Spacious Borderless Design)
+
+To make the interface feel less boxy, lighter, and more modern, we removed redundant horizontal separation borders across the views.
+
+---
+
+## 🏛️ Clean Symmetric Metrics Row & Spacing (Zero Collision Spacing)
+
+To resolve the vertical collision (visual clashing) where the metrics cards touched the global top header's bottom border, we updated the spacing.
+
+---
+
+## 📈 Telemetry Temperature Excursion Chart Redesign (GxP Educational Design)
+
+To ensure the temperature excursion telemetry is instantly self-explanatory for investigators and auditors, we redesigned the SVG chart component.
+
+---
+
+## 🏛️ Static Global Header Layout (Zero Jerks / Transitions Polish)
+
+To eliminate any visual "jerks", flashes, or layout shifts when switching views (e.g. going from Command Center to Document Review or Timeline Story), we completely restructured the layout.
+
+---
+
+## 💎 Softer Unified Card Shadows
+
+To ensure the interface feels clean, premium, and avoids hard borders or muddy shadows, we redefined the card shadow tokens.
+
+---
+
+## 🎨 Sidebar Navigation Design & Contrast Update
+
+To improve visual clarity, contrast, and active status tracking, we updated the navigation links.
+
+---
+
+## 🎨 Sidebar Logo Left Alignment & Sizing
+
+To ensure the brand logo aligns perfectly with the textual grid of the navigation layout, we updated the styling.
+
+---
+
 ## 📐 Proportional UI Scale Reduction (15-20% Down)
 
-To make the application look like a premium desktop tool designed for 1440-1600px displays rather than a zoomed-in layout, we scaled down the entire visual scale proportionally:
-1. **Sidebar Navigation**:
-   * Sidebar width scaled down from `w-80` (320px) to `w-[260px]`.
-   * Sidebar logo reduced from `h-[52px]` to `h-[36px]`.
-   * Sidebar header height scaled down from `h-24` to `h-16`.
-2. **Main Headers**:
-   * Scaled down main header heights from `h-[76px]` to a cleaner `h-[58px]`.
-   * Reduced header logo bounds from `h-[32px]`/`h-[38px]` to `h-[25px]`/`h-[28px]`.
-   * Padded outer bounds with `px-6` instead of `px-10` to balance layouts.
-3. **Typography Scaling**:
-   * Scaled down page titles (`text-3xl` -> `text-[24px]`).
-   * Scaled down secondary headers (`text-2xl` -> `text-[19px]`).
-   * Scaled down body copy and inputs proportionally:
-     * `text-[17.5px]` -> `text-[14.5px]`
-     * `text-[16.5px]` -> `text-[13.5px]`
-     * `text-[16px]` -> `text-[13.5px]`
-     * `text-[15px]` -> `text-[12.5px]`
-     * `text-[14.5px]` -> `text-[12px]`
-     * `text-[13.5px]` -> `text-[11.5px]`
-     * `text-[13px]` -> `text-[11px]`
-4. **Spacing & Padding Details**:
-   * Main workspace padding reduced from `p-8`/`p-10` to `p-6`/`p-7`.
-   * Grid gaps reduced from `gap-8` to `gap-6` and `gap-5` to `gap-4`.
-   * Verticals and padding wrappers changed from `space-y-8`/`py-3.5` to `space-y-6`/`py-2`.
-5. **Icon Proportions**:
-   * Scaled down icons from `w-5.5`/`w-4.5`/`w-4` to `w-4.5`/`w-3.5`/`w-3`.
-   * This retains comfortable whitespace while matching the layout density of world-class web apps like Stripe, Figma, Linear, and Vercel at 100% zoom.
+To make the application look like a premium desktop tool designed for 1440-1600px displays rather than a zoomed-in layout, we scaled down the entire visual scale proportionally.
 
 ---
 
 ## 🚀 Resolving Vercel Deployment & Runtime Errors
 
 We resolved two critical deployment blocks:
-1. **Prisma Client Generation**: Added the client-generation hook to the Next.js build script in `package.json` (`"build": "prisma generate && next build"`), since `/lib/generated/prisma` is correctly ignored in git.
+1. **Prisma Client Generation**: Added the client-generation hook to the Next.js build script in "build" inside `package.json`, since Prisma generation is required before compilation.
 2. **Conditional Clerk Middleware (500 Error Fix)**:
    * Next.js 16 renames `middleware.ts` to `proxy.ts`. 
-   * Modified `proxy.ts` to run Clerk dynamically *only* if the environment keys are declared:
-     ```typescript
-     export default function middleware(request: NextRequest, event: any) {
-       const hasClerkKeys = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY;
-       if (hasClerkKeys) {
-         return clerkMiddleware()(request, event);
-       }
-       return NextResponse.next();
-     }
-     ```
 
 ---
 
 ## ⚙️ Settings Page (`viewMode === "settings"`)
 
-We created a simple, GxP-oriented settings view:
-* **Left Menu Tabs**: Profile Details, AI Preferences, Compliance & GxP, Security & MFA, Integrations (LIMS), and Audit Logs.
+We created a simple, GxP-oriented settings view.
 
 ---
 
 ## 💎 Design Refinements & Clutter Reduction
 
-We refined all views to remove boilerplate aesthetics and ensure the product feels handcrafted:
-1. **Simplified Evidence Workspace**: Removed the row of 4 decorative cards from the top, allowing the workspace search panel, filters, and file log tables to breathe.
-2. **Simplified Knowledge Base**: Removed the top summary cards to eliminate redundancy, prioritizing direct access to the active Knowledge Library folders and connections.
-3. **Calmer Reports Portal**: Restructured Row 2 to place focus entirely on a 3/5 width **Most Common Root Causes** chart and a 2/5 width **Compliance Overview** progress list.
-4. **Slate-Neutral Styling & No Purple Cast**:
-   * Replaced low-opacity blue backgrounds with neutral slate-gray containers (`bg-[#F8FAFC]` with `border-neutral-200/60`).
+We refined all views to remove boilerplate aesthetics and ensure the product feels handcrafted.
 
 ---
 

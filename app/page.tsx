@@ -281,6 +281,73 @@ export default function Page() {
   const [isSigning, setIsSigning] = useState<boolean>(false)
   const [activeChartTab, setActiveChartTab] = useState<"temperature" | "evidence">("temperature")
 
+  // Contextual AI Assistant state
+  const [assistantQuery, setAssistantQuery] = useState<string>("")
+  const [assistantResponse, setAssistantResponse] = useState<{
+    text: string;
+    confidence: string;
+    evidence: { doc: string; source: string; content: string; }[];
+  } | null>(null)
+
+  const handleAskAssistant = (query: string) => {
+    setAssistantQuery(query);
+    const q = query.toLowerCase();
+    
+    let text = "";
+    let confidence = "";
+    let evidence: { doc: string; source: string; content: string; }[] = [];
+
+    if (q.includes("why") || q.includes("choose") || q.includes("reason")) {
+      text = "The AI attributed the overnight hold excursion to a faulty refrigeration valve because telemetry data showed a slow, linear temperature increase (from 6.0°C to 10.4°C) starting at 23:45, characteristic of ambient warm air leaking into the chamber rather than a power failure. This is corroborated by the maintenance log showing a worn gasket warning in May.";
+      confidence = "94% Confidence";
+      evidence = [
+        { doc: "Manufacturing Log", source: "Cold Unit 3 Telemetry", content: "Timestamp,Sensor,Reading,Status\n23:45:00,TEMP-B4,6.1°C,NORMAL\n00:30:00,TEMP-B4,8.2°C,WARNING\n01:05:00,TEMP-B4,10.4°C,OUT-OF-SPEC" },
+        { doc: "Maintenance Log", source: "Equipment Log", content: "Date,Equipment,Action,Status\n12-May-2026,Cold Unit 3,Gasket Wear Warning,Flagged" }
+      ];
+    } else if (q.includes("evidence") || q.includes("support")) {
+      text = "The core evidence spans three sources: 1) Telemetry showing a 4.4°C deviation over 38 minutes. 2) The maintenance log showing the gasket was flagged for service. 3) The audit checklist showing a missing GxP confirmation signature for the valve inspection on June 14.";
+      confidence = "High Certainty";
+      evidence = [
+        { doc: "Manufacturing Log", source: "Cold Unit 3 Telemetry", content: "Timestamp,Sensor,Reading,Status\n23:45:00,TEMP-B4,6.1°C,NORMAL\n00:30:00,TEMP-B4,8.2°C,WARNING\n01:05:00,TEMP-B4,10.4°C,OUT-OF-SPEC" },
+        { doc: "Maintenance Log", source: "Equipment Log", content: "Date,Equipment,Action,Status\n12-May-2026,Cold Unit 3,Gasket Wear Warning,Flagged" },
+        { doc: "SOP-882 Audit Checklist", source: "Compliance Folder", content: "Inspection,Status,Inspector,Signed\nValve Seal Check,Incomplete,J. Rao,Unsigned" }
+      ];
+    } else if (q.includes("missing") || q.includes("information")) {
+      text = "The critical missing piece is the validation signature on the valve maintenance sign-off log for June 14. We have a conflicting manual log at 14:02 and an automated sensor log at 16:40. Resolving this discrepancy is required to finalize compliance package closure.";
+      confidence = "Action Required";
+      evidence = [
+        { doc: "Maintenance Log", source: "Equipment Log", content: "Manual Log: Valve maintenance completed at 14:02 (J. Rao)\nSensor Log: Valve cycle calibration completed at 16:40 (Auto)" }
+      ];
+    } else if (q.includes("graph") || q.includes("explain")) {
+      text = "The graph shows a GxP safe storage range highlighted in green (2.0°C - 8.0°C). The temperature stayed normal until 23:45, then spiked above the 8.0°C validated limit, peaking at 10.4°C at 01:05 (red segment). The red shaded vertical area indicates the 38 minutes spent in deviation.";
+      confidence = "Telemetry Trace";
+      evidence = [
+        { doc: "Manufacturing Log", source: "Cold Unit 3 Telemetry", content: "Timestamp,Sensor,Reading,Status\n23:45:00,TEMP-B4,6.1°C,NORMAL\n00:30:00,TEMP-B4,8.2°C,WARNING\n01:05:00,TEMP-B4,10.4°C,OUT-OF-SPEC" }
+      ];
+    } else if (q.includes("similar") || q.includes("compare") || q.includes("past")) {
+      text = "A search of the historical knowledge library identified 2 similar deviations in Q1. Deviation DV-23910 also involved a cold unit temperature excursion caused by worn gaskets, which resolved with a gasket replacement and resulted in zero batch rejection after QA stability testing.";
+      confidence = "Historical Match";
+      evidence = [
+        { doc: "Deviation Record DV-23910", source: "QMS Archive", content: "Deviation Type: Temperature Excursion\nRoot Cause: Gasket Seal Failure\nDisposition: Batch Released" },
+        { doc: "Gasket Stability QA Study", source: "QA Library", content: "Product stability maintained for up to 90 minutes at 12°C." }
+      ];
+    } else {
+      if (q.includes("valve") || q.includes("temp") || q.includes("gasket") || q.includes("maintenance") || q.includes("audit") || q.includes("batch")) {
+        text = "Regarding the open investigation (DV-24081): The primary issue is a refrigeration valve gasket on Cold Unit 3 that failed to seal properly during the overnight hold on June 14, causing the batch temperature to exceed 8.0°C for 38 minutes. You can reconcile the manual and sensor timestamps via the 'Reconcile' queue.";
+        confidence = "Contextual Fit";
+        evidence = [
+          { doc: "Manufacturing Log", source: "Cold Unit 3 Telemetry", content: "Timestamp,Sensor,Reading,Status\n23:45:00,TEMP-B4,6.1°C,NORMAL\n00:30:00,TEMP-B4,8.2°C,WARNING\n01:05:00,TEMP-B4,10.4°C,OUT-OF-SPEC" }
+        ];
+      } else {
+        text = "This contextual AI assistant only answers questions related to the active deviation investigation (DV-24081). Please ask about the temperature trace, supporting documents, or gasket maintenance.";
+        confidence = "Scope Restriction";
+        evidence = [];
+      }
+    }
+
+    setAssistantResponse({ text, confidence, evidence });
+  };
+
   // --- Document Review States (Canvas 4) ---
   const [selectedReviewId, setSelectedReviewId] = useState<string>("root1")
   const [reviewSections, setReviewSections] = useState<ReviewSection[]>(reviewSectionsData)
@@ -401,8 +468,8 @@ export default function Page() {
       <aside className="w-[18%] border-r border-neutral-200/40 bg-[#F9FAFB] flex flex-col justify-between flex-shrink-0 select-none">
         <div>
           {/* Logo Header */}
-          <div className="h-16 px-8 flex items-center border-b border-neutral-100 select-none">
-            <img src="/logo.png" alt="Karixa Logo" className="h-[26px] w-auto object-contain" />
+          <div className="h-[90px] pl-2 pr-5 flex items-center select-none">
+            <img src="/logo.png" alt="Karixa Logo" className="w-full max-w-[180px] h-auto object-contain object-left" />
           </div>
 
           {/* Navigation Links */}
@@ -442,21 +509,26 @@ export default function Page() {
                         }
                       }}
                       className={cn(
-                        "w-full text-left px-4 py-2 rounded-xl transition-all flex items-center justify-between text-[10px] hover:bg-[#F1F5F9]/40 hover:scale-[1.01] duration-150",
+                        "w-full text-left px-4 py-2 transition-all flex items-center justify-between text-[10px] duration-150 relative",
                         item.active
-                          ? "bg-[#F1F5F9] text-[#0F172A] font-bold shadow-xs"
-                          : "text-[#64748B] hover:text-[#0F172A]"
+                          ? "bg-[#EFF2FF] text-[#2C52F5] font-bold border-l-[3px] border-[#2C52F5] rounded-r-xl rounded-l-none shadow-xs"
+                          : "text-[#475569] hover:text-neutral-900 hover:bg-neutral-100/50 rounded-xl"
                       )}
                     >
                       <div className="flex items-center gap-3.5">
                         <IconComponent className={cn(
                           "w-3 h-3",
-                          item.active ? "text-[#0F172A]" : "text-[#94A3B8]"
+                          item.active ? "text-[#2C52F5]" : "text-[#64748B]"
                         )} />
                         <span className="text-[11.5px]">{item.label}</span>
                       </div>
                       {item.count && (
-                        <span className="bg-white border border-[#E2E8F0] text-[#475569] px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono">
+                        <span className={cn(
+                          "px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono border",
+                          item.active
+                            ? "bg-[#2C52F5] border-transparent text-white"
+                            : "bg-white border-[#E2E8F0] text-[#475569]"
+                        )}>
                           {item.count}
                         </span>
                       )}
@@ -471,7 +543,7 @@ export default function Page() {
         {/* Sidebar Footer Info */}
         <div className="p-4 space-y-4 border-t border-neutral-100">
           {/* GxP audit mode */}
-          <div className="p-4.5 bg-[#F8FAFC]/75 border border-[#E2E8F0]/40 rounded-[14px] space-y-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+          <div className="p-4.5 bg-[#F8FAFC]/75 border border-[#E2E8F0]/40 rounded-[14px] space-y-1.5 shadow-xs">
             <div className="flex items-center gap-2 text-[10px] font-semibold text-[#1E293B]">
               <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
               <span>GxP audit mode</span>
@@ -506,6 +578,134 @@ export default function Page() {
 
       {/* MAIN VIEW CONTROLLER WITH FRAMER MOTION TRANSITIONS */}
       <div className="flex-1 flex flex-col overflow-hidden relative bg-white">
+        {/* GLOBAL STATIC HEADER */}
+        <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white z-30 select-none">
+          {/* LEFT SECTION */}
+          <div className="flex items-center gap-5">
+            {viewMode === "home" || viewMode === "review" || viewMode === "timeline" || viewMode === "reconcile" || viewMode === "revision-summary" ? (
+              <div className="flex items-center gap-3">
+                <span className="font-bold text-[14px] text-neutral-850">
+                  {activeCaseId === "case-1" ? "DV-24081" : "DV-24082"}
+                </span>
+                <div className="w-1 h-1 rounded-full bg-neutral-300" />
+                <span className="font-semibold text-[11px] text-neutral-500 uppercase tracking-wider font-mono">
+                  Batch {activeCaseId === "case-1" ? "PX-2041" : "PX-9022"}
+                </span>
+                <div className="w-1.5 h-1.5 rounded-full bg-neutral-300" />
+                <span className="font-bold text-[10px] text-red-650 uppercase tracking-widest bg-red-50 px-2 py-0.5 rounded border border-red-200/40">
+                  High Severity
+                </span>
+                <div className="flex items-center gap-2 bg-[#EFF2FF] border border-[#C0D1FF]/50 rounded-full px-2.5 py-0.5 font-bold text-[#2C52F5] text-[9.5px] ml-2">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7B94FF] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#2C52F5]"></span>
+                  </span>
+                  <span>AI agent active</span>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <span className="font-bold text-[14.5px] text-neutral-850">
+                  {viewMode === "complete" && "Inspection Deliverables"}
+                  {viewMode === "evidence" && "Evidence Library"}
+                  {viewMode === "knowledge" && "Knowledge Base"}
+                  {viewMode === "reports" && "Executive Reports"}
+                  {viewMode === "settings" && "System Settings"}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* CENTER TABS SWITCHER */}
+          <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-xs relative">
+            <button
+              onClick={() => setViewMode("home")}
+              className={cn(
+                "px-3.5 py-1 rounded-lg font-bold text-[9.5px] transition-colors relative z-10",
+                viewMode === "home" ? "bg-white text-neutral-900 shadow-xs" : "text-neutral-500 hover:text-neutral-850"
+              )}
+            >
+              Command Center
+            </button>
+            <button
+              onClick={() => setViewMode("review")}
+              className={cn(
+                "px-3.5 py-1 rounded-lg font-bold text-[9.5px] transition-colors relative z-10",
+                viewMode === "review" ? "bg-white text-neutral-900 shadow-xs" : "text-neutral-500 hover:text-neutral-850"
+              )}
+            >
+              Document Review
+            </button>
+            <button
+              onClick={() => setViewMode("timeline")}
+              className={cn(
+                "px-3.5 py-1 rounded-lg font-bold text-[9.5px] transition-colors relative z-10",
+                viewMode === "timeline" ? "bg-white text-neutral-900 shadow-xs" : "text-neutral-500 hover:text-neutral-850"
+              )}
+            >
+              Timeline Story
+            </button>
+            {isConflictResolved && (
+              <button
+                onClick={() => setViewMode("revision-summary")}
+                className={cn(
+                  "px-3.5 py-1 rounded-lg font-bold text-[9.5px] transition-colors relative z-10",
+                  viewMode === "revision-summary" ? "bg-white text-neutral-900 shadow-xs" : "text-neutral-500 hover:text-neutral-850"
+                )}
+              >
+                AI Revision Summary
+              </button>
+            )}
+          </div>
+
+          {/* RIGHT ACTIONS */}
+          <div className="flex items-center gap-3">
+            {viewMode === "home" || viewMode === "review" || viewMode === "timeline" || viewMode === "reconcile" || viewMode === "revision-summary" ? (
+              <div className="flex items-center gap-2.5">
+                <button className="px-4 py-2 border border-neutral-200 hover:bg-neutral-50 rounded-xl font-bold text-[11.5px] text-neutral-700 transition-colors shadow-xs flex items-center gap-2 select-none">
+                  <Download className="w-3.5 h-3.5 text-neutral-500" />
+                  <span>Export</span>
+                </button>
+                <button
+                  onClick={() => setShowSignModal(true)}
+                  className="px-5 py-2 bg-[#2C52F5] hover:bg-[#1E40AF] text-white font-bold rounded-xl text-[11.5px] transition-colors shadow-sm flex items-center gap-2 select-none"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 text-white/90" />
+                  <span>Approve investigation</span>
+                </button>
+              </div>
+            ) : viewMode === "complete" ? (
+              <div className="flex items-center gap-2">
+                <button className="px-3.5 py-1 bg-[#2C52F5] hover:bg-[#1E40AF] text-white font-bold rounded-lg text-[9.5px] shadow-xs">
+                  Inspection Mode
+                </button>
+                <button className="px-3.5 py-1 border border-[#E2E8F0] hover:bg-neutral-50 rounded-lg font-bold text-[9.5px] text-neutral-700 transition-colors shadow-xs">
+                  Print Package
+                </button>
+              </div>
+            ) : viewMode === "evidence" ? (
+              <div className="flex items-center gap-2">
+                <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg px-3 py-1 text-[9.5px] font-semibold shadow-xs">
+                  Upload evidence
+                </button>
+              </div>
+            ) : viewMode === "knowledge" ? (
+              <div className="flex items-center gap-2">
+                <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-lg px-4 py-1 text-[9.5px] font-bold shadow-xs">
+                  Add Knowledge
+                </button>
+              </div>
+            ) : viewMode === "reports" ? (
+              <div className="flex items-center gap-2">
+                <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg px-3.5 py-1 text-[9.5px] font-bold shadow-xs">
+                  Export Report
+                </button>
+              </div>
+            ) : (
+              <span className="text-[9.5px] font-mono font-bold text-neutral-400">v1.2.0</span>
+            )}
+          </div>
+        </header>
         <AnimatePresence mode="wait">
           {viewMode === "home" && (
             <motion.div
@@ -520,200 +720,135 @@ export default function Page() {
               {/* 1. HOME SCREEN: COMMAND CENTER (Detailed telemetry chart view)                 */}
               {/* ============================================================================== */}
               
-              {/* Top Page Header */}
-              <header className="px-12 pt-10 pb-6 space-y-5 bg-white flex-shrink-0 select-none">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 font-mono text-[10px] font-bold text-[#64748B] tracking-tight">
-                    <span>{activeCaseId === "case-1" ? "DV-24081" : "DV-24082"}</span>
-                    <span>·</span>
-                    <span>BATCH {activeCaseId === "case-1" ? "PX-2041" : "PX-9022"}</span>
-                    <span>·</span>
-                    <span className="text-[#DC2626] font-extrabold uppercase">High Severity</span>
-                  </div>
-
-                  {/* View Switcher Controls */}
-                  <div className="flex items-center gap-3.5">
-                    <div className="flex items-center gap-2.5 bg-[#F1F5F9] rounded-full px-3.5 py-1.5 font-bold text-[#2C52F5] text-[10px]">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7B94FF] opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2C52F5]"></span>
-                      </span>
-                      <span>AI agent active</span>
-                    </div>
-
-                    <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                      <button
-                        onClick={() => setViewMode("home")}
-                        className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
-                      >
-                        Command Center
-                      </button>
-                      <button
-                        onClick={() => setViewMode("review")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[10px] transition-colors relative z-10"
-                      >
-                        Document Review
-                      </button>
-                      <button
-                        onClick={() => setViewMode("timeline")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                      >
-                        Timeline Story
-                      </button>
-                      {isConflictResolved && (
-                        <button
-                          onClick={() => setViewMode("revision-summary")}
-                          className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
-                        >
-                          Revision Summary
-                        </button>
-                      )}
-                      {signatureHash && (
-                        <button
-                          onClick={() => setViewMode("complete")}
-                          className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
-                        >
-                          Inspection Package
-                        </button>
-                      )}
-                    </div>
-
-                    <button className="px-4.5 py-1.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[10px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
-                      Export
-                    </button>
-                    
-                    <button
-                      onClick={() => {
-                        if (signatureHash) return
-                        setShowSignModal(true)
-                      }}
-                      className="px-6 py-1.5 bg-[#090D1A] hover:bg-[#1f2937] text-white font-bold rounded-xl text-[10px] transition-colors shadow-sm"
-                    >
-                      {signatureHash ? "Locked & Approved" : "Approve investigation"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <h1 className="text-4xl font-extrabold tracking-tight text-[#0F172A] leading-tight">
-                    {activeCaseId === "case-1" ? "Temperature excursion investigation" : "Product sterile filter deviation"}
-                  </h1>
-                  <p className="text-[10px] text-[#64748B] leading-relaxed">
-                    AI investigation draft is ready - review the analysis and approve the proposed root cause.
-                  </p>
-                </div>
-              </header>
+              
 
               {/* 5-Card Metrics Row */}
-              <div className="px-12 grid grid-cols-5 gap-4">
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 flex items-center gap-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px]">
-                  <div className="relative w-14 h-14 flex-shrink-0">
-                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                      <path
-                        className="text-neutral-100"
-                        strokeWidth="3"
-                        stroke="currentColor"
-                        fill="none"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                      />
-                      <motion.path
-                        className="text-[#2C52F5]"
-                        initial={{ strokeDasharray: "0, 100" }}
-                        animate={{ strokeDasharray: `${dynamicConfidence === "98%" ? 98 : 94}, 100` }}
+              <div className="px-12 pt-6 grid grid-cols-5 gap-5">
+                {/* Card 1: Confidence */}
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-xs transition-shadow min-h-[114px] flex flex-col justify-between">
+                  <div className="space-y-1">
+                    <div className="text-[9px] uppercase font-bold tracking-widest text-[#64748B] font-mono">Confidence</div>
+                    <div className="text-[20px] font-extrabold text-[#0F172A] tracking-tight">{dynamicConfidence}</div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[9px] font-bold font-mono text-[#64748B]">
+                      <span>Strong evidence</span>
+                      <span>{dynamicConfidence}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-[#E2E8F0] rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-[#7B94FF] to-[#2C52F5] rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: dynamicConfidence === "98%" ? "98%" : "94%" }}
                         transition={{ duration: 1.2, ease: "easeOut" }}
-                        strokeWidth="3.2"
-                        strokeLinecap="round"
-                        stroke="currentColor"
-                        fill="none"
-                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                       />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center font-extrabold text-[11.5px] text-[#0F172A]">
-                      {dynamicConfidence}
                     </div>
                   </div>
-                  <div className="space-y-0.5">
-                    <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Confidence</div>
-                    <div className="text-[10px] font-bold text-[#64748B]">Strong evidence</div>
-                  </div>
                 </div>
 
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 flex flex-col justify-between hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px]">
-                  <div className="flex justify-between items-start">
-                    <div className="space-y-0.5">
-                      <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Excursion</div>
-                      <div className="text-[19px] font-extrabold text-[#0F172A]">38 min</div>
+                {/* Card 2: Excursion */}
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-xs transition-shadow min-h-[114px] flex flex-col justify-between">
+                  <div className="space-y-1">
+                    <div className="text-[9px] uppercase font-bold tracking-widest text-[#64748B] font-mono">Excursion</div>
+                    <div className="text-[20px] font-extrabold text-[#0F172A] tracking-tight">38 min</div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[9px] font-bold font-mono text-red-500">
+                      <span>Exceedance duration</span>
+                      <span>01:05 Peak</span>
+                    </div>
+                    <div className="h-5 w-full relative overflow-hidden">
+                      <svg className="w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
+                        <defs>
+                          <linearGradient id="excursionCardSparkline" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#EF4444" stopOpacity="0.15" />
+                            <stop offset="100%" stopColor="#EF4444" stopOpacity="0" />
+                          </linearGradient>
+                        </defs>
+                        <path
+                          d="M 0 18 Q 20 18, 40 15 Q 60 2, 70 12 Q 80 18, 90 17 L 100 12 L 100 20 L 0 20 Z"
+                          fill="url(#excursionCardSparkline)"
+                        />
+                        <motion.path
+                          d="M 0 18 Q 20 18, 40 15 Q 60 2, 70 12 Q 80 18, 90 17 L 100 12"
+                          fill="none"
+                          stroke="#EF4444"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 1.2, ease: "easeInOut" }}
+                        />
+                      </svg>
                     </div>
                   </div>
-                  <div className="h-8 w-full mt-2 relative overflow-hidden">
-                    <svg className="w-full h-full" viewBox="0 0 100 30" preserveAspectRatio="none">
-                      <defs>
-                        <linearGradient id="excursionSparklineGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#EF4444" stopOpacity="0.25" />
-                          <stop offset="100%" stopColor="#EF4444" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                      {/* Area Fill */}
-                      <path
-                        d="M 0 25 C 20 25, 30 22, 45 10 C 55 2, 70 26, 85 24 C 95 21, 98 16, 100 15 L 100 30 L 0 30 Z"
-                        fill="url(#excursionSparklineGrad)"
-                      />
-                      {/* Smooth Stroke Line */}
-                      <motion.path
-                        d="M 0 25 C 20 25, 30 22, 45 10 C 55 2, 70 26, 85 24 C 95 21, 98 16, 100 15"
-                        fill="none"
-                        stroke="#EF4444"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 1.4, ease: "easeInOut" }}
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                </div>
+
+                {/* Card 3: Peak Temp */}
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-xs transition-shadow min-h-[114px] flex flex-col justify-between">
+                  <div className="space-y-1">
+                    <div className="text-[9px] uppercase font-bold tracking-widest text-[#64748B] font-mono">Peak Temp</div>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-[20px] font-extrabold text-[#0F172A] tracking-tight">
+                        {activeCaseId === "case-1" ? "10.4°C" : "42.0 psi"}
+                      </span>
+                      <span className="text-[10px] font-bold text-[#EF4444] font-mono">
+                        {activeCaseId === "case-1" ? "+2.4°C" : "+2.0 psi"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[9px] font-bold font-mono text-[#64748B]">
+                      <span>Limit {activeCaseId === "case-1" ? "8.0°C" : "40.0 psi"}</span>
+                      <span className="text-red-500 font-extrabold">Exceeded</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-[#E2E8F0] rounded-full overflow-hidden relative">
+                      <div className="absolute left-0 top-0 h-full bg-[#2C52F5]" style={{ width: "75%" }} />
+                      <div className="absolute left-[75%] top-0 h-full bg-[#EF4444]" style={{ width: "25%" }} />
+                    </div>
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between">
-                  <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Peak temp</div>
-                  <div className="flex items-baseline gap-1.5 mt-1">
-                    <span className="text-[19px] font-extrabold text-[#0F172A]">
-                      {activeCaseId === "case-1" ? "10.4°" : "42.0 psi"}
-                    </span>
-                    <span className="text-[10px] font-bold text-[#EF4444] font-mono">
-                      {activeCaseId === "case-1" ? "+2.4°" : "+2.0 psi"}
-                    </span>
+                {/* Card 4: Evidence */}
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-xs transition-shadow min-h-[114px] flex flex-col justify-between">
+                  <div className="space-y-1">
+                    <div className="text-[9px] uppercase font-bold tracking-widest text-[#64748B] font-mono">Evidence</div>
+                    <div className="text-[20px] font-extrabold text-[#0F172A] tracking-tight">18 docs</div>
                   </div>
-                  <div className="text-[10px] text-[#64748B] font-mono mt-0.5">
-                    Validated max - {activeCaseId === "case-1" ? "8.0°" : "40.0 psi"}
-                  </div>
-                </div>
-
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between space-y-2">
-                  <div>
-                    <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Evidence</div>
-                    <div className="text-[19px] font-extrabold text-[#0F172A] mt-0.5">18 docs</div>
-                  </div>
-                  <div className="flex gap-0.5 h-2 w-full">
-                    <div className="flex-1 bg-[#2C52F5] rounded-l-sm" />
-                    <div className="flex-1 bg-[#2C52F5]" />
-                    <div className="flex-1 bg-[#7B94FF]" />
-                    <div className="flex-1 bg-[#A3B8FF]" />
-                    <div className="flex-1 bg-neutral-100" />
-                    <div className="flex-1 bg-neutral-100 rounded-r-sm" />
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[9px] font-bold font-mono text-[#64748B]">
+                      <span>5 Sources Sync</span>
+                      <span>82% Confidence</span>
+                    </div>
+                    <div className="flex gap-1 h-1.5 w-full">
+                      <div className="flex-1 bg-[#2C52F5] rounded-l-full" />
+                      <div className="flex-1 bg-[#2C52F5]" />
+                      <div className="flex-1 bg-[#7B94FF]" />
+                      <div className="flex-1 bg-[#A3B8FF]" />
+                      <div className="flex-1 bg-[#E2E8F0] rounded-r-full" />
+                    </div>
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-4 hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow min-h-[96px] flex flex-col justify-between space-y-2">
-                  <div>
-                    <div className="text-[10.5px] uppercase font-bold tracking-wider text-[#94A3B8] font-mono">Progress</div>
-                    <div className="text-[19px] font-extrabold text-[#0F172A] mt-0.5">5 / 6</div>
+                {/* Card 5: Progress */}
+                <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 hover:shadow-xs transition-shadow min-h-[114px] flex flex-col justify-between">
+                  <div className="space-y-1">
+                    <div className="text-[9px] uppercase font-bold tracking-widest text-[#64748B] font-mono">Progress</div>
+                    <div className="text-[20px] font-extrabold text-[#0F172A] tracking-tight">5 / 6</div>
                   </div>
-                  <div className="flex gap-0.5 h-2 w-full">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <div key={i} className="flex-1 bg-[#0F172A] rounded-xs" />
-                    ))}
-                    <div className="flex-1 bg-neutral-100 rounded-xs" />
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[9px] font-bold font-mono text-[#64748B]">
+                      <span>Checklist Done</span>
+                      <span>83%</span>
+                    </div>
+                    <div className="flex gap-1 h-1.5 w-full">
+                      <div className="flex-1 bg-[#0F172A] rounded-l-full" />
+                      <div className="flex-1 bg-[#0F172A]" />
+                      <div className="flex-1 bg-[#0F172A]" />
+                      <div className="flex-1 bg-[#0F172A]" />
+                      <div className="flex-1 bg-[#0F172A]" />
+                      <div className="flex-1 bg-[#E2E8F0] rounded-r-full" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -724,7 +859,7 @@ export default function Page() {
                 {/* Left Main (70%) */}
                 <div className="col-span-8 space-y-4">
                   <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-6 shadow-sm">
-                    <div className="flex items-center justify-between border-b border-neutral-100 pb-5 mb-5 select-none">
+                    <div className="flex items-center justify-between mb-5 select-none">
                       <div>
                         <h3 className="text-[11.5px] font-extrabold text-[#0F172A] uppercase tracking-wider">
                           {activeCaseId === "case-1" ? "Sensor temperature - overnight hold" : "Skid Bubble Point Telemetry"}
@@ -733,7 +868,7 @@ export default function Page() {
                           {activeCaseId === "case-1" ? "Cold unit 3 · Batch PX-2041 · 14 Jun · 22:00-02:00 IST" : "Sterilization Skid FL-9022 · 18 Jun"}
                         </span>
                       </div>
-                      <div className="flex border border-neutral-200/50 rounded-xl p-0.5 bg-neutral-50/50 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                      <div className="flex border border-neutral-200/50 rounded-xl p-0.5 bg-neutral-50/50 shadow-xs">
                         <button
                           onClick={() => setActiveChartTab("temperature")}
                           className={cn(
@@ -770,36 +905,63 @@ export default function Page() {
                       </div>
 
                       <svg className="absolute inset-0 w-full h-[272px]" viewBox="0 0 500 200" preserveAspectRatio="none">
-                        <motion.path
-                          d="M 285 200 L 285 110 Q 310 70, 335 40 Q 360 70, 385 110 L 385 200 Z"
+                        {/* 1. GxP Safe Operating Range Background Band (2°C - 8°C) */}
+                        <rect x="0" y="67" width="500" height="133" fill="rgba(16, 185, 129, 0.025)" />
+                        
+                        {/* 2. Excursion Duration Shaded Vertical Band */}
+                        <motion.rect
+                          x="313"
+                          y="67"
+                          width="44"
+                          height="133"
                           fill="#FEF2F2"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 0.8 }}
                           transition={{ delay: 1, duration: 0.8 }}
                         />
-                        <line x1="0" y1="110" x2="500" y2="110" stroke="#EF4444" strokeWidth="1.5" strokeDasharray="3,3" />
 
+                        {/* 3. Excursion Boundary Guidelines */}
+                        <line x1="313" y1="67" x2="313" y2="200" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+                        <line x1="357" y1="67" x2="357" y2="200" stroke="#EF4444" strokeWidth="1" strokeDasharray="2,2" opacity="0.5" />
+
+                        {/* 4. Validated Limit Line (aligned with Y-Axis 8°C tick) */}
+                        <line x1="0" y1="67" x2="500" y2="67" stroke="#EF4444" strokeWidth="1.5" strokeDasharray="3,3" />
+
+                        {/* 5. Normal Temperature Curve (Blue) */}
                         <motion.path
-                          d="M 0 160 Q 50 162, 100 160 Q 150 157, 200 162 Q 250 155, 285 110 Q 310 70, 335 40 Q 360 70, 385 110 Q 410 145, 450 160 L 500 180"
+                          d="M 0 160 Q 50 162, 100 160 Q 150 157, 200 162 Q 250 155, 313 67"
                           fill="none"
                           stroke="#2C52F5"
                           strokeWidth="2.5"
                           strokeLinecap="round"
                           initial={{ pathLength: 0 }}
                           animate={{ pathLength: 1 }}
-                          transition={{ duration: 1.5, ease: "easeInOut" }}
+                          transition={{ duration: 1, ease: "easeInOut" }}
+                        />
+                        <motion.path
+                          d="M 357 67 Q 380 100, 420 135 L 500 170"
+                          fill="none"
+                          stroke="#2C52F5"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
                         />
 
+                        {/* 6. Excursion Temperature Curve (Red) */}
                         <motion.path
-                          d="M 285 110 Q 310 70, 335 40 Q 360 70, 385 110"
+                          d="M 313 67 Q 324 50, 335 40 Q 346 50, 357 67"
                           fill="none"
                           stroke="#EF4444"
                           strokeWidth="2.5"
                           strokeLinecap="round"
                           initial={{ pathLength: 0 }}
                           animate={{ pathLength: 1 }}
-                          transition={{ delay: 0.6, duration: 1, ease: "easeInOut" }}
+                          transition={{ delay: 0.6, duration: 0.6, ease: "easeInOut" }}
                         />
+
+                        {/* 7. Peak Value Indicator Dot */}
                         <motion.circle
                           cx="335"
                           cy="40"
@@ -813,25 +975,32 @@ export default function Page() {
                         />
                       </svg>
 
-                      <div className="absolute right-4 top-[108px] text-[10.5px] font-mono font-bold text-[#EF4444]">
-                        VALIDATED MAX 8.0°
+                      {/* Labels and Tooltips */}
+                      <div className="absolute right-4 top-[56px] text-[10px] font-mono font-bold text-[#EF4444] select-none">
+                        VALIDATED MAX 8.0°C
                       </div>
+                      
+                      <div className="absolute left-4 bottom-[36px] text-[9px] font-mono font-bold text-emerald-600/75 select-none uppercase tracking-wider">
+                        Safe GxP Storage Zone (2.0°C - 8.0°C)
+                      </div>
+
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 1.6 }}
-                        className="absolute left-[272px] top-[86px] text-[10.5px] font-mono font-bold text-[#EF4444] text-center w-28 bg-[#FEF2F2] border border-[#FEE2E2]/60 px-1 py-0.5 rounded shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
+                        className="absolute left-[262px] top-[74px] text-[10px] font-mono font-bold text-[#EF4444] text-center w-32 bg-[#FEF2F2] border border-[#FEE2E2]/60 px-1 py-0.5 rounded shadow-xs"
                       >
                         38 MIN ABOVE LIMIT
                       </motion.div>
+                      
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.6 }}
-                        className="absolute left-[302px] top-2 z-10 flex flex-col items-center"
+                        className="absolute left-[302px] top-[12px] z-20 flex flex-col items-center select-none"
                       >
                         <div className="bg-[#0F172A] text-white rounded-md px-3 py-1.5 text-[10px] font-mono font-bold shadow-md tracking-tight">
-                          10.4° · 01:05
+                          10.4°C · 01:05
                         </div>
                       </motion.div>
                       <div className="absolute inset-x-0 bottom-0 flex justify-between px-1 font-mono text-[10px] text-[#94A3B8] pt-2 select-none border-t border-neutral-100">
@@ -941,12 +1110,28 @@ export default function Page() {
                   </div>
 
                   {!isConflictResolved && (
-                    <div className="border border-amber-200 bg-amber-50/45 rounded-2xl p-6 space-y-5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] select-none">
-                      <div className="flex gap-3 text-[10px] font-semibold text-amber-850 leading-relaxed font-sans">
-                        <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                        <p>Maintenance records from 14 June contain conflicting timestamps that should be confirmed before sign-off.</p>
+                    <div className="border border-neutral-200/60 bg-amber-50/15 rounded-2xl p-5 space-y-4 shadow-xs select-none">
+                      <div className="flex gap-3.5 items-start">
+                        <div className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-50 border border-amber-100 flex-shrink-0">
+                          <AlertTriangle className="w-4 h-4 text-amber-600" />
+                        </div>
+                        <div className="space-y-1">
+                          <div className="text-[11px] font-bold text-neutral-900 leading-none">
+                            Action Required: Timestamp Conflict
+                          </div>
+                          <p className="text-[10px] text-neutral-500 leading-relaxed font-sans mt-1">
+                            Maintenance records from 14 June contain conflicting timestamps that should be confirmed before sign-off.
+                          </p>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-2.5 text-[10px]">
+                      <div className="flex items-center gap-2.5 pt-1">
+                        <button
+                          onClick={() => setViewMode("reconcile")}
+                          className="px-4 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-colors text-[9.5px] shadow-xs flex items-center gap-1.5 select-none"
+                        >
+                          <span>Reconcile conflict</span>
+                          <ArrowRight className="w-3 h-3 text-white/90" />
+                        </button>
                         <button
                           onClick={() => {
                             setSelectedPreviewDoc({
@@ -955,19 +1140,125 @@ export default function Page() {
                               content: "Timestamp,Sensor,Reading,Status\n14:00:00,TEMP-B4,37.2°C,NORMAL\n14:15:00,TEMP-B4,38.9°C,WARNING\n14:30:00,TEMP-B4,39.5°C,OUT-OF-SPEC\n14:45:00,TEMP-B4,37.1°C,NORMAL"
                             })
                           }}
-                          className="py-3 bg-white hover:bg-neutral-50 border border-[#E2E8F0] rounded-xl font-bold text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
+                          className="px-4 py-1.5 bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-600 font-bold rounded-lg transition-colors text-[9.5px] shadow-xs select-none"
                         >
                           Review logs
-                        </button>
-                        <button
-                          onClick={() => setViewMode("reconcile")}
-                          className="py-3 bg-white hover:bg-neutral-50 border border-[#E2E8F0] rounded-xl font-bold text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
-                        >
-                          Reconcile
                         </button>
                       </div>
                     </div>
                   )}
+
+                  {/* Contextual AI Assistant Card */}
+                  <div className="bg-white border border-[#E5E7EB]/80 rounded-2xl p-5 shadow-xs space-y-4 select-none">
+                    <div className="flex items-center gap-2">
+                      
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-[#64748B] font-mono">
+                        Need clarification?
+                      </span>
+                    </div>
+
+                    <div className="space-y-3">
+                      {/* Input field */}
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          if (assistantQuery.trim()) {
+                            handleAskAssistant(assistantQuery);
+                          }
+                        }}
+                        className="relative"
+                      >
+                        <input
+                          type="text"
+                          value={assistantQuery}
+                          onChange={(e) => setAssistantQuery(e.target.value)}
+                          placeholder="Ask about this investigation..."
+                          className="w-full bg-[#F8FAFC] border border-neutral-200/70 rounded-xl pl-3 pr-8 py-2 text-[10.5px] text-neutral-850 placeholder-neutral-450 focus:outline-none focus:border-[#2C52F5] transition-colors"
+                        />
+                        <button
+                          type="submit"
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-[#2C52F5]"
+                        >
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </form>
+
+                      {/* Expandable Inline Response Panel */}
+                      {assistantResponse && (
+                        <div className="bg-[#EFF2FF]/40 border border-[#C0D1FF]/40 border-l-[3px] border-l-[#2C52F5] rounded-r-xl rounded-l-none p-4 space-y-3 text-[10px] relative">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5 text-[9px] font-bold font-mono text-[#2C52F5]">
+                              
+                              <span>AI EXPLANATION</span>
+                              <span>·</span>
+                              <span className="text-neutral-500 font-normal">{assistantResponse.confidence}</span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setAssistantResponse(null);
+                                setAssistantQuery("");
+                              }}
+                              className="text-neutral-400 hover:text-neutral-600 p-0.5 rounded-full hover:bg-neutral-100"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                          
+                          <p className="text-neutral-700 leading-relaxed font-sans">{assistantResponse.text}</p>
+                          
+                          {/* Supporting Evidence List */}
+                          {assistantResponse.evidence.length > 0 && (
+                            <div className="space-y-1.5 pt-1.5 border-t border-[#C0D1FF]/30">
+                              <div className="text-[8.5px] uppercase font-bold tracking-wider text-neutral-450 font-mono">
+                                Supporting Evidence
+                              </div>
+                              <div className="flex flex-wrap gap-1.5 pt-0.5">
+                                {assistantResponse.evidence.map((ev) => (
+                                  <button
+                                    type="button"
+                                    key={ev.doc}
+                                    onClick={() => {
+                                      setSelectedPreviewDoc({
+                                        title: ev.doc,
+                                        subtitle: ev.source,
+                                        content: ev.content
+                                      })
+                                    }}
+                                    className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-[#C0D1FF]/35 rounded text-[9px] text-[#2C52F5] hover:bg-[#EFF2FF] transition-colors font-bold font-mono shadow-2xs"
+                                  >
+                                    <FileText className="w-2.5 h-2.5" />
+                                    <span>{ev.doc}</span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Suggested Prompts List */}
+                      <div className="space-y-1">
+                        {[
+                          "Why did the AI choose this root cause?",
+                          "Show supporting evidence.",
+                          "What information is missing?",
+                          "Explain this graph.",
+                          "Compare with similar investigations."
+                        ].map((promptText) => (
+                          <button
+                            type="button"
+                            key={promptText}
+                            onClick={() => handleAskAssistant(promptText)}
+                            className="w-full text-left text-[9.5px] text-neutral-500 hover:text-[#2C52F5] hover:bg-neutral-50 px-2 py-1 rounded transition-colors flex items-center gap-2"
+                          >
+                            <span className="w-1 h-1 rounded-full bg-neutral-300 flex-shrink-0" />
+                            <span>{promptText}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -986,81 +1277,7 @@ export default function Page() {
               {/* 2. DOCUMENT REVIEW: CANVAS 4 (`Klarixa Review.dc.html` replica)               */}
               {/* ============================================================================== */}
               
-              <header className="h-[60px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-8 bg-white z-30 select-none">
-                <div className="flex items-center gap-4 min-w-0">
-                  <button
-                    onClick={() => setViewMode("home")}
-                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-neutral-505 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-2 py-1 rounded-lg transition-all"
-                  >
-                    <ArrowLeft className="w-3 h-3" />
-                    <span>Back</span>
-                  </button>
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className="font-bold text-[11.5px] text-neutral-900 truncate">Deviation investigation</span>
-                    <span className="font-mono text-[10px] text-neutral-400">DV-24081</span>
-                    <span className="inline-flex items-center gap-1.5 bg-[#F3F4F6] border border-[#E5E7EB] rounded-full px-2.5 py-0.5 text-[11.5px] font-semibold text-neutral-750">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1]" />
-                      <span>{signatureHash ? "Locked & Approved" : "AI draft · in review"}</span>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                    <button
-                      onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Command Center
-                    </button>
-                    <button
-                      onClick={() => setViewMode("review")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
-                    >
-                      Document Review
-                    </button>
-                    <button
-                      onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Timeline Story
-                    </button>
-                    {isConflictResolved && (
-                      <button
-                        onClick={() => setViewMode("revision-summary")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-850 font-semibold text-[10px] transition-colors relative z-10"
-                      >
-                        Revision Summary
-                      </button>
-                    )}
-                    {signatureHash && (
-                      <button
-                        onClick={() => setViewMode("complete")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
-                      >
-                        Inspection Package
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="w-px h-6 bg-neutral-200" />
-                  
-                  <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-lg px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
-                    Save draft
-                  </button>
-                  
-                  <button
-                    onClick={() => {
-                      if (signatureHash) return
-                      setShowSignModal(true)
-                    }}
-                    className="bg-neutral-900 hover:bg-neutral-808 text-white rounded-lg px-4.5 py-2 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
-                  >
-                    {signatureHash ? "Locked & Approved" : "Approve Final Investigation"}
-                  </button>
-                </div>
-              </header>
+              
 
               <div className="flex-1 flex overflow-hidden">
                 {/* Left Outline Panel */}
@@ -1134,10 +1351,10 @@ export default function Page() {
 
                 {/* Center Document pane */}
                 <main className="flex-1 overflow-y-auto bg-[#F8F9FC] border-r border-neutral-200/40">
-                  <div className="max-w-[800px] mx-auto px-12 py-14 space-y-12 pb-32 my-8 bg-white border border-neutral-200/35 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_10px_40px_rgba(0,0,0,0.015)]">
+                  <div className="max-w-[800px] mx-auto px-12 py-14 space-y-12 pb-32 my-8 bg-white border border-neutral-200/35 rounded-3xl shadow-lg">
                     <div className="space-y-5">
                       <div className="inline-flex items-center gap-2 bg-[#F5F3FF] border border-[#E0E7FF] rounded-full px-3.5 py-1 text-[10px] font-semibold text-[#2C52F5] select-none">
-                        <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                        
                         <span>{signatureHash ? "Approved & Locked" : "Drafted by Klarixa AI"}</span>
                       </div>
                       <h1 className="text-4xl font-extrabold tracking-tight text-neutral-900 leading-tight">
@@ -1175,7 +1392,7 @@ export default function Page() {
                             onClick={() => setSelectedReviewId(sec.id)}
                             className={cn(
                               "group rounded-r-xl border-l-2 p-4 transition-all duration-200 cursor-pointer -mx-5 px-5 relative",
-                              isSelected ? "border-[#2C52F5] bg-[#FAFAFE] shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]" : "border-transparent hover:bg-neutral-50/50"
+                              isSelected ? "border-[#2C52F5] bg-[#FAFAFE] shadow-xs" : "border-transparent hover:bg-neutral-50/50"
                             )}
                           >
                             {sec.paraTitle && (
@@ -1217,7 +1434,7 @@ export default function Page() {
                                   className="flex items-center gap-4 mt-4 select-none text-[10px] text-neutral-400 overflow-hidden"
                                 >
                                   <span className="inline-flex items-center gap-1 text-[#2C52F5] font-semibold">
-                                    <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                                    
                                     <span>AI generated</span>
                                   </span>
                                   <span>{dynamicConfidence} confidence</span>
@@ -1251,7 +1468,7 @@ export default function Page() {
                           >
                             Approve Final Investigation
                           </button>
-                          <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-5 py-2 text-[11.5px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors">
+                          <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-5 py-2 text-[11.5px] font-semibold shadow-xs transition-colors">
                             Request AI revision
                           </button>
                         </>
@@ -1312,7 +1529,7 @@ export default function Page() {
 
                       <div className="p-6 space-y-4">
                         <div className="flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-neutral-455 font-mono select-none">
-                          <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                          
                           <span>AI reasoning</span>
                         </div>
                         <p className="text-[11.5px] leading-relaxed text-neutral-700 font-sans">
@@ -1374,73 +1591,7 @@ export default function Page() {
               {/* 3. TIMELINE STORY VIEW: CANVAS 5 (`Klarixa Timeline.dc.html` replica)          */}
               {/* ============================================================================== */}
               
-              <header className="h-[60px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-8 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-2">
-                    <img src="/logo.png" alt="Karixa Logo" className="h-[26px] w-auto object-contain" />
-                  </div>
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-4 text-[10px] font-semibold text-[#64748B]">
-                    <button onClick={() => setViewMode("home")} className="hover:text-neutral-955 text-[10px]">Investigations</button>
-                    <span>/</span>
-                    <span className="text-neutral-900 text-[10px]">DV-24081</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                    <button
-                      onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Command Center
-                    </button>
-                    <button
-                      onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Document Review
-                    </button>
-                    <button
-                      onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
-                    >
-                      Timeline Story
-                    </button>
-                    {isConflictResolved && (
-                      <button
-                        onClick={() => setViewMode("revision-summary")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-850 font-semibold text-[10px] transition-colors relative z-10"
-                      >
-                        Revision Summary
-                      </button>
-                    )}
-                    {signatureHash && (
-                      <button
-                        onClick={() => setViewMode("complete")}
-                        className="px-4 py-2 text-neutral-505 hover:text-neutral-855 font-semibold text-[10px] transition-colors relative z-10"
-                      >
-                        Inspection Package
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-[#6B7280]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                    <span>AI agent active</span>
-                  </span>
-                  <button
-                    onClick={() => {
-                      if (signatureHash) return
-                      setShowSignModal(true)
-                    }}
-                    className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg px-4.5 py-2 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
-                  >
-                    {signatureHash ? "Approved" : "Approve"}
-                  </button>
-                </div>
-              </header>
+              
 
               <div className="flex-1 flex justify-center px-12 py-14 gap-20">
                 <motion.article
@@ -1490,7 +1641,7 @@ export default function Page() {
                         <p className="text-[11.5px] leading-relaxed text-neutral-700">
                           Cold unit 3 reported temperatures rising past the validated 8.0°C ceiling. The reading peaked at 10.4°C at 01:05 and stayed above limit for roughly 38 minutes before recovering.
                         </p>
-                        <div className="border border-neutral-200 rounded-2xl p-6 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <div className="border border-neutral-200 rounded-2xl p-6 bg-white shadow-xs">
                           <div className="flex justify-between items-center text-[10px] font-semibold mb-4 select-none">
                             <span className="text-neutral-900">Sensor temperature trace</span>
                             <span className="text-neutral-400 font-mono">22:00 - 02:00 IST</span>
@@ -1679,28 +1830,7 @@ export default function Page() {
               {/* 4. RECONCILIATION WORKSPACE: SIDE-BY-SIDE RESOLUTION WORKSPACE                 */}
               {/* ============================================================================== */}
               
-              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setViewMode("home")}
-                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-neutral-550 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-3 py-1.5 rounded-lg transition-all"
-                  >
-                    <ArrowLeft className="w-3 h-3" />
-                    <span>Back to workspace</span>
-                  </button>
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[11.5px] text-neutral-900">Evidence Reconciliation Workspace</span>
-                    <span className="font-mono text-[10px] text-neutral-400">Conflict #1 · Maintenance Timestamps</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-full px-3 py-1 text-[10px] font-semibold text-amber-800">
-                    <AlertTriangle className="w-3 h-3 text-amber-600" />
-                    <span>Action required</span>
-                  </span>
-                </div>
-              </header>
+              
 
               <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36">
                 <div className="space-y-3">
@@ -1717,7 +1847,7 @@ export default function Page() {
                   {/* Left Column: Record A */}
                   <div className="col-span-4 bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col justify-between hover:shadow-sm transition-shadow">
                     <div className="space-y-5">
-                      <div className="flex items-center justify-between border-b border-neutral-100 pb-3 select-none">
+                      <div className="flex items-center justify-between pb-3 select-none">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 font-mono">Record A</span>
                         <span className="inline-flex items-center gap-1 bg-[#EEF2FF] text-[#2C52F5] text-[10.5px] font-bold uppercase px-2 py-0.5 rounded font-mono">CMMS Work Order</span>
                       </div>
@@ -1748,7 +1878,7 @@ export default function Page() {
                       <button
                         onClick={() => setReconciliationChoice("A")}
                         className={cn(
-                          "w-full py-2 rounded-xl font-bold text-[10px] transition-all shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center justify-center gap-2",
+                          "w-full py-2 rounded-xl font-bold text-[10px] transition-all shadow-xs flex items-center justify-center gap-2",
                           reconciliationChoice === "A"
                             ? "bg-[#2C52F5] text-white shadow-xs"
                             : "bg-white hover:bg-neutral-50 border border-neutral-205 text-neutral-700"
@@ -1761,9 +1891,9 @@ export default function Page() {
                   </div>
 
                   {/* Center comparison summary */}
-                  <div className="col-span-4 bg-[#FCFCFD] border border-neutral-200/80 rounded-2xl p-6 flex flex-col justify-between shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] select-none">
+                  <div className="col-span-4 bg-[#FCFCFD] border border-neutral-200/80 rounded-2xl p-6 flex flex-col justify-between shadow-xs select-none">
                     <div className="space-y-4">
-                      <div className="border-b border-neutral-100 pb-3">
+                      <div className="pb-3">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] font-mono">Side-by-Side Comparison</span>
                       </div>
                       <div className="space-y-5">
@@ -1853,7 +1983,7 @@ export default function Page() {
                       <button
                         onClick={() => setReconciliationChoice("B")}
                         className={cn(
-                          "w-full py-2 rounded-xl font-bold text-[10px] transition-all shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center justify-center gap-2",
+                          "w-full py-2 rounded-xl font-bold text-[10px] transition-all shadow-xs flex items-center justify-center gap-2",
                           reconciliationChoice === "B"
                             ? "bg-[#2C52F5] text-white shadow-xs"
                             : "bg-white hover:bg-neutral-50 border border-neutral-205 text-neutral-705"
@@ -1870,7 +2000,7 @@ export default function Page() {
                 <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 grid grid-cols-12 gap-6 items-start select-none">
                   <div className="col-span-7 space-y-3">
                     <div className="flex items-center gap-2 text-[#2C52F5]">
-                      <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                      
                       <span className="text-[10px] font-bold uppercase tracking-wider font-mono">AI Recommendation & Assessment</span>
                     </div>
                     <p className="text-[10px] text-neutral-700 leading-relaxed font-sans font-medium text-[10px]">
@@ -1885,15 +2015,15 @@ export default function Page() {
                     <div className="space-y-3 font-mono text-[10px]">
                       <div className="flex justify-between items-center">
                         <span className="text-neutral-500">Current confidence:</span>
-                        <span className="font-bold text-neutral-900 bg-white border border-neutral-200 px-2.5 py-0.5 rounded shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)]">94%</span>
+                        <span className="font-bold text-neutral-900 bg-white border border-neutral-200 px-2.5 py-0.5 rounded shadow-xs">94%</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-neutral-500">Confidence if Record A accepted:</span>
-                        <span className="font-bold text-emerald-600 bg-white border border-neutral-200 px-2.5 py-0.5 rounded shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)]">98% (Recommended)</span>
+                        <span className="font-bold text-emerald-600 bg-white border border-neutral-200 px-2.5 py-0.5 rounded shadow-xs">98% (Recommended)</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-neutral-500">Confidence if Record B accepted:</span>
-                        <span className="font-bold text-rose-600 bg-white border border-neutral-200 px-2.5 py-0.5 rounded shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)]">90% (Low agreement)</span>
+                        <span className="font-bold text-rose-600 bg-white border border-neutral-200 px-2.5 py-0.5 rounded shadow-xs">90% (Low agreement)</span>
                       </div>
                     </div>
                   </div>
@@ -1905,7 +2035,7 @@ export default function Page() {
                     <button
                       onClick={() => setReconciliationChoice("inconclusive")}
                       className={cn(
-                        "px-4.5 py-1.5 rounded-xl font-bold text-[10px] transition-colors border shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]",
+                        "px-4.5 py-1.5 rounded-xl font-bold text-[10px] transition-colors border shadow-xs",
                         reconciliationChoice === "inconclusive"
                           ? "bg-neutral-900 border-neutral-900 text-white"
                           : "bg-white hover:bg-neutral-50 border-neutral-205 text-neutral-600"
@@ -1917,7 +2047,7 @@ export default function Page() {
                     <button
                       onClick={() => setReconciliationChoice("evidence")}
                       className={cn(
-                        "px-4.5 py-1.5 rounded-xl font-bold text-[10px] transition-colors border shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]",
+                        "px-4.5 py-1.5 rounded-xl font-bold text-[10px] transition-colors border shadow-xs",
                         reconciliationChoice === "evidence"
                           ? "bg-neutral-900 border-neutral-900 text-white"
                           : "bg-white hover:bg-neutral-50 border-neutral-205 text-neutral-600"
@@ -1928,7 +2058,7 @@ export default function Page() {
 
                     <span className="text-neutral-300">|</span>
 
-                    <div className="flex-1 min-w-[300px] flex items-center gap-2.5 border border-neutral-200 rounded-xl bg-white px-3.5 py-1 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                    <div className="flex-1 min-w-[300px] flex items-center gap-2.5 border border-neutral-200 rounded-xl bg-white px-3.5 py-1 shadow-xs">
                       <MessageSquare className="w-3 h-3 text-neutral-450" />
                       <input
                         type="text"
@@ -1946,7 +2076,7 @@ export default function Page() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="bg-[#ECFDF5] border border-emerald-200 rounded-2xl p-6 flex items-center justify-between shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] select-none"
+                        className="bg-[#ECFDF5] border border-emerald-200 rounded-2xl p-6 flex items-center justify-between shadow-xs select-none"
                       >
                         <div className="space-y-1">
                           <div className="flex items-center gap-2 text-emerald-800 font-bold text-[11.5px]">
@@ -1971,7 +2101,7 @@ export default function Page() {
                             resolveConflict();
                             setViewMode("revision-summary");
                           }}
-                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl px-5 py-3 text-[10px] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-1.5 font-sans animate-pulse"
+                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl px-5 py-3 text-[10px] transition-colors shadow-xs flex items-center gap-1.5 font-sans animate-pulse"
                         >
                           <span>Accept & View AI Revision Summary</span>
                           <ArrowRight className="w-3 h-3" />
@@ -1997,43 +2127,7 @@ export default function Page() {
               {/* 5. AI REVISION SUMMARY SCREEN (Final Screen)                                   */}
               {/* ============================================================================== */}
               
-              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setViewMode("home")}
-                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-neutral-550 hover:text-neutral-905 border border-transparent hover:border-neutral-200 px-3 py-1.5 rounded-lg transition-all"
-                  >
-                    <ArrowLeft className="w-3 h-3" />
-                    <span>Back to workspace</span>
-                  </button>
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[11.5px] text-[#111827]">AI Revision Summary</span>
-                    <span className="font-mono text-[10px] text-neutral-400">DV-24081 · Ready for Sign-off</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3.5">
-                  <button
-                    onClick={() => setViewMode("review")}
-                    className="px-4.5 py-1.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[10px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]"
-                  >
-                    View Updated Report
-                  </button>
-                  <button className="px-4.5 py-1.5 border border-[#E2E8F0] hover:bg-neutral-50 rounded-xl font-bold text-[10px] text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
-                    Export Inspection Package
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (signatureHash) return
-                      setShowSignModal(true)
-                    }}
-                    className="px-6 py-1.5 bg-neutral-950 hover:bg-neutral-850 text-white font-bold rounded-xl text-[10px] transition-colors shadow-sm animate-pulse"
-                  >
-                    {signatureHash ? "Locked & Approved" : "Approve Final Investigation"}
-                  </button>
-                </div>
-              </header>
+              
 
               <div className="px-6 py-10 max-w-[1360px] mx-auto w-full grid grid-cols-12 gap-7 pb-36">
                 
@@ -2053,7 +2147,7 @@ export default function Page() {
                   </div>
 
                   <div className="grid grid-cols-4 gap-4 select-none">
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-xs transition-shadow">
                       <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Feedback status</div>
                       <div className="text-lg font-extrabold text-neutral-900 mt-2 flex items-center gap-1.5">
                         <CheckCircle2 className="w-3 h-3 text-emerald-500" />
@@ -2062,7 +2156,7 @@ export default function Page() {
                       <span className="text-[10px] text-neutral-450 block mt-1">CMMS timestamp fixed</span>
                     </div>
 
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-xs transition-shadow">
                       <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Confidence Score</div>
                       <div className="text-xl font-extrabold text-[#2C52F5] mt-2 flex items-baseline gap-1 font-mono">
                         <span>98%</span>
@@ -2071,7 +2165,7 @@ export default function Page() {
                       <span className="text-[10px] text-emerald-655 font-semibold block mt-1">+4% improvement</span>
                     </div>
 
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-xs transition-shadow">
                       <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Affected Sections</div>
                       <div className="text-lg font-extrabold text-neutral-900 mt-2">
                         2 Updated
@@ -2079,7 +2173,7 @@ export default function Page() {
                       <span className="text-[10px] text-neutral-450 block mt-1">Chapters 02 & 04 modified</span>
                     </div>
 
-                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-[0_1px_1px_rgba(0,0,0,0.005),0_1px_2px_rgba(0,0,0,0.01)] transition-shadow">
+                    <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 hover:shadow-xs transition-shadow">
                       <div className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-450 font-mono">Supporting Evidence</div>
                       <div className="text-lg font-extrabold text-neutral-900 mt-2">
                         +1 Log Added
@@ -2095,7 +2189,7 @@ export default function Page() {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="border border-neutral-200/60 rounded-2xl overflow-hidden bg-white shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                      <div className="border border-neutral-200/60 rounded-2xl overflow-hidden bg-white shadow-xs">
                         <div className="bg-neutral-50 px-5 py-3 border-b border-neutral-100 flex items-center justify-between select-none">
                           <span className="font-bold text-neutral-800 text-[10.5px]">Chapter 02 · Root Cause Analysis (Primary root cause)</span>
                           <span className="text-[10.5px] font-mono text-neutral-400">Section Diff</span>
@@ -2116,7 +2210,7 @@ export default function Page() {
                         </div>
                       </div>
 
-                      <div className="border border-neutral-200/60 rounded-2xl overflow-hidden bg-white shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                      <div className="border border-neutral-200/60 rounded-2xl overflow-hidden bg-white shadow-xs">
                         <div className="bg-neutral-50 px-5 py-3 border-b border-neutral-100 flex items-center justify-between select-none">
                           <span className="font-bold text-neutral-808 text-[10.5px]">Chapter 04 · Corrective & Preventive Action</span>
                           <span className="text-[10.5px] font-mono text-neutral-400">Section Diff</span>
@@ -2144,7 +2238,7 @@ export default function Page() {
                 <div className="col-span-4 space-y-4 select-none">
                   <div className="bg-neutral-50 border border-neutral-200/60 rounded-2xl p-4 space-y-4">
                     <div className="flex items-center gap-2 text-[#2C52F5]">
-                      <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                      
                       <span className="text-[10.5px] uppercase font-bold tracking-wider font-mono">AI re-analysis explanation</span>
                     </div>
                     <p className="text-[10px] text-neutral-700 leading-relaxed font-sans font-medium text-[10px]">
@@ -2161,7 +2255,7 @@ export default function Page() {
                   </div>
 
                   <div className="bg-white border border-[#E5E7EB] rounded-2xl p-4 space-y-5">
-                    <div className="border-b border-neutral-100 pb-3 flex justify-between items-center">
+                    <div className="pb-3 flex justify-between items-center">
                       <span className="text-[10.5px] uppercase font-bold tracking-wider text-neutral-400 font-mono">Audit trail timeline</span>
                       <span className="inline-flex items-center gap-1.5 text-[10px] text-neutral-455">
                         <Clock className="w-3 h-3 text-neutral-400" />
@@ -2216,53 +2310,12 @@ export default function Page() {
               {/* ============================================================================== */}
               
               {/* Header */}
-              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <img src="/logo.png" alt="Karixa Logo" className="h-[28px] w-auto object-contain" />
-                  </div>
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[11.5px] text-neutral-905">Investigation Package Locked</span>
-                    <span className="font-mono text-[10px] text-neutral-400">DV-24081</span>
-                  </div>
-                </div>
+              
 
-                {/* View switcher */}
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                    <button
-                      onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Command Center
-                    </button>
-                    <button
-                      onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-805 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Document Review
-                    </button>
-                    <button
-                      onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Timeline Story
-                    </button>
-                    <button
-                      onClick={() => setViewMode("complete")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
-                    >
-                      Inspection Package
-                    </button>
-                  </div>
-                </div>
-              </header>
-
-              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] my-6">
+              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-md my-6">
                 
                 {/* Success Header (Calm FDA inspection-ready style) */}
-                <div className="bg-[#ECFDF5]/60 border border-emerald-250 rounded-3xl p-6 flex items-start gap-6 select-none shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                <div className="bg-[#ECFDF5]/60 border border-emerald-250 rounded-3xl p-6 flex items-start gap-6 select-none shadow-xs">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
                     <CheckCircle2 className="w-7 h-7 text-emerald-600" />
                   </div>
@@ -2308,7 +2361,7 @@ export default function Page() {
                     
                     {/* Inspection Package Deliverables */}
                     <div className="space-y-5">
-                      <div className="border-b border-neutral-100 pb-3 select-none flex justify-between items-center">
+                      <div className="pb-3 select-none flex justify-between items-center">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Regulator inspection package</span>
                         <span className="text-[10px] text-emerald-600 font-bold font-mono">All files signed, hashed & ready</span>
                       </div>
@@ -2325,7 +2378,7 @@ export default function Page() {
                           { title: "Version History", desc: "Complete tracking of report drafts V1 to V4.", size: "110 KB", hash: "SHA256-559B..D1" },
                           { title: "Regulatory Metadata", desc: "GxP compliance checklist validation certificate.", size: "65 KB", hash: "SHA256-F982..32" }
                         ].map((item, i) => (
-                          <div key={i} className="border border-neutral-200/60 rounded-2xl p-4 bg-white hover:shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-shadow flex items-start gap-4">
+                          <div key={i} className="border border-neutral-200/60 rounded-2xl p-4 bg-white hover:shadow-xs transition-shadow flex items-start gap-4">
                             <div className="w-10 h-10 rounded-xl bg-neutral-50 flex items-center justify-center flex-shrink-0">
                               <FileText className="w-5 h-5 text-neutral-450" />
                             </div>
@@ -2351,7 +2404,7 @@ export default function Page() {
                     {/* Knowledge Captured Panel (How it improves future cases) */}
                     <div className="space-y-4 bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
                       <div className="flex items-center gap-2 text-[#2C52F5] select-none">
-                        <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                        
                         <span className="text-[10px] font-bold uppercase tracking-wider font-mono">Knowledge Captured (Continuous Improvement)</span>
                       </div>
                       <div className="grid grid-cols-2 gap-4.5 text-[10px] text-neutral-700">
@@ -2382,21 +2435,21 @@ export default function Page() {
                           <Download className="w-3 h-3" />
                           <span>Download Inspection Package</span>
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-xs">
                           Export PDF Report
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-xs">
                           Export Audit Trail
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-xs">
                           Share with Quality Assurance
                         </button>
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-705 rounded-xl px-4 py-2 text-[10px] font-semibold shadow-xs">
                           Open Investigation Archive
                         </button>
                         <button
                           onClick={handleReset}
-                          className="bg-[#2C52F5] hover:bg-[#2C52F5] text-white rounded-xl px-5 py-2 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors"
+                          className="bg-[#2C52F5] hover:bg-[#2C52F5] text-white rounded-xl px-5 py-2 text-[10px] font-bold shadow-xs transition-colors"
                         >
                           Start New Investigation
                         </button>
@@ -2409,7 +2462,7 @@ export default function Page() {
                   <div className="col-span-4 space-y-4 select-none">
                     
                     {/* Investigation Summary Card (Elegant Typography instead of large block KPI cards) */}
-                    <div className="bg-white border border-neutral-200 rounded-2xl p-6 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] space-y-5">
+                    <div className="bg-white border border-neutral-200 rounded-2xl p-6 shadow-xs space-y-5">
                       <div className="border-b border-neutral-100 pb-3">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-450 font-mono">Investigation Summary</span>
                       </div>
@@ -2503,118 +2556,93 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-hidden"
             >
               {/* Header */}
-              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-4">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[11.5px] text-neutral-905">Evidence Library</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                    <button
-                      onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Command Center
-                    </button>
-                    <button
-                      onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Document Review
-                    </button>
-                    <button
-                      onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Timeline Story
-                    </button>
-                    <button
-                      onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 bg-white text-neutral-900 rounded-lg font-bold text-[10px] shadow-xs relative z-10"
-                    >
-                      Evidence Library
-                    </button>
-                  </div>
-                </div>
-              </header>
+              
 
               {/* Main Content Area */}
               <div className="flex-1 flex overflow-hidden">
                 
                 {/* Left Filter Panel (240px) */}
-                <aside className="w-[240px] border-r border-neutral-200/40 bg-[#F9FAFB] p-6 flex-shrink-0 overflow-y-auto select-none space-y-4">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-450 font-mono">
+                <aside className="w-[240px] border-r border-neutral-200/40 bg-[#F9FAFB] p-5.5 flex-shrink-0 overflow-y-auto select-none space-y-5">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-[#64748B] font-mono mb-4">
                     Filter Evidence
                   </div>
 
                   <div className="space-y-5">
                     {/* Filter Group 1: Doc Type */}
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-bold text-neutral-600 block">Document Type</label>
-                      <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
-                        <option>All Types</option>
-                        <option>CSV Spreadsheets</option>
-                        <option>PDF Documents</option>
-                        <option>JSON Data</option>
-                        <option>Word DOCX</option>
-                      </select>
+                    <div className="space-y-1.5">
+                      <label className="text-[9.5px] uppercase font-bold tracking-wider text-[#64748B] block font-mono">Document Type</label>
+                      <div className="relative">
+                        <select className="w-full bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg pl-2.5 pr-8 py-1.5 text-[11.5px] font-medium text-neutral-800 focus:outline-none focus:border-[#2C52F5] transition-colors cursor-pointer shadow-2xs appearance-none">
+                          <option>All Types</option>
+                          <option>CSV Spreadsheets</option>
+                          <option>PDF Documents</option>
+                          <option>JSON Data</option>
+                          <option>Word DOCX</option>
+                        </select>
+                        <ChevronDown className="w-3.5 h-3.5 text-neutral-450 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
                     </div>
 
                     {/* Filter Group 2: Investigation */}
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-bold text-neutral-600 block">Investigation</label>
-                      <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
-                        <option>All Cases</option>
-                        <option>DV-24081 (PX-2041)</option>
-                        <option>DV-24082 (PX-9022)</option>
-                        <option>DV-23110 (Line 4)</option>
-                      </select>
+                    <div className="space-y-1.5">
+                      <label className="text-[9.5px] uppercase font-bold tracking-wider text-[#64748B] block font-mono">Investigation</label>
+                      <div className="relative">
+                        <select className="w-full bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg pl-2.5 pr-8 py-1.5 text-[11.5px] font-medium text-neutral-800 focus:outline-none focus:border-[#2C52F5] transition-colors cursor-pointer shadow-2xs appearance-none">
+                          <option>All Cases</option>
+                          <option>DV-24081 (PX-2041)</option>
+                          <option>DV-24082 (PX-9022)</option>
+                          <option>DV-23110 (Line 4)</option>
+                        </select>
+                        <ChevronDown className="w-3.5 h-3.5 text-neutral-450 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
                     </div>
 
                     {/* Filter Group 3: Source */}
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-bold text-neutral-600 block">Evidence Source</label>
-                      <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
-                        <option>All Sources</option>
-                        <option>MES Automation</option>
-                        <option>LIMS QC Lab</option>
-                        <option>CMMS Maintenance</option>
-                        <option>SOP Vault</option>
-                      </select>
+                    <div className="space-y-1.5">
+                      <label className="text-[9.5px] uppercase font-bold tracking-wider text-[#64748B] block font-mono">Evidence Source</label>
+                      <div className="relative">
+                        <select className="w-full bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg pl-2.5 pr-8 py-1.5 text-[11.5px] font-medium text-neutral-800 focus:outline-none focus:border-[#2C52F5] transition-colors cursor-pointer shadow-2xs appearance-none">
+                          <option>All Sources</option>
+                          <option>MES Automation</option>
+                          <option>LIMS QC Lab</option>
+                          <option>CMMS Maintenance</option>
+                          <option>SOP Vault</option>
+                        </select>
+                        <ChevronDown className="w-3.5 h-3.5 text-neutral-450 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
                     </div>
 
                     {/* Filter Group 4: Verified */}
                     <div className="space-y-2">
-                      <label className="text-[11px] font-bold text-neutral-600 block">Verification Status</label>
-                      <div className="space-y-2 pt-1">
-                        <label className="flex items-center gap-2.5 text-[14px] text-neutral-700 font-medium cursor-pointer">
-                          <input type="checkbox" defaultChecked className="rounded border-neutral-350 text-[#2C52F5] focus:ring-[#2C52F5]" />
+                      <label className="text-[9.5px] uppercase font-bold tracking-wider text-[#64748B] block font-mono">Verification Status</label>
+                      <div className="space-y-2 pt-0.5">
+                        <label className="flex items-center gap-2.5 text-[11.5px] text-neutral-700 font-medium cursor-pointer hover:text-neutral-900 transition-colors">
+                          <input type="checkbox" defaultChecked className="w-3.5 h-3.5 rounded border-neutral-300 text-[#2C52F5] focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer" />
                           <span>Verified</span>
                         </label>
-                        <label className="flex items-center gap-2.5 text-[14px] text-neutral-700 font-medium cursor-pointer">
-                          <input type="checkbox" defaultChecked className="rounded border-neutral-350 text-[#2C52F5] focus:ring-[#2C52F5]" />
+                        <label className="flex items-center gap-2.5 text-[11.5px] text-neutral-700 font-medium cursor-pointer hover:text-neutral-900 transition-colors">
+                          <input type="checkbox" defaultChecked className="w-3.5 h-3.5 rounded border-neutral-300 text-[#2C52F5] focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer" />
                           <span>Flagged</span>
                         </label>
-                        <label className="flex items-center gap-2.5 text-[14px] text-neutral-700 font-medium cursor-pointer">
-                          <input type="checkbox" className="rounded border-neutral-350 text-[#2C52F5] focus:ring-[#2C52F5]" />
+                        <label className="flex items-center gap-2.5 text-[11.5px] text-neutral-700 font-medium cursor-pointer hover:text-neutral-900 transition-colors">
+                          <input type="checkbox" className="w-3.5 h-3.5 rounded border-neutral-300 text-[#2C52F5] focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer" />
                           <span>Pending Review</span>
                         </label>
                       </div>
                     </div>
 
                     {/* Filter Group 5: AI Confidence */}
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-bold text-neutral-600 block">AI Confidence Threshold</label>
-                      <select className="w-full bg-white border border-neutral-200 rounded-xl px-3 py-2 text-[14px] font-medium text-neutral-700 focus:outline-none">
-                        <option>All Levels</option>
-                        <option>&gt; 95% High Confidence</option>
-                        <option>&gt; 90% Moderate</option>
-                        <option>&gt; 80% Baseline</option>
-                      </select>
+                    <div className="space-y-1.5">
+                      <label className="text-[9.5px] uppercase font-bold tracking-wider text-[#64748B] block font-mono">AI Confidence Threshold</label>
+                      <div className="relative">
+                        <select className="w-full bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg pl-2.5 pr-8 py-1.5 text-[11.5px] font-medium text-neutral-800 focus:outline-none focus:border-[#2C52F5] transition-colors cursor-pointer shadow-2xs appearance-none">
+                          <option>All Levels</option>
+                          <option>&gt; 95% High Confidence</option>
+                          <option>&gt; 90% Moderate</option>
+                          <option>&gt; 80% Baseline</option>
+                        </select>
+                        <ChevronDown className="w-3.5 h-3.5 text-neutral-450 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
                     </div>
                   </div>
                 </aside>
@@ -2622,80 +2650,84 @@ export default function Page() {
                 {/* Center Content Workspace */}
                 <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-6 space-y-4">
                   {/* Evidence Library Title & Actions row */}
-                  <div className="flex justify-between items-end select-none">
-                    <div className="space-y-2">
-                      <h1 className="text-[24px] font-extrabold text-neutral-900 tracking-tight">Evidence Library</h1>
-                      <p className="text-[11.5px] text-neutral-500 leading-normal">
+                  <div className="flex justify-between items-start select-none">
+                    <div className="space-y-1">
+                      <h1 className="text-[20px] font-extrabold text-[#0F172A] tracking-tight">Evidence Library</h1>
+                      <p className="text-[11.5px] text-[#64748B] leading-relaxed">
                         Browse, search, and review all evidence collected across investigations.
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5 flex-shrink-0">
                       {/* AI Synced Badge */}
-                      <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-3.5 py-1.5 text-[10px] font-bold text-emerald-800">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                        <span>AI Synced</span>
+                      <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200/50 rounded-full px-2.5 py-1.5 text-[10px] font-bold text-emerald-800 whitespace-nowrap select-none">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="whitespace-nowrap">AI Synced</span>
                       </div>
 
-                      <div className="flex items-center gap-2 border border-neutral-200 rounded-xl bg-white px-3 py-2 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] w-60">
-                        <Search className="w-3 h-3 text-neutral-400" />
-                        <input
-                          type="text"
-                          placeholder="Search documents..."
-                          className="bg-transparent border-none text-[10px] focus:outline-none w-full"
-                        />
-                      </div>
-
-                      <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
-                        <Layers className="w-3 h-3 text-neutral-500" />
-                        <span>Filter</span>
-                      </button>
-
-                      <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                      {/* Upload Button */}
+                      <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-4 py-2 text-[10.5px] font-bold shadow-xs transition-colors select-none whitespace-nowrap">
                         Upload evidence
                       </button>
                     </div>
                   </div>
 
-                  {/* 4 Summary Cards (Light brand colored backgrounds) */}
+                  {/* Search and Filters Utility Row */}
+                  <div className="flex items-center gap-2.5 select-none pt-1">
+                    <div className="flex items-center gap-2 border border-neutral-200 rounded-xl bg-white px-3 py-1.5 shadow-2xs w-72">
+                      <Search className="w-3.5 h-3.5 text-neutral-400" />
+                      <input
+                        type="text"
+                        placeholder="Search documents..."
+                        className="bg-transparent border-none text-[11px] focus:outline-none w-full text-neutral-800 placeholder-neutral-400"
+                      />
+                    </div>
+
+                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10.5px] font-bold shadow-2xs flex items-center gap-2 transition-colors">
+                      <Layers className="w-3.5 h-3.5 text-neutral-500" />
+                      <span>Filter</span>
+                    </button>
+                  </div>
+
+                  {/* 4 Summary Cards */}
                   <div className="grid grid-cols-4 gap-4 select-none">
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Total Documents</div>
-                      <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">124 files</div>
-                      <span className="text-[11px] text-neutral-450 block mt-1">Telemetry, log & SOP index</span>
+                    <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                      <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">Total Documents</div>
+                      <div className="text-[18px] font-extrabold text-[#0F172A] mt-1.5 font-mono">124 files</div>
+                      <span className="text-[10px] text-[#64748B] block mt-1">Telemetry, log & SOP index</span>
                     </div>
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Evidence Sources</div>
-                      <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">8 systems</div>
-                      <span className="text-[11px] text-neutral-455 block mt-1">MES, LIMS, CMMS connected</span>
+                    <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                      <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">Evidence Sources</div>
+                      <div className="text-[18px] font-extrabold text-[#0F172A] mt-1.5 font-mono">8 systems</div>
+                      <span className="text-[10px] text-[#64748B] block mt-1">MES, LIMS, CMMS connected</span>
                     </div>
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">AI Indexed</div>
-                      <div className="text-[24px] font-extrabold text-[#2C52F5] mt-2 font-mono">98.4%</div>
-                      <span className="text-[11px] text-emerald-600 font-semibold block mt-1">Audit-ready validation</span>
+                    <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                      <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">AI Indexed</div>
+                      <div className="text-[18px] font-extrabold text-[#2C52F5] mt-1.5 font-mono">98.4%</div>
+                      <span className="text-[10px] text-emerald-600 font-semibold block mt-1">Audit-ready validation</span>
                     </div>
-                    <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono font-bold">Recently Added</div>
-                      <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">12 new</div>
-                      <span className="text-[11px] text-neutral-455 block mt-1">Last sync 4 min ago</span>
+                    <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                      <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">Recently Added</div>
+                      <div className="text-[18px] font-extrabold text-[#0F172A] mt-1.5 font-mono">12 new</div>
+                      <span className="text-[10px] text-[#64748B] block mt-1">Last sync 4 min ago</span>
                     </div>
                   </div>
 
                   {/* Evidence Table Sheet (Notion-style elevated container) */}
-                  <div className="bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)]">
-                    <table className="w-full text-[10px] text-left">
+                  <div className="bg-white border border-neutral-200/35 rounded-2xl p-5 shadow-xs overflow-x-auto">
+                    <table className="w-full text-[11px] text-left table-fixed min-w-[700px]">
                       <thead>
-                        <tr className="border-b border-neutral-100 text-neutral-400 text-[11px] uppercase font-bold font-mono select-none">
-                          <th className="pb-4">Document</th>
-                          <th className="pb-4">Source System</th>
-                          <th className="pb-4">Investigation ID</th>
-                          <th className="pb-4">Category</th>
-                          <th className="pb-4">Uploaded By</th>
-                          <th className="pb-4">AI Confidence</th>
-                          <th className="pb-4 text-right">Status</th>
+                        <tr className="border-b border-neutral-100 text-[#64748B] text-[9.5px] uppercase font-bold font-mono select-none">
+                          <th className="pb-3.5 pl-2 w-[28%]">Document</th>
+                          <th className="pb-3.5 w-[16%]">Source System</th>
+                          <th className="pb-3.5 w-[14%]">Investigation ID</th>
+                          <th className="pb-3.5 w-[14%]">Category</th>
+                          <th className="pb-3.5 w-[12%]">Uploaded By</th>
+                          <th className="pb-3.5 w-[8%]">AI Conf.</th>
+                          <th className="pb-3.5 pr-2 w-[8%] text-right">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-neutral-100 text-neutral-600 font-medium">
+                      <tbody className="divide-y divide-neutral-100 text-neutral-600 font-medium select-text">
                         {[
                           { file: "MES_Bioreactor_Logs.csv", sys: "MES Automation", inv: "DV-24081", cat: "Telemetry", user: "AI System", conf: "96%", status: "Verified" },
                           { file: "Sensor_Temperature_Trace.pdf", sys: "BMS Alarms", inv: "DV-24081", cat: "Telemetry", user: "AI System", conf: "98%", status: "Verified" },
@@ -2716,17 +2748,19 @@ export default function Page() {
                                 isSelected ? "bg-[#F8FAFC] text-neutral-900" : ""
                               )}
                             >
-                              <td className="py-4 font-semibold text-neutral-850 flex items-center gap-2">
-                                <FileText className="w-3 h-3 text-neutral-450" />
-                                <span>{row.file}</span>
+                              <td className="py-3.5 pl-2 font-semibold text-neutral-850 truncate max-w-[220px]">
+                                <div className="flex items-center gap-2 truncate">
+                                  <FileText className="w-3.5 h-3.5 text-neutral-450 flex-shrink-0" />
+                                  <span className="truncate" title={row.file}>{row.file}</span>
+                                </div>
                               </td>
-                              <td className="py-4 font-mono text-[11px]">{row.sys}</td>
-                              <td className="py-4 font-mono text-[11px]">{row.inv}</td>
-                              <td className="py-4">{row.cat}</td>
-                              <td className="py-4">{row.user}</td>
-                              <td className="py-4 font-mono text-neutral-450 font-semibold">{row.conf}</td>
-                              <td className="py-4 text-right">
-                                <span className="inline-flex items-center gap-1 text-emerald-600 text-[11px] font-bold font-mono">
+                              <td className="py-3.5 font-mono text-[10.5px] text-neutral-500 truncate" title={row.sys}>{row.sys}</td>
+                              <td className="py-3.5 font-mono text-[10.5px] text-neutral-500">{row.inv}</td>
+                              <td className="py-3.5 text-neutral-500 truncate" title={row.cat}>{row.cat}</td>
+                              <td className="py-3.5 text-neutral-500 truncate" title={row.user}>{row.user}</td>
+                              <td className="py-3.5 font-mono text-neutral-450 font-semibold">{row.conf}</td>
+                              <td className="py-3.5 pr-2 text-right">
+                                <span className="inline-flex items-center gap-1 text-emerald-600 text-[10.5px] font-bold font-mono">
                                   <Check className="w-3 h-3 stroke-[2.5]" />
                                   <span>{row.status}</span>
                                 </span>
@@ -2770,7 +2804,7 @@ export default function Page() {
                     {/* AI Summary */}
                     <div className="space-y-2">
                       <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-neutral-455 font-mono select-none">
-                        <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                        
                         <span>AI Document Summary</span>
                       </div>
                       <p className="text-[10px] leading-relaxed text-neutral-700 font-medium">
@@ -2819,14 +2853,14 @@ export default function Page() {
                         <span>Open Document</span>
                       </button>
 
-                      <button className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl py-3 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors flex items-center justify-center gap-2">
+                      <button className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl py-3 text-[10px] font-bold shadow-xs transition-colors flex items-center justify-center gap-2">
                         <Download className="w-3 h-3 text-neutral-500" />
                         <span>Download File</span>
                       </button>
 
                       <button
                         onClick={() => setViewMode("review")}
-                        className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl py-3 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] transition-colors"
+                        className="w-full bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl py-3 text-[10px] font-bold shadow-xs transition-colors"
                       >
                         View Investigation
                       </button>
@@ -2848,44 +2882,7 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-hidden"
             >
               {/* Header */}
-              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-4">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[11.5px] text-neutral-905">Knowledge Base</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                    <button
-                      onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Command Center
-                    </button>
-                    <button
-                      onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Document Review
-                    </button>
-                    <button
-                      onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Timeline Story
-                    </button>
-                    <button
-                      onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Evidence Library
-                    </button>
-                  </div>
-                </div>
-              </header>
+              
 
               {/* Main Content Area */}
               <div className="flex-1 flex overflow-hidden">
@@ -3029,71 +3026,80 @@ export default function Page() {
                 <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-6 space-y-4 flex flex-col justify-between">
                   <div className="space-y-4">
                     {/* Header Title & Actions row */}
-                    <div className="flex justify-between items-end select-none">
-                      <div className="space-y-2">
-                        <h1 className="text-[24px] font-extrabold text-neutral-900 tracking-tight">Knowledge Base</h1>
-                        <p className="text-[11.5px] text-neutral-500 leading-normal">
+                    <div className="flex justify-between items-start select-none">
+                      <div className="space-y-1">
+                        <h1 className="text-[20px] font-extrabold text-[#0F172A] tracking-tight">Knowledge Base</h1>
+                        <p className="text-[11.5px] text-[#64748B] leading-relaxed">
                           Validated organizational knowledge used to improve future AI investigations.
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2 border border-neutral-200 rounded-xl bg-white px-3 py-2 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] w-60">
-                          <Search className="w-3 h-3 text-neutral-400" />
-                          <input
-                            type="text"
-                            placeholder="Search Knowledge..."
-                            className="bg-transparent border-none text-[10px] focus:outline-none w-full"
-                          />
+                      <div className="flex items-center gap-2.5 flex-shrink-0">
+                        {/* AI Semantic Search Status Badge */}
+                        <div className="flex items-center gap-1.5 bg-[#EFF2FF] border border-[#C0D1FF]/50 rounded-full px-2.5 py-1 text-[10px] font-bold text-[#2C52F5] whitespace-nowrap select-none">
+                          <span className="relative flex h-1.5 w-1.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7B94FF] opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#2C52F5]"></span>
+                          </span>
+                          <span>Semantic Search Active</span>
                         </div>
 
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
-                          <Sparkles className="w-3 h-3 text-[#2C52F5]" />
-                          <span>AI Semantic Search</span>
-                        </button>
-
-                        <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
-                          Filter
-                        </button>
-
-                        <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                        {/* Add Knowledge Button */}
+                        <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-4 py-1.5 text-[10.5px] font-bold shadow-xs transition-colors select-none whitespace-nowrap">
                           Add Knowledge
                         </button>
                       </div>
                     </div>
 
-                    {/* 4 Summary Cards (Light brand colored backgrounds) */}
+                    {/* Search and Filters Utility Row */}
+                    <div className="flex items-center gap-2.5 select-none pt-1">
+                      <div className="flex items-center gap-2 border border-neutral-200 rounded-xl bg-white px-3 py-1.5 shadow-2xs w-72">
+                        <Search className="w-3.5 h-3.5 text-neutral-400" />
+                        <input
+                          type="text"
+                          placeholder="Search Knowledge..."
+                          className="bg-transparent border-none text-[11px] focus:outline-none w-full text-neutral-800 placeholder-neutral-400"
+                        />
+                      </div>
+
+                      <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10.5px] font-bold shadow-2xs flex items-center gap-2 transition-colors select-none whitespace-nowrap">
+                        <Layers className="w-3.5 h-3.5 text-neutral-500" />
+                        <span>Filter</span>
+                      </button>
+                    </div>
+
+                    {/* 4 Summary Cards */}
                     <div className="grid grid-cols-4 gap-4 select-none">
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Validated Cases</div>
-                        <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">318 cases</div>
-                        <span className="text-[11px] text-neutral-450 block mt-1">SOP & CAPA cross-linked</span>
+                      <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                        <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">Validated Cases</div>
+                        <div className="text-[18px] font-extrabold text-[#0F172A] mt-1.5 font-mono">318 cases</div>
+                        <span className="text-[10px] text-[#64748B] block mt-1">SOP & CAPA cross-linked</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Root Cause Patterns</div>
-                        <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">14 patterns</div>
-                        <span className="text-[11px] text-neutral-455 block mt-1">Mapped to thermal anomalies</span>
+                      <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                        <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">Root Cause Patterns</div>
+                        <div className="text-[18px] font-extrabold text-[#0F172A] mt-1.5 font-mono">14 patterns</div>
+                        <span className="text-[10px] text-[#64748B] block mt-1">Mapped to thermal anomalies</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">SOP References</div>
-                        <div className="text-[24px] font-extrabold text-[#2C52F5] mt-2 font-mono">48 SOPs</div>
-                        <span className="text-[11px] text-emerald-600 font-semibold block mt-1">Active vault compliance</span>
+                      <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                        <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">SOP References</div>
+                        <div className="text-[18px] font-extrabold text-[#2C52F5] mt-1.5 font-mono">48 SOPs</div>
+                        <span className="text-[10px] text-emerald-600 font-semibold block mt-1">Active vault compliance</span>
                       </div>
-                      <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">AI Knowledge Coverage</div>
-                        <div className="text-[24px] font-extrabold text-neutral-900 mt-2 font-mono">94.2%</div>
-                        <span className="text-[11px] text-neutral-455 block mt-1">Accuracy rate on intake files</span>
+                      <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs">
+                        <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">AI Knowledge Coverage</div>
+                        <div className="text-[18px] font-extrabold text-[#0F172A] mt-1.5 font-mono">94.2%</div>
+                        <span className="text-[10px] text-[#64748B] block mt-1">Accuracy rate on intake files</span>
                       </div>
                     </div>
 
                     {/* Two-Column Detail Block */}
                     <div className="grid grid-cols-5 gap-6 select-text">
                       {/* Left 3/5: Knowledge Detail Sheet */}
-                      <div className="col-span-3 bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-4">
+                      <div className="col-span-3 bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-md space-y-4">
                         <div className="flex justify-between items-start border-b border-neutral-100 pb-4 select-none">
                           <div className="space-y-1">
                             <span className="inline-flex items-center gap-1.5 bg-[#F1F5F9] border border-neutral-200/70 rounded-full px-3 py-1 text-[11px] font-bold text-[#2C52F5]">
-                              <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                              
                               <span>Used in 42 investigations</span>
                             </span>
                             <h2 className="text-[19px] font-extrabold text-neutral-900 mt-2">
@@ -3137,7 +3143,7 @@ export default function Page() {
                       {/* Right 2/5: Connections & What the AI Learned */}
                       <div className="col-span-2 space-y-4">
                         {/* Mapped Connections Panel */}
-                        <div className="bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-4">
+                        <div className="bg-white border border-neutral-200/35 rounded-3xl p-6 shadow-md space-y-4">
                           <div className="border-b border-neutral-100 pb-2 select-none">
                             <h3 className="font-bold text-[10.5px] text-neutral-900">Connections Map</h3>
                           </div>
@@ -3164,7 +3170,7 @@ export default function Page() {
                         {/* What the AI Learned (Smart Insights) */}
                         <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-3xl p-6 space-y-4">
                           <div className="flex items-center gap-2 text-[#2C52F5] select-none">
-                            <Sparkles className="w-3 h-3 text-[#2C52F5]" />
+                            
                             <h3 className="font-bold text-[10.5px] font-mono uppercase tracking-wider">What the AI learned</h3>
                           </div>
 
@@ -3241,47 +3247,10 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-y-auto"
             >
               {/* Header */}
-              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-4">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[11.5px] text-neutral-905">Executive Reports</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                    <button
-                      onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Command Center
-                    </button>
-                    <button
-                      onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Document Review
-                    </button>
-                    <button
-                      onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Timeline Story
-                    </button>
-                    <button
-                      onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Evidence Library
-                    </button>
-                  </div>
-                </div>
-              </header>
+              
 
               {/* Main Content Dashboard */}
-              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] my-6">
+              <div className="px-6 py-10 max-w-[1360px] mx-auto w-full space-y-10 pb-36 bg-white border border-neutral-200/45 rounded-3xl shadow-md my-6">
                 
                 {/* Reports Header Title & Actions Row */}
                 <div className="flex justify-between items-end select-none">
@@ -3293,21 +3262,21 @@ export default function Page() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
+                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-700 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-xs flex items-center gap-2">
                       <Calendar className="w-3 h-3 text-neutral-500" />
                       <span>Last 30 Days</span>
                     </button>
 
-                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-750 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] flex items-center gap-2">
+                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-750 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-xs flex items-center gap-2">
                       <Download className="w-3 h-3 text-neutral-500" />
                       <span>Export Report</span>
                     </button>
 
-                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                    <button className="bg-white border border-neutral-200 hover:bg-neutral-50 text-neutral-755 rounded-xl px-4 py-1.5 text-[10px] font-bold shadow-xs">
                       Schedule Report
                     </button>
 
-                    <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-1.5 text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)]">
+                    <button className="bg-[#2C52F5] hover:bg-[#1E40AF] text-white rounded-xl px-5 py-1.5 text-[10px] font-bold shadow-xs">
                       Share Dashboard
                     </button>
                   </div>
@@ -3315,32 +3284,32 @@ export default function Page() {
 
                 {/* 4 Premium Executive Summary Cards */}
                 <div className="grid grid-cols-4 gap-4 select-none">
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Open Investigations</div>
-                    <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-[24px] font-extrabold text-neutral-900 font-mono">18 active</div>
-                      <span className="text-[11.5px] text-amber-600 font-semibold">+3 vs last month</span>
+                  <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs flex flex-col justify-between min-h-[100px]">
+                    <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">Open Investigations</div>
+                    <div className="flex justify-between items-baseline mt-1.5">
+                      <div className="text-[18px] font-extrabold text-[#0F172A] font-mono">18 active</div>
+                      <span className="text-[10.5px] text-amber-600 font-bold whitespace-nowrap">+3 vs last month</span>
                     </div>
                   </div>
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">Average Investigation Time</div>
-                    <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-[24px] font-extrabold text-neutral-900 font-mono">3.2 hours</div>
-                      <span className="text-[11.5px] text-emerald-600 font-semibold">-72% vs last month</span>
+                  <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs flex flex-col justify-between min-h-[100px]">
+                    <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">Average Investigation Time</div>
+                    <div className="flex justify-between items-baseline mt-1.5">
+                      <div className="text-[18px] font-extrabold text-[#0F172A] font-mono">3.2 hours</div>
+                      <span className="text-[10.5px] text-emerald-600 font-bold whitespace-nowrap">-72% vs last month</span>
                     </div>
                   </div>
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">FDA Inspection Readiness</div>
-                    <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-[24px] font-extrabold text-[#2C52F5] font-mono">99.8% score</div>
-                      <span className="text-[11.5px] text-emerald-600 font-semibold">+0.4% vs last month</span>
+                  <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs flex flex-col justify-between min-h-[100px]">
+                    <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">FDA Inspection Readiness</div>
+                    <div className="flex justify-between items-baseline mt-1.5">
+                      <div className="text-[18px] font-extrabold text-[#0F172A] font-mono">99.8% score</div>
+                      <span className="text-[10.5px] text-emerald-600 font-bold whitespace-nowrap">+0.4% vs last month</span>
                     </div>
                   </div>
-                  <div className="bg-[#F8FAFC] border border-neutral-200/60 rounded-2xl p-4 flex flex-col justify-between min-h-[110px]">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#2C52F5] font-mono">AI Time Saved</div>
-                    <div className="flex justify-between items-baseline mt-2">
-                      <div className="text-[24px] font-extrabold text-neutral-900 font-mono">1,420 hours</div>
-                      <span className="text-[11.5px] text-[#2C52F5] font-semibold">+12% vs last month</span>
+                  <div className="bg-white border border-neutral-200/60 rounded-2xl p-4.5 shadow-2xs flex flex-col justify-between min-h-[100px]">
+                    <div className="text-[9px] font-mono tracking-widest text-[#64748B] uppercase font-bold">AI Time Saved</div>
+                    <div className="flex justify-between items-baseline mt-1.5">
+                      <div className="text-[18px] font-extrabold text-[#2C52F5] font-mono">1,420 hours</div>
+                      <span className="text-[10.5px] text-[#2C52F5] font-bold whitespace-nowrap">+12% vs last month</span>
                     </div>
                   </div>
                 </div>
@@ -3348,67 +3317,71 @@ export default function Page() {
                 {/* Main Dashboard Visualizations Row 1 */}
                 <div className="grid grid-cols-5 gap-6 select-none">
                   {/* Donut Chart Block (2/5) */}
-                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-4 space-y-4">
-                    <h3 className="text-[10.5px] font-bold text-neutral-905 uppercase tracking-wider font-mono">Investigation Status</h3>
-                    <div className="flex items-center gap-6 justify-center h-48">
+                  <div className="col-span-2 border border-neutral-100 rounded-2xl p-4.5 space-y-4 shadow-2xs bg-white">
+                    <h3 className="text-[9.5px] font-bold text-[#64748B] uppercase tracking-widest font-mono">Investigation Status</h3>
+                    <div className="flex items-center gap-6 justify-center h-44">
                       {/* Donut Chart Illustration */}
-                      <div className="relative w-36 h-36 flex-shrink-0">
+                      <div className="relative w-32 h-32 flex-shrink-0">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#2C52F5" strokeWidth="4.2" strokeDasharray="46 100" strokeDashoffset="0" />
-                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#10B981" strokeWidth="4.2" strokeDasharray="12 100" strokeDashoffset="-46" />
-                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#F59E0B" strokeWidth="4.2" strokeDasharray="24 100" strokeDashoffset="-58" />
-                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#EF4444" strokeWidth="4.2" strokeDasharray="18 100" strokeDashoffset="-82" />
+                          {/* Completed: 46% (dasharray 46 100, offset 0) */}
+                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#0F172A" strokeWidth="4.2" strokeDasharray="46 100" strokeDashoffset="0" />
+                          {/* In Review: 24% (dasharray 24 100, offset -46) */}
+                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#2C52F5" strokeWidth="4.2" strokeDasharray="24 100" strokeDashoffset="-46" />
+                          {/* Open: 18% (dasharray 18 100, offset -70) */}
+                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#E2E8F0" strokeWidth="4.2" strokeDasharray="18 100" strokeDashoffset="-70" />
+                          {/* Awaiting Sign-off: 12% (dasharray 12 100, offset -88) */}
+                          <circle cx="18" cy="18" r="15.915" fill="none" stroke="#818CF8" strokeWidth="4.2" strokeDasharray="12 100" strokeDashoffset="-88" />
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                          <span className="text-[24px] font-extrabold text-neutral-900 font-mono">124</span>
-                          <span className="text-[10px] text-neutral-400 font-bold uppercase mt-0.5">Total Cases</span>
+                          <span className="text-[20px] font-extrabold text-neutral-900 font-mono">124</span>
+                          <span className="text-[8.5px] text-neutral-400 font-bold uppercase mt-0.5 tracking-wider">Total Cases</span>
                         </div>
                       </div>
-                      <div className="space-y-2 text-[14px] font-semibold text-neutral-600">
+                      <div className="space-y-1.5 text-[11px] font-semibold text-neutral-600">
                         <div className="flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full bg-[#2C52F5]" />
-                          <span>Completed: 46% (57)</span>
+                          <span className="w-2.5 h-2.5 rounded bg-[#0F172A]" />
+                          <span>Completed: 46%</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full bg-[#F59E0B]" />
-                          <span>In Review: 24% (30)</span>
+                          <span className="w-2.5 h-2.5 rounded bg-[#2C52F5]" />
+                          <span>In Review: 24%</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full bg-[#EF4444]" />
-                          <span>Open: 18% (22)</span>
+                          <span className="w-2.5 h-2.5 rounded bg-[#E2E8F0] border border-neutral-300/40" />
+                          <span>Open: 18%</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full bg-[#10B981]" />
-                          <span>Awaiting Sign-off: 12% (15)</span>
+                          <span className="w-2.5 h-2.5 rounded bg-[#818CF8]" />
+                          <span>Sign-off: 12%</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Monthly Trend Chart Block (3/5) */}
-                  <div className="col-span-3 border border-neutral-100 rounded-2xl p-4 space-y-4">
+                  <div className="col-span-3 border border-neutral-100 rounded-2xl p-4.5 space-y-4 shadow-2xs bg-white">
                     <div className="flex justify-between items-baseline">
-                      <h3 className="text-[10.5px] font-bold text-neutral-905 uppercase tracking-wider font-mono">Monthly Investigation Trend</h3>
-                      <span className="text-[11px] text-amber-600 font-semibold">⚠️ Recurring seasonal spikes in summer holds</span>
+                      <h3 className="text-[9.5px] font-bold text-[#64748B] uppercase tracking-widest font-mono">Monthly Investigation Trend</h3>
+                      <span className="text-[10px] text-amber-600 font-bold">⚠️ Seasonal summer spikes detected</span>
                     </div>
-                    <div className="h-48 w-full relative">
-                      <svg className="w-full h-full" viewBox="0 0 300 80" preserveAspectRatio="none">
+                    <div className="h-44 w-full relative pt-2">
+                      <svg className="w-full h-[140px]" viewBox="0 0 300 80" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#2C52F5" stopOpacity="0.03" />
+                            <stop offset="0%" stopColor="#2C52F5" stopOpacity="0.08" />
                             <stop offset="100%" stopColor="#2C52F5" stopOpacity="0" />
                           </linearGradient>
                         </defs>
                         {/* Area Fill */}
-                        <path d="M 0 70 Q 25 65, 50 68 T 100 50 T 150 72 T 200 38 T 250 62 T 300 48 L 300 80 L 0 80 Z" fill="url(#trendGrad)" />
+                        <path d="M 0 58 C 25 55, 50 35, 75 35 C 100 35, 125 62, 150 62 C 175 62, 200 22, 225 22 C 250 22, 275 48, 300 48 L 300 80 L 0 80 Z" fill="url(#trendGrad)" />
                         {/* Smooth Line */}
-                        <path d="M 0 70 Q 25 65, 50 68 T 100 50 T 150 72 T 200 38 T 250 62 T 300 48" fill="none" stroke="#2C52F5" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M 0 58 C 25 55, 50 35, 75 35 C 100 35, 125 62, 150 62 C 175 62, 200 22, 225 22 C 250 22, 275 48, 300 48" fill="none" stroke="#2C52F5" strokeWidth="2" strokeLinecap="round" />
                         {/* Highlighting Spikes */}
-                        <circle cx="100" cy="50" r="3.5" fill="#EF4444" />
-                        <circle cx="200" cy="38" r="3.5" fill="#EF4444" />
+                        <circle cx="75" cy="35" r="3" fill="#EF4444" />
+                        <circle cx="225" cy="22" r="3" fill="#EF4444" />
                       </svg>
                       {/* Months Labels */}
-                      <div className="flex justify-between text-[11px] text-neutral-400 font-mono mt-2 uppercase tracking-wide">
+                      <div className="flex justify-between text-[10px] text-neutral-400 font-mono mt-1.5 uppercase tracking-wide px-1.5">
                         <span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
                       </div>
                     </div>
@@ -3496,7 +3469,7 @@ export default function Page() {
                 {/* Bottom Section: Recent Investigation Activity Table */}
                 <div className="space-y-4">
                   <h3 className="text-[10.5px] font-bold text-neutral-900 uppercase tracking-wider font-mono select-none">Recent Investigation Activity</h3>
-                  <div className="bg-white border border-neutral-250/30 rounded-3xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)]">
+                  <div className="bg-white border border-neutral-250/30 rounded-3xl p-4 shadow-md">
                     <table className="w-full text-[10px] text-left">
                       <thead>
                         <tr className="border-b border-neutral-100 text-neutral-400 text-[11px] uppercase font-bold font-mono select-none">
@@ -3554,44 +3527,7 @@ export default function Page() {
               className="flex-1 flex flex-col bg-[#F8F9FC] select-text overflow-hidden"
             >
               {/* Header */}
-              <header className="h-[58px] border-b border-neutral-200 flex-shrink-0 flex items-center justify-between px-6 bg-white sticky top-0 z-30 select-none">
-                <div className="flex items-center gap-4">
-                  <img src="/logo.png" alt="Karixa Logo" className="h-[25px] w-auto object-contain" />
-                  <div className="w-px h-6 bg-neutral-200" />
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[11.5px] text-neutral-905">System Settings</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-[#F4F4F5] border border-neutral-200/40 rounded-xl p-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.01),0_2px_4px_rgba(0,0,0,0.015)] relative">
-                    <button
-                      onClick={() => setViewMode("home")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-800 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Command Center
-                    </button>
-                    <button
-                      onClick={() => setViewMode("review")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Document Review
-                    </button>
-                    <button
-                      onClick={() => setViewMode("timeline")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Timeline Story
-                    </button>
-                    <button
-                      onClick={() => setViewMode("evidence")}
-                      className="px-4 py-2 text-neutral-505 hover:text-neutral-808 font-semibold text-[10px] transition-colors relative z-10"
-                    >
-                      Evidence Library
-                    </button>
-                  </div>
-                </div>
-              </header>
+              
 
               {/* Main Content Area */}
               <div className="flex-1 flex overflow-hidden">
@@ -3629,10 +3565,10 @@ export default function Page() {
 
                 {/* Right Content Workspace */}
                 <main className="flex-1 overflow-y-auto bg-[#F8F9FC] p-7 select-text">
-                  <div className="max-w-[720px] bg-white border border-neutral-200/35 rounded-3xl p-7 shadow-[0_1px_3px_rgba(0,0,0,0.01),0_12px_45px_rgba(0,0,0,0.015)] space-y-4">
+                  <div className="max-w-[720px] bg-white border border-neutral-200/35 rounded-3xl p-7 shadow-md space-y-4">
                     
                     {/* Header Details */}
-                    <div className="border-b border-neutral-100 pb-5 select-none">
+                    <div className="pb-5 select-none">
                       <h2 className="text-[19px] font-extrabold text-neutral-900 tracking-tight">
                         {activeSettingsTab === "profile" && "User Profile"}
                         {activeSettingsTab === "ai" && "AI Preferences & Thresholds"}
