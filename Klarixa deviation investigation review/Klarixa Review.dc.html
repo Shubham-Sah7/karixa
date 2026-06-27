@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #FFFFFF; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background: #E0E7FF; }
+  @keyframes rv-pulse { 0%{opacity:1;} 50%{opacity:0.4;} 100%{opacity:1;} }
+  .rv-para:hover .rv-meta { opacity:1 !important; }
+  .rv-para:hover { background:#FAFAFA; }
+  .rv-out:hover { color:#111827 !important; border-color:#C7D2FE !important; }
+  .rv-scroll::-webkit-scrollbar { width:10px; }
+  .rv-scroll::-webkit-scrollbar-thumb { background:#E5E7EB; border-radius:999px; border:3px solid #fff; }
+  .rv-cite { display:inline-flex; align-items:center; justify-content:center; vertical-align:super; font-size:10px; font-weight:600; line-height:1; color:#4F46E5; background:#EEF2FF; border-radius:4px; padding:2px 4px; margin-left:2px; cursor:pointer; font-variant-numeric:normal; }
+  .rv-cite:hover { background:#E0E7FF; }
+  [contenteditable]:focus { outline:none; }
+  @media (max-width:1180px){ .rv-outline{ display:none !important; } }
+  @media (max-width:920px){ .rv-rail{ display:none !important; } }
+</style>
+</helmet>
+
+<div style="height:100vh; display:flex; flex-direction:column; background:#FFFFFF; font-family:'Inter',system-ui,sans-serif; color:#111827; font-variant-numeric:tabular-nums;">
+
+  <!-- TOP BAR -->
+  <header style="height:60px; flex-shrink:0; border-bottom:1px solid #E5E7EB; display:flex; align-items:center; justify-content:space-between; padding:0 24px; background:#FFFFFF; z-index:30;">
+    <div style="display:flex; align-items:center; gap:16px; min-width:0;">
+      <a href="Klarixa Investigation.dc.html" class="rv-out" style="display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:500; color:#6B7280; text-decoration:none; border:1px solid transparent; padding:6px 9px; border-radius:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back
+      </a>
+      <div style="width:1px; height:24px; background:#E5E7EB;"></div>
+      <div style="min-width:0;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:15px; font-weight:650; letter-spacing:-0.02em; color:#111827; white-space:nowrap;">Deviation investigation</span>
+          <span style="font-family:'Inter'; font-size:12.5px; font-weight:500; color:#9CA3AF;">DV-24081</span>
+          <span style="display:inline-flex; align-items:center; gap:6px; background:#F3F4F6; border:1px solid #E5E7EB; border-radius:999px; padding:3px 10px; font-size:11.5px; font-weight:550; color:#374151;">
+            <span style="width:6px; height:6px; border-radius:999px; background:#6366F1;"></span>AI draft · in review
+          </span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div style="display:flex; align-items:center; gap:8px; padding-right:4px;">
+        <div style="display:flex; align-items:center;">
+          <div style="width:28px; height:28px; border-radius:999px; background:#111827; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; border:2px solid #FFFFFF;">AI</div>
+          <div style="width:28px; height:28px; border-radius:999px; background:#4F46E5; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:600; border:2px solid #FFFFFF; margin-left:-8px;">AR</div>
+        </div>
+        <div style="line-height:1.25;">
+          <div style="font-size:12.5px; font-weight:600; color:#111827;">Dr. Anita Rao</div>
+          <div style="font-size:11px; color:#9CA3AF;">with Klarixa AI · updated 12 min ago</div>
+        </div>
+      </div>
+      <div style="width:1px; height:24px; background:#E5E7EB;"></div>
+      <button style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:9px; padding:8px 14px; font-size:13px; font-weight:500; color:#374151; cursor:pointer; font-family:inherit;">Save draft</button>
+      <button style="background:#111827; border:1px solid #111827; border-radius:9px; padding:8px 16px; font-size:13px; font-weight:600; color:#FFFFFF; cursor:pointer; font-family:inherit;">Approve investigation</button>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <div style="flex:1; min-height:0; display:flex;">
+
+    <!-- LEFT OUTLINE -->
+    <nav class="rv-outline" style="width:232px; flex-shrink:0; border-right:1px solid #E5E7EB; padding:28px 20px; overflow-y:auto;" >
+      <div style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; margin-bottom:16px;">Report contents</div>
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <sc-for list="{{ outline }}" as="o" hint-placeholder-count="5">
+          <a href="{{ o.href }}" style="display:flex; align-items:baseline; gap:10px; text-decoration:none; padding:8px 10px; border-radius:8px; background:{{ o.bg }};">
+            <span style="font-family:'Inter'; font-size:11px; font-weight:600; color:{{ o.numColor }}; width:16px; flex-shrink:0;">{{ o.num }}</span>
+            <span style="font-size:13px; font-weight:{{ o.weight }}; color:{{ o.color }}; line-height:1.35;">{{ o.label }}</span>
+          </a>
+        </sc-for>
+      </div>
+
+      <div style="height:1px; background:#F3F4F6; margin:22px 0;"></div>
+
+      <div style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; margin-bottom:14px;">Draft health</div>
+      <div style="display:flex; flex-direction:column; gap:13px;">
+        <div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+            <span style="font-size:12.5px; color:#6B7280;">Overall confidence</span>
+            <span style="font-size:12.5px; font-weight:600; color:#111827;">94%</span>
+          </div>
+          <div style="height:5px; border-radius:999px; background:#F3F4F6; overflow:hidden;"><div style="height:100%; width:94%; background:#4F46E5; border-radius:999px;"></div></div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:12.5px; color:#6B7280;">Sections approved</span>
+          <span style="font-size:12.5px; font-weight:600; color:#111827;">0 / 5</span>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:12.5px; color:#6B7280;">Needs review</span>
+          <span style="font-size:12.5px; font-weight:600; color:#B45309;">1 item</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- CENTER DOCUMENT -->
+    <main class="rv-scroll" style="flex:1; min-width:0; overflow-y:auto;">
+      <div style="max-width:720px; margin:0 auto; padding:44px 56px 120px;">
+
+        <!-- doc header -->
+        <div style="margin-bottom:8px;">
+          <div style="display:inline-flex; align-items:center; gap:7px; background:#F5F3FF; border:1px solid #E0E7FF; border-radius:999px; padding:4px 11px; margin-bottom:18px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+            <span style="font-size:12px; font-weight:600; color:#4F46E5;">Drafted by Klarixa AI</span>
+          </div>
+          <h1 style="font-size:32px; font-weight:680; letter-spacing:-0.03em; line-height:1.12; color:#111827; margin:0 0 12px;">Temperature excursion — Batch PX-2041</h1>
+          <p style="font-size:14px; color:#6B7280; margin:0; line-height:1.55;">Investigation report · Generated 14 June 2026, 00:41 IST · Version 3 · Reviewed by Dr. Anita Rao</p>
+        </div>
+
+        <div style="height:1px; background:#E5E7EB; margin:28px 0 8px;"></div>
+
+        <!-- ===== 01 EXECUTIVE SUMMARY ===== -->
+        <section id="sec-exec" style="padding-top:28px;">
+          <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:14px;">
+            <span style="font-size:13px; font-weight:600; color:#C7CBD1;">01</span>
+            <h2 style="font-size:20px; font-weight:650; letter-spacing:-0.02em; color:#111827; margin:0;">Executive summary</h2>
+          </div>
+
+          <div class="rv-para" onClick="{{ select.exec1 }}" style="margin:0 -20px; padding:12px 20px; border-left:2px solid {{ sel.exec1.b }}; background:{{ sel.exec1.g }}; border-radius:0 10px 10px 0; cursor:pointer; transition:background 160ms,border-color 160ms;">
+            <p contentEditable="{{ ed.exec1 }}" style="font-size:16.5px; line-height:1.78; color:#1F2937; margin:0; outline:{{ sel.exec1.o }}; outline-offset:6px; border-radius:4px;">On 14 June 2026, cold-chain unit 3 logged a temperature excursion during the overnight hold of Batch PX-2041, a refrigerated drug product. The temperature rose above the validated 8.0&nbsp;°C limit for approximately 38 minutes, peaking at 10.4&nbsp;°C at 01:05 IST.<span class="rv-cite">1</span> Stability testing confirms the batch remains within assay and impurity specifications; the deviation is therefore classified as a storage-condition excursion of high severity, pending disposition.<span class="rv-cite">2</span></p>
+            <div class="rv-meta" style="display:flex; align-items:center; gap:14px; margin-top:12px; opacity:{{ sel.exec1.m }}; transition:opacity 160ms;">
+              <span style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#4F46E5;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI generated</span>
+              <span style="font-size:11.5px; color:#9CA3AF;">96% confidence</span>
+              <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+              <span style="font-size:11.5px; color:#9CA3AF;">8 supporting documents</span>
+              <button onClick="{{ edit.exec1 }}" class="rv-out" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#6B7280; background:none; border:1px solid transparent; border-radius:7px; padding:4px 8px; cursor:pointer; font-family:inherit;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>{{ ed.exec1Label }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 02 ROOT CAUSE ===== -->
+        <section id="sec-root" style="padding-top:40px;">
+          <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:14px;">
+            <span style="font-size:13px; font-weight:600; color:#C7CBD1;">02</span>
+            <h2 style="font-size:20px; font-weight:650; letter-spacing:-0.02em; color:#111827; margin:0;">Root cause analysis</h2>
+          </div>
+
+          <div class="rv-para" onClick="{{ select.root1 }}" style="margin:0 -20px; padding:12px 20px; border-left:2px solid {{ sel.root1.b }}; background:{{ sel.root1.g }}; border-radius:0 10px 10px 0; cursor:pointer; transition:background 160ms,border-color 160ms;">
+            <p contentEditable="{{ ed.root1 }}" style="font-size:16.5px; line-height:1.78; color:#1F2937; margin:0; outline:{{ sel.root1.o }}; outline-offset:6px; border-radius:4px;">The primary root cause is a mechanical failure of the refrigeration valve on cold-chain unit 3, which did not fully close during the compressor cycle and admitted intermittent warm-air ingress.<span class="rv-cite">3</span> Sensor telemetry shows a 2.4&nbsp;°C drift consistent with periodic warm-air entry rather than a sustained compressor loss, and the maintenance record confirms the valve assembly was last serviced outside its scheduled interval.<span class="rv-cite">4</span></p>
+            <div class="rv-meta" style="display:flex; align-items:center; gap:14px; margin-top:12px; opacity:{{ sel.root1.m }}; transition:opacity 160ms;">
+              <span style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#4F46E5;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI generated</span>
+              <span style="font-size:11.5px; color:#9CA3AF;">94% confidence</span>
+              <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+              <span style="font-size:11.5px; color:#9CA3AF;">6 supporting documents</span>
+              <button onClick="{{ edit.root1 }}" class="rv-out" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#6B7280; background:none; border:1px solid transparent; border-radius:7px; padding:4px 8px; cursor:pointer; font-family:inherit;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>{{ ed.root1Label }}
+              </button>
+            </div>
+          </div>
+
+          <div class="rv-para" onClick="{{ select.root2 }}" style="margin:8px -20px 0; padding:12px 20px; border-left:2px solid {{ sel.root2.b }}; background:{{ sel.root2.g }}; border-radius:0 10px 10px 0; cursor:pointer; transition:background 160ms,border-color 160ms;">
+            <p contentEditable="{{ ed.root2 }}" style="font-size:16.5px; line-height:1.78; color:#1F2937; margin:0; outline:{{ sel.root2.o }}; outline-offset:6px; border-radius:4px;">A contributing factor is the unit's preventive-maintenance cadence, which lagged the revised schedule by 11 days at the time of the event.<span class="rv-cite">5</span> No operator or process error was identified; alarm acknowledgement followed SOP-114 within the permitted response window.</p>
+            <div class="rv-meta" style="display:flex; align-items:center; gap:14px; margin-top:12px; opacity:{{ sel.root2.m }}; transition:opacity 160ms;">
+              <span style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#4F46E5;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI generated</span>
+              <span style="font-size:11.5px; color:#9CA3AF;">88% confidence</span>
+              <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+              <span style="font-size:11.5px; color:#9CA3AF;">4 supporting documents</span>
+              <button onClick="{{ edit.root2 }}" class="rv-out" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#6B7280; background:none; border:1px solid transparent; border-radius:7px; padding:4px 8px; cursor:pointer; font-family:inherit;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>{{ ed.root2Label }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 03 IMPACT ===== -->
+        <section id="sec-impact" style="padding-top:40px;">
+          <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:14px;">
+            <span style="font-size:13px; font-weight:600; color:#C7CBD1;">03</span>
+            <h2 style="font-size:20px; font-weight:650; letter-spacing:-0.02em; color:#111827; margin:0;">Impact assessment</h2>
+          </div>
+
+          <div class="rv-para" onClick="{{ select.impact1 }}" style="margin:0 -20px; padding:12px 20px; border-left:2px solid {{ sel.impact1.b }}; background:{{ sel.impact1.g }}; border-radius:0 10px 10px 0; cursor:pointer; transition:background 160ms,border-color 160ms;">
+            <p contentEditable="{{ ed.impact1 }}" style="font-size:16.5px; line-height:1.78; color:#1F2937; margin:0; outline:{{ sel.impact1.o }}; outline-offset:6px; border-radius:4px;">Product impact is assessed as low. The affected batch met all release criteria on retest, and accelerated-stability modelling predicts no measurable reduction in shelf life from a single 38-minute excursion at 10.4&nbsp;°C.<span class="rv-cite">6</span> Quality impact is contained to Batch PX-2041; no adjacent batches shared the affected unit during the hold window.<span class="rv-cite">7</span></p>
+            <div class="rv-meta" style="display:flex; align-items:center; gap:14px; margin-top:12px; opacity:{{ sel.impact1.m }}; transition:opacity 160ms;">
+              <span style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#4F46E5;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI generated</span>
+              <span style="font-size:11.5px; color:#9CA3AF;">91% confidence</span>
+              <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+              <span style="font-size:11.5px; color:#9CA3AF;">5 supporting documents</span>
+              <button onClick="{{ edit.impact1 }}" class="rv-out" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#6B7280; background:none; border:1px solid transparent; border-radius:7px; padding:4px 8px; cursor:pointer; font-family:inherit;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>{{ ed.impact1Label }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 04 CAPA ===== -->
+        <section id="sec-capa" style="padding-top:40px;">
+          <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:14px;">
+            <span style="font-size:13px; font-weight:600; color:#C7CBD1;">04</span>
+            <h2 style="font-size:20px; font-weight:650; letter-spacing:-0.02em; color:#111827; margin:0;">Corrective &amp; preventive actions</h2>
+          </div>
+
+          <div class="rv-para" onClick="{{ select.capa1 }}" style="margin:0 -20px; padding:12px 20px; border-left:2px solid {{ sel.capa1.b }}; background:{{ sel.capa1.g }}; border-radius:0 10px 10px 0; cursor:pointer; transition:background 160ms,border-color 160ms;">
+            <div style="font-size:11.5px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#6B7280; margin-bottom:7px;">Corrective</div>
+            <p contentEditable="{{ ed.capa1 }}" style="font-size:16.5px; line-height:1.78; color:#1F2937; margin:0; outline:{{ sel.capa1.o }}; outline-offset:6px; border-radius:4px;">Replace the refrigeration valve assembly on cold-chain unit 3 and requalify the unit against the validated temperature profile before returning it to GxP service.<span class="rv-cite">8</span></p>
+            <div class="rv-meta" style="display:flex; align-items:center; gap:14px; margin-top:12px; opacity:{{ sel.capa1.m }}; transition:opacity 160ms;">
+              <span style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#4F46E5;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI generated</span>
+              <span style="font-size:11.5px; color:#9CA3AF;">90% confidence</span>
+              <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+              <span style="font-size:11.5px; color:#9CA3AF;">4 supporting documents</span>
+              <button onClick="{{ edit.capa1 }}" class="rv-out" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#6B7280; background:none; border:1px solid transparent; border-radius:7px; padding:4px 8px; cursor:pointer; font-family:inherit;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>{{ ed.capa1Label }}
+              </button>
+            </div>
+          </div>
+
+          <div class="rv-para" onClick="{{ select.capa2 }}" style="margin:8px -20px 0; padding:12px 20px; border-left:2px solid {{ sel.capa2.b }}; background:{{ sel.capa2.g }}; border-radius:0 10px 10px 0; cursor:pointer; transition:background 160ms,border-color 160ms;">
+            <div style="font-size:11.5px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#6B7280; margin-bottom:7px;">Preventive</div>
+            <p contentEditable="{{ ed.capa2 }}" style="font-size:16.5px; line-height:1.78; color:#1F2937; margin:0; outline:{{ sel.capa2.o }}; outline-offset:6px; border-radius:4px;">Shorten the preventive-maintenance interval for all cold-chain valves on this line and add an automated overdue-calibration alert to the maintenance system to prevent recurrence.<span class="rv-cite">9</span></p>
+            <div class="rv-meta" style="display:flex; align-items:center; gap:14px; margin-top:12px; opacity:{{ sel.capa2.m }}; transition:opacity 160ms;">
+              <span style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#4F46E5;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI generated</span>
+              <span style="font-size:11.5px; color:#9CA3AF;">85% confidence</span>
+              <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+              <span style="font-size:11.5px; color:#9CA3AF;">3 supporting documents</span>
+              <button onClick="{{ edit.capa2 }}" class="rv-out" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#6B7280; background:none; border:1px solid transparent; border-radius:7px; padding:4px 8px; cursor:pointer; font-family:inherit;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>{{ ed.capa2Label }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 05 RECOMMENDATION ===== -->
+        <section id="sec-rec" style="padding-top:40px;">
+          <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:14px;">
+            <span style="font-size:13px; font-weight:600; color:#C7CBD1;">05</span>
+            <h2 style="font-size:20px; font-weight:650; letter-spacing:-0.02em; color:#111827; margin:0;">Final recommendation</h2>
+          </div>
+
+          <div class="rv-para" onClick="{{ select.rec1 }}" style="margin:0 -20px; padding:16px 20px; border-left:2px solid {{ sel.rec1.b }}; background:{{ sel.rec1.g }}; border-radius:0 10px 10px 0; cursor:pointer; transition:background 160ms,border-color 160ms;">
+            <p contentEditable="{{ ed.rec1 }}" style="font-size:18px; line-height:1.7; font-weight:450; color:#111827; margin:0; outline:{{ sel.rec1.o }}; outline-offset:6px; border-radius:4px;">Disposition Batch PX-2041 as <strong style="font-weight:600;">released with deviation documented</strong>, on the basis that all product-quality specifications were met. Approve the CAPA plan above and schedule an effectiveness review at 90 days. This investigation is ready for Quality Assurance sign-off.</p>
+            <div class="rv-meta" style="display:flex; align-items:center; gap:14px; margin-top:12px; opacity:{{ sel.rec1.m }}; transition:opacity 160ms;">
+              <span style="display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#4F46E5;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI generated</span>
+              <span style="font-size:11.5px; color:#9CA3AF;">93% confidence</span>
+              <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+              <span style="font-size:11.5px; color:#9CA3AF;">7 supporting documents</span>
+              <button onClick="{{ edit.rec1 }}" class="rv-out" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:500; color:#6B7280; background:none; border:1px solid transparent; border-radius:7px; padding:4px 8px; cursor:pointer; font-family:inherit;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>{{ ed.rec1Label }}
+              </button>
+            </div>
+          </div>
+
+          <!-- approval footer -->
+          <div style="display:flex; align-items:center; gap:12px; margin-top:36px; padding-top:24px; border-top:1px solid #E5E7EB;">
+            <button style="background:#111827; border:1px solid #111827; border-radius:10px; padding:12px 22px; font-size:14px; font-weight:600; color:#FFFFFF; cursor:pointer; font-family:inherit;">Approve investigation</button>
+            <button style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; padding:12px 18px; font-size:14px; font-weight:500; color:#374151; cursor:pointer; font-family:inherit;">Request AI revision</button>
+            <span style="margin-left:auto; font-size:12.5px; color:#9CA3AF;">Sign-off is logged to the audit trail.</span>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- RIGHT CONTEXT RAIL -->
+    <aside class="rv-rail rv-scroll" style="width:384px; flex-shrink:0; border-left:1px solid #E5E7EB; overflow-y:auto; background:#FCFCFD;">
+
+      <!-- rail header -->
+      <div style="padding:20px 22px 18px; border-bottom:1px solid #ECECEC; position:sticky; top:0; background:#FCFCFD; z-index:5;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; margin-bottom:8px;">Reviewing</div>
+        <div style="font-size:15px; font-weight:600; color:#111827; letter-spacing:-0.01em; margin-bottom:3px;">{{ rcSectionLabel }}</div>
+        <div style="font-size:12.5px; color:#6B7280; line-height:1.45;">{{ rcParaLabel }}</div>
+      </div>
+
+      <!-- confidence -->
+      <div style="padding:20px 22px; border-bottom:1px solid #ECECEC;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF;">Confidence breakdown</span>
+          <span style="font-size:18px; font-weight:680; letter-spacing:-0.02em; color:#111827;">{{ rcConfidence }}</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <sc-for list="{{ rcConfBars }}" as="bar" hint-placeholder-count="4">
+            <div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;">
+                <span style="font-size:12.5px; color:#374151;">{{ bar.label }}</span>
+                <span style="font-size:12px; font-weight:600; color:#6B7280;">{{ bar.pctLabel }}</span>
+              </div>
+              <div style="height:5px; border-radius:999px; background:#F0F0F1; overflow:hidden;"><div style="height:100%; width:{{ bar.pct }}; background:#4F46E5; border-radius:999px;"></div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- AI reasoning -->
+      <div style="padding:20px 22px; border-bottom:1px solid #ECECEC;">
+        <div style="display:flex; align-items:center; gap:7px; margin-bottom:12px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF;">AI reasoning</span>
+        </div>
+        <p style="font-size:13.5px; line-height:1.6; color:#374151; margin:0 0 14px;">{{ rcReasoning }}</p>
+        <button class="rv-out" style="display:inline-flex; align-items:center; gap:7px; width:100%; justify-content:center; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:9px; padding:10px; font-size:13px; font-weight:550; color:#374151; cursor:pointer; font-family:inherit;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          Ask AI to explain
+        </button>
+      </div>
+
+      <!-- supporting evidence -->
+      <div style="padding:20px 22px; border-bottom:1px solid #ECECEC;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:13px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF;">Supporting evidence</span>
+          <span style="font-size:12px; font-weight:600; color:#6B7280;">{{ rcEvidenceCount }}</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <sc-for list="{{ rcEvidence }}" as="ev" hint-placeholder-count="3">
+            <div class="rv-para" style="display:flex; align-items:flex-start; gap:11px; padding:9px 8px; border-radius:9px; cursor:pointer;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <div style="min-width:0;">
+                <div style="font-size:13px; font-weight:500; color:#111827; line-height:1.35;">{{ ev.title }}</div>
+                <div style="font-size:11.5px; color:#9CA3AF; margin-top:2px;">{{ ev.meta }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- source documents -->
+      <div style="padding:20px 22px; border-bottom:1px solid #ECECEC;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; margin-bottom:13px;">Source documents</div>
+        <div style="display:flex; flex-direction:column;">
+          <sc-for list="{{ rcSources }}" as="src" hint-placeholder-count="3">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 0; border-bottom:1px solid #F3F4F5;">
+              <div style="min-width:0;">
+                <div style="font-size:13px; font-weight:500; color:#111827; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ src.title }}</div>
+                <div style="font-size:11.5px; color:#9CA3AF; margin-top:1px;">{{ src.type }}</div>
+              </div>
+              <span style="font-size:11.5px; font-weight:600; color:#374151; flex-shrink:0;">{{ src.conf }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- similar historical -->
+      <div style="padding:20px 22px; border-bottom:1px solid #ECECEC;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; margin-bottom:13px;">Similar investigations</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <sc-for list="{{ rcSimilar }}" as="sim" hint-placeholder-count="2">
+            <div class="rv-para" style="padding:11px; border:1px solid #ECECEC; border-radius:10px; background:#FFFFFF; cursor:pointer;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;">
+                <span style="font-family:'Inter'; font-size:11.5px; font-weight:600; color:#6B7280;">{{ sim.id }}</span>
+                <span style="font-size:11px; font-weight:600; color:#4F46E5;">{{ sim.match }} match</span>
+              </div>
+              <div style="font-size:13px; font-weight:500; color:#111827; line-height:1.4; margin-bottom:4px;">{{ sim.title }}</div>
+              <div style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color:#6B7280;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>{{ sim.outcome }}
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- needs review (only when present) -->
+      <sc-if value="{{ rcHasFlag }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 22px; border-bottom:1px solid #ECECEC;">
+          <div style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#B45309; margin-bottom:12px;">Needs your review</div>
+          <div style="display:flex; align-items:flex-start; gap:10px; background:#FFFBEB; border:1px solid #FDE68A; border-radius:10px; padding:13px 14px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <p style="font-size:12.5px; line-height:1.5; color:#92400E; margin:0;">{{ rcFlag }}</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- comments -->
+      <div style="padding:20px 22px 28px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF;">Comments</span>
+          <span style="font-size:11.5px; color:#9CA3AF;">{{ rcCommentCount }}</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:16px;">
+          <sc-for list="{{ rcComments }}" as="cm" hint-placeholder-count="1">
+            <div style="display:flex; align-items:flex-start; gap:10px;">
+              <div style="width:26px; height:26px; border-radius:999px; background:{{ cm.bg }}; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:600; flex-shrink:0;">{{ cm.initials }}</div>
+              <div style="min-width:0;">
+                <div style="display:flex; align-items:baseline; gap:8px;">
+                  <span style="font-size:12.5px; font-weight:600; color:#111827;">{{ cm.author }}</span>
+                  <span style="font-size:11px; color:#9CA3AF;">{{ cm.time }}</span>
+                </div>
+                <p style="font-size:13px; line-height:1.5; color:#374151; margin:4px 0 0;">{{ cm.text }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="border:1px solid #E5E7EB; border-radius:11px; background:#FFFFFF; padding:10px 12px;">
+          <div style="font-size:13px; color:#9CA3AF;">Add a comment or @mention…</div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:14px;">
+            <div style="display:flex; gap:6px; color:#C7CBD1;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+            </div>
+            <button style="background:#111827; border:none; border-radius:8px; padding:7px 14px; font-size:12.5px; font-weight:600; color:#FFFFFF; cursor:pointer; font-family:inherit;">Comment</button>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { selected: "root1", editingId: null };
+
+  ids = ["exec1", "root1", "root2", "impact1", "capa1", "capa2", "rec1"];
+
+  select(id) { this.setState({ selected: id }); }
+  toggleEdit(id) {
+    this.setState(s => ({ editingId: s.editingId === id ? null : id, selected: id }));
+  }
+
+  renderVals() {
+    const selected = this.state.selected;
+    const editingId = this.state.editingId;
+
+    const sel = {}, ed = {}, selectH = {}, editH = {};
+    this.ids.forEach(id => {
+      const active = selected === id;
+      const editing = editingId === id;
+      sel[id] = {
+        b: (active || editing) ? "#6366F1" : "transparent",
+        g: editing ? "#F5F3FF" : (active ? "#FAFAFE" : "transparent"),
+        o: editing ? "2px solid #C7D2FE" : "none",
+        m: active ? "1" : "0.55",
+      };
+      ed[id] = editing;
+      ed[id + "Label"] = editing ? "Done" : "Edit";
+      selectH[id] = () => this.select(id);
+      editH[id] = () => this.toggleEdit(id);
+    });
+
+    const meta = {
+      exec1:   { section: "01 · Executive summary", para: "Opening summary paragraph" },
+      root1:   { section: "02 · Root cause analysis", para: "Primary root cause" },
+      root2:   { section: "02 · Root cause analysis", para: "Contributing factor" },
+      impact1: { section: "03 · Impact assessment", para: "Product & quality impact" },
+      capa1:   { section: "04 · Corrective & preventive actions", para: "Corrective action" },
+      capa2:   { section: "04 · Corrective & preventive actions", para: "Preventive action" },
+      rec1:    { section: "05 · Final recommendation", para: "Disposition & sign-off" },
+    };
+
+    const outlineDef = [
+      { id: "exec",   key: "exec1",   num: "01", label: "Executive summary",   href: "#sec-exec" },
+      { id: "root",   key: "root1",   num: "02", label: "Root cause analysis", href: "#sec-root" },
+      { id: "impact", key: "impact1", num: "03", label: "Impact assessment",   href: "#sec-impact" },
+      { id: "capa",   key: "capa1",   num: "04", label: "Corrective & preventive", href: "#sec-capa" },
+      { id: "rec",    key: "rec1",    num: "05", label: "Final recommendation", href: "#sec-rec" },
+    ];
+    const sectionOf = { exec1:"exec", root1:"root", root2:"root", impact1:"impact", capa1:"capa", capa2:"capa", rec1:"rec" };
+    const activeSection = sectionOf[selected];
+    const outline = outlineDef.map(o => {
+      const on = o.id === activeSection;
+      return {
+        num: o.num, label: o.label, href: o.href,
+        bg: on ? "#F3F4F6" : "transparent",
+        color: on ? "#111827" : "#6B7280",
+        numColor: on ? "#4F46E5" : "#C7CBD1",
+        weight: on ? "600" : "450",
+      };
+    });
+
+    const ctx = {
+      exec1: {
+        confidence: "96%",
+        confBars: [
+          { label: "Evidence quality", pct: "96%", pctLabel: "96%" },
+          { label: "Source agreement", pct: "94%", pctLabel: "94%" },
+          { label: "Data completeness", pct: "92%", pctLabel: "92%" },
+        ],
+        reasoning: "I summarised the deviation from the batch record, the sensor trace, and the stability result, then classified severity. I called it high because the excursion breached a validated storage limit — while noting the batch still met specification, the two facts that most shape disposition.",
+        evidenceCount: "8 documents",
+        evidence: [
+          { title: "Deviation report DV-24081", meta: "Quality system · filed 14 Jun" },
+          { title: "Sensor temperature trace", meta: "Cold unit 3 · 22:00–02:00" },
+          { title: "Stability retest summary", meta: "LIMS · 16 Jun" },
+        ],
+        sources: [
+          { title: "Batch record PX-2041", type: "MES", conf: "96%" },
+          { title: "Excursion alarm log", type: "BMS", conf: "95%" },
+          { title: "Stability report SR-0612", type: "LIMS", conf: "92%" },
+        ],
+        similar: [
+          { id: "DV-23110", title: "Cold-chain excursion, Line 4", match: "91%", outcome: "Released with deviation" },
+        ],
+        comments: [
+          { initials: "AR", author: "Dr. Anita Rao", time: "8 min ago", text: "Severity classification looks right. Confirm the peak timestamp against BMS before sign-off.", bg: "#4F46E5" },
+        ],
+        flag: null,
+      },
+      root1: {
+        confidence: "94%",
+        confBars: [
+          { label: "Evidence quality", pct: "95%", pctLabel: "95%" },
+          { label: "Precedent match", pct: "88%", pctLabel: "88%" },
+          { label: "Cross-source agreement", pct: "96%", pctLabel: "96%" },
+          { label: "Data completeness", pct: "91%", pctLabel: "91%" },
+        ],
+        reasoning: "I weighted the valve-malfunction hypothesis above compressor failure because the sensor pattern shows intermittent warm-air spikes, not a monotonic rise. The CMMS service record and three historical precedents on this line reinforce the mechanical-valve conclusion.",
+        evidenceCount: "6 documents",
+        evidence: [
+          { title: "Valve maintenance record", meta: "CMMS · last service 14 Jun" },
+          { title: "Sensor drift analysis", meta: "AI-derived · 2.4 °C intermittent" },
+          { title: "Compressor cycle log", meta: "BMS · cycles normal" },
+        ],
+        sources: [
+          { title: "CMMS work order WO-8841", type: "Maintenance", conf: "78%" },
+          { title: "Sensor trace (raw)", type: "BMS", conf: "94%" },
+          { title: "CAPA-2208 closure", type: "Quality", conf: "89%" },
+        ],
+        similar: [
+          { id: "CAPA-2208", title: "Valve seal intermittent failure", match: "93%", outcome: "Root cause confirmed mechanical" },
+          { id: "CAPA-1602", title: "Door-seal drift, cold store 2", match: "81%", outcome: "Preventive interval shortened" },
+        ],
+        comments: [
+          { initials: "AR", author: "Dr. Anita Rao", time: "5 min ago", text: "Agree on the valve. The service-record timestamp conflict needs resolving — see flag.", bg: "#4F46E5" },
+          { initials: "JK", author: "J. Kapoor · Eng", time: "2 min ago", text: "Pulling the original work order now.", bg: "#0F766E" },
+        ],
+        flag: "Maintenance records from 14 June log the valve service at both 14:02 and 16:40. Confirm the correct time before approving this root cause.",
+      },
+      root2: {
+        confidence: "88%",
+        confBars: [
+          { label: "Evidence quality", pct: "86%", pctLabel: "86%" },
+          { label: "Schedule data", pct: "90%", pctLabel: "90%" },
+          { label: "Cross-source agreement", pct: "88%", pctLabel: "88%" },
+        ],
+        reasoning: "Maintenance cadence is a contributing factor, not the proximate cause. I separated it so the CAPA can address the systemic scheduling gap without overstating its role in this specific event.",
+        evidenceCount: "4 documents",
+        evidence: [
+          { title: "PM schedule SCH-114", meta: "11 days overdue at event" },
+          { title: "SOP-114 alarm response", meta: "Operator action compliant" },
+        ],
+        sources: [
+          { title: "Preventive-maintenance plan", type: "CMMS", conf: "90%" },
+          { title: "SOP-114 rev. 6", type: "DMS", conf: "85%" },
+        ],
+        similar: [
+          { id: "CAPA-1974", title: "Overdue PM contributed to fault", match: "84%", outcome: "Interval revised line-wide" },
+        ],
+        comments: [],
+        flag: null,
+      },
+      impact1: {
+        confidence: "91%",
+        confBars: [
+          { label: "Retest coverage", pct: "94%", pctLabel: "94%" },
+          { label: "Stability model fit", pct: "90%", pctLabel: "90%" },
+          { label: "Batch isolation", pct: "92%", pctLabel: "92%" },
+        ],
+        reasoning: "Impact is low because retest passed and accelerated-stability modelling predicts no shelf-life loss for a single short excursion. I confirmed no adjacent batches shared the unit during the window, so quality impact stays contained to PX-2041.",
+        evidenceCount: "5 documents",
+        evidence: [
+          { title: "Release retest results", meta: "LIMS · all within spec" },
+          { title: "Accelerated-stability model", meta: "AI-derived · no shelf-life loss" },
+          { title: "Unit occupancy log", meta: "No adjacent batches" },
+        ],
+        sources: [
+          { title: "Stability report SR-0612", type: "LIMS", conf: "92%" },
+          { title: "Batch genealogy PX-2041", type: "MES", conf: "93%" },
+          { title: "Storage occupancy export", type: "BMS", conf: "89%" },
+        ],
+        similar: [
+          { id: "DV-23110", title: "Single short excursion, no impact", match: "88%", outcome: "No shelf-life reduction" },
+        ],
+        comments: [],
+        flag: null,
+      },
+      capa1: {
+        confidence: "90%",
+        confBars: [
+          { label: "Action specificity", pct: "93%", pctLabel: "93%" },
+          { label: "SOP alignment", pct: "90%", pctLabel: "90%" },
+          { label: "Precedent match", pct: "87%", pctLabel: "87%" },
+        ],
+        reasoning: "The corrective action targets the failed component directly. Requalification against the validated profile is required before GxP return per SOP-114, so I made that an explicit gate rather than an optional step.",
+        evidenceCount: "4 documents",
+        evidence: [
+          { title: "Valve replacement procedure", meta: "Engineering · WI-220" },
+          { title: "Requalification protocol", meta: "Validated temp profile" },
+        ],
+        sources: [
+          { title: "SOP-114 rev. 6", type: "DMS", conf: "90%" },
+          { title: "CAPA-2208 corrective steps", type: "Quality", conf: "89%" },
+        ],
+        similar: [
+          { id: "CAPA-2208", title: "Valve replaced + requalified", match: "94%", outcome: "Effective at 90-day review" },
+        ],
+        comments: [],
+        flag: null,
+      },
+      capa2: {
+        confidence: "85%",
+        confBars: [
+          { label: "Systemic coverage", pct: "88%", pctLabel: "88%" },
+          { label: "Feasibility", pct: "85%", pctLabel: "85%" },
+          { label: "Precedent match", pct: "82%", pctLabel: "82%" },
+        ],
+        reasoning: "The preventive action addresses the scheduling gap that allowed the valve to run past service. An automated overdue alert closes the detection loop so a missed interval surfaces before it can cause another excursion.",
+        evidenceCount: "3 documents",
+        evidence: [
+          { title: "PM interval analysis", meta: "AI-recommended cadence" },
+          { title: "Alerting capability spec", meta: "CMMS module" },
+        ],
+        sources: [
+          { title: "Maintenance system config", type: "CMMS", conf: "85%" },
+          { title: "CAPA-1974 preventive steps", type: "Quality", conf: "83%" },
+        ],
+        similar: [
+          { id: "CAPA-1974", title: "Automated overdue-PM alert added", match: "86%", outcome: "Recurrence eliminated" },
+        ],
+        comments: [],
+        flag: null,
+      },
+      rec1: {
+        confidence: "93%",
+        confBars: [
+          { label: "Spec compliance", pct: "97%", pctLabel: "97%" },
+          { label: "CAPA completeness", pct: "90%", pctLabel: "90%" },
+          { label: "Precedent match", pct: "91%", pctLabel: "91%" },
+        ],
+        reasoning: "I recommend release-with-deviation because every product-quality specification was met; the only nonconformance is storage condition, which the CAPA resolves. An effectiveness review at 90 days follows standard practice and keeps the loop auditable.",
+        evidenceCount: "7 documents",
+        evidence: [
+          { title: "Full specification panel", meta: "LIMS · all pass" },
+          { title: "CAPA plan summary", meta: "Corrective + preventive" },
+          { title: "Disposition precedent set", meta: "3 comparable cases" },
+        ],
+        sources: [
+          { title: "Release criteria checklist", type: "QMS", conf: "97%" },
+          { title: "Stability report SR-0612", type: "LIMS", conf: "92%" },
+          { title: "CAPA-2208 outcome", type: "Quality", conf: "89%" },
+        ],
+        similar: [
+          { id: "DV-23110", title: "Released with deviation", match: "90%", outcome: "Accepted by QA" },
+          { id: "CAPA-2208", title: "Comparable disposition", match: "88%", outcome: "Closed effective" },
+        ],
+        comments: [
+          { initials: "AR", author: "Dr. Anita Rao", time: "just now", text: "Ready to approve once the timestamp flag in section 02 is cleared.", bg: "#4F46E5" },
+        ],
+        flag: null,
+      },
+    };
+
+    const c = ctx[selected] || ctx.root1;
+    const m = meta[selected] || meta.root1;
+
+    return {
+      sel, ed, select: selectH, edit: editH, outline,
+      rcSectionLabel: m.section,
+      rcParaLabel: m.para,
+      rcConfidence: c.confidence,
+      rcConfBars: c.confBars,
+      rcReasoning: c.reasoning,
+      rcEvidenceCount: c.evidenceCount,
+      rcEvidence: c.evidence,
+      rcSources: c.sources,
+      rcSimilar: c.similar,
+      rcComments: c.comments,
+      rcCommentCount: c.comments.length ? (c.comments.length + (c.comments.length === 1 ? " comment" : " comments")) : "None yet",
+      rcHasFlag: !!c.flag,
+      rcFlag: c.flag || "",
+    };
+  }
+}
+</script>
+</body>
+</html>

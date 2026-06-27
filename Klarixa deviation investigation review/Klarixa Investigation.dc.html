@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #FFFFFF; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background: #E0E7FF; }
+  @keyframes klx-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.45); }
+    70% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+    100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+  }
+  @keyframes klx-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes klx-draw { from { stroke-dashoffset: 1400; } to { stroke-dashoffset: 0; } }
+  .klx-nav:hover { background:#F9FAFB; color:#111827 !important; }
+  .klx-rail:hover { color:#111827 !important; background:#F4F4F5 !important; }
+  .klx-scroll::-webkit-scrollbar { width:10px; }
+  .klx-scroll::-webkit-scrollbar-thumb { background:#E5E7EB; border-radius:999px; border:3px solid #fff; }
+  @media (max-width:1180px){
+    .klx-grid{ grid-template-columns:1fr !important; }
+    .klx-grid > div:last-child{ position:static !important; top:auto !important; }
+    .klx-kpi{ grid-template-columns:1fr 1fr !important; }
+  }
+  @media (max-width:620px){ .klx-kpi{ grid-template-columns:1fr !important; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#FFFFFF; font-family:'Inter',system-ui,sans-serif; color:#111827; font-variant-numeric:tabular-nums; display:flex;">
+
+  <!-- ============ LEFT SIDEBAR ============ -->
+  <aside style="width:248px; flex-shrink:0; height:100vh; position:sticky; top:0; border-right:1px solid #E5E7EB; background:#FFFFFF; display:flex; flex-direction:column; padding:22px 16px;">
+    <div style="display:flex; align-items:center; gap:10px; padding:4px 8px 26px;">
+      <div style="width:30px; height:30px; border-radius:9px; background:#111827; display:flex; align-items:center; justify-content:center;">
+        <div style="width:11px; height:11px; border-radius:3px; background:#FFFFFF;"></div>
+      </div>
+      <span style="font-size:18px; font-weight:650; letter-spacing:-0.025em; color:#111827;">Klarixa</span>
+    </div>
+
+    <div style="font-size:11px; font-weight:600; color:#9CA3AF; letter-spacing:0.06em; text-transform:uppercase; padding:0 8px 10px;">Workspace</div>
+    <nav style="display:flex; flex-direction:column; gap:2px;">
+      <a href="#" style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:10px; text-decoration:none; font-size:13.5px; font-weight:550; color:#111827; background:#F3F4F6;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        Investigations
+        <span style="margin-left:auto; font-size:11px; font-weight:600; color:#6B7280; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:999px; padding:1px 7px;">3</span>
+      </a>
+      <a href="#" class="klx-nav" style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:10px; text-decoration:none; font-size:13.5px; font-weight:450; color:#6B7280;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+        Evidence
+      </a>
+      <a href="#" class="klx-nav" style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:10px; text-decoration:none; font-size:13.5px; font-weight:450; color:#6B7280;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+        Knowledge
+      </a>
+      <a href="#" class="klx-nav" style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:10px; text-decoration:none; font-size:13.5px; font-weight:450; color:#6B7280;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6" rx="1"/><rect x="13" y="7" width="3" height="10" rx="1"/></svg>
+        Reports
+      </a>
+      <a href="#" class="klx-nav" style="display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:10px; text-decoration:none; font-size:13.5px; font-weight:450; color:#6B7280;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div style="margin-top:auto; display:flex; flex-direction:column; gap:14px;">
+      <div style="background:#F9FAFB; border:1px solid #E5E7EB; border-radius:14px; padding:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+          <span style="width:7px; height:7px; border-radius:999px; background:#10B981; animation:klx-pulse 2s infinite;"></span>
+          <span style="font-size:12.5px; font-weight:600; color:#111827;">GxP audit mode</span>
+        </div>
+        <div style="font-size:12px; font-weight:450; color:#6B7280; line-height:1.45;">Every AI step is logged and inspection-ready.</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; padding:6px 4px;">
+        <div style="width:34px; height:34px; border-radius:999px; background:#111827; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600;">AR</div>
+        <div style="line-height:1.25; min-width:0;">
+          <div style="font-size:13px; font-weight:600; color:#111827; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Dr. Anita Rao</div>
+          <div style="font-size:11.5px; color:#9CA3AF;">Quality investigator</div>
+        </div>
+        <button style="margin-left:auto; width:30px; height:30px; border:none; background:none; cursor:pointer; color:#9CA3AF; display:flex; align-items:center; justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main style="flex:1; min-width:0; display:flex; flex-direction:column; height:100vh; overflow-y:auto;" class="klx-scroll">
+
+    <!-- TOP BAR -->
+    <header style="height:64px; flex-shrink:0; border-bottom:1px solid #E5E7EB; display:flex; align-items:center; justify-content:space-between; padding:0 28px; position:sticky; top:0; background:rgba(255,255,255,0.9); backdrop-filter:saturate(180%) blur(8px); z-index:40;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:13px; font-weight:500; color:#9CA3AF;">Investigations</span>
+        <span style="color:#D1D5DB;">/</span>
+        <span style="font-size:13px; font-weight:600; color:#111827;">DV-24081</span>
+        <span style="margin-left:8px; display:inline-flex; align-items:center; gap:6px; background:#F3F4F6; border:1px solid #E5E7EB; border-radius:999px; padding:3px 10px; font-size:11.5px; font-weight:550; color:#374151;">
+          <span style="width:6px; height:6px; border-radius:999px; background:#6366F1;"></span>AI draft ready
+        </span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button style="width:36px; height:36px; border:1px solid #E5E7EB; background:#FFFFFF; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#6B7280;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        </button>
+        <button style="width:36px; height:36px; border:1px solid #E5E7EB; background:#FFFFFF; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#6B7280;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </button>
+        <div style="display:flex; align-items:center; gap:10px; border:1px solid #E5E7EB; border-radius:999px; padding:5px 14px 5px 6px; margin-left:4px;">
+          <div style="width:30px; height:30px; border-radius:999px; background:#111827; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:600;">AR</div>
+          <div style="line-height:1.2;">
+            <div style="font-size:11px; color:#9CA3AF;">Welcome back,</div>
+            <div style="font-size:13px; font-weight:600; color:#111827;">Dr. Rao</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div style="padding:28px 28px 56px;">
+
+      <!-- PAGE HEADING -->
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:24px;">
+        <div>
+          <h1 style="font-size:27px; font-weight:680; letter-spacing:-0.03em; color:#111827; margin:0 0 8px; line-height:1.12;">Deviation investigation</h1>
+          <p style="font-size:15px; font-weight:450; color:#6B7280; margin:0; line-height:1.5; max-width:620px;">Temperature excursion detected during Batch PX-2041. <span style="color:#374151;">The AI investigation draft is ready for your review.</span></p>
+        </div>
+        <div style="display:flex; align-items:center; gap:9px;">
+          <button style="display:inline-flex; align-items:center; gap:7px; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; padding:9px 14px; font-size:13px; font-weight:550; color:#374151; cursor:pointer; font-family:inherit;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+          <button style="background:#111827; border:1px solid #111827; border-radius:10px; padding:9px 18px; font-size:13px; font-weight:600; color:#FFFFFF; cursor:pointer; font-family:inherit;">Review investigation</button>
+        </div>
+      </div>
+
+      <!-- KPI ROW -->
+      <div class="klx-kpi" style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:16px;">
+        <sc-for list="{{ kpis }}" as="kpi" hint-placeholder-count="4">
+          <div style="background:#F9FAFB; border:1px solid #E5E7EB; border-radius:16px; padding:18px 20px;">
+            <div style="font-size:12.5px; font-weight:500; color:#6B7280; margin-bottom:12px;">{{ kpi.label }}</div>
+            <div style="display:flex; align-items:baseline; gap:8px;">
+              <span style="font-size:28px; font-weight:680; letter-spacing:-0.03em; color:#111827; line-height:1;">{{ kpi.value }}</span>
+              <span style="font-size:13px; font-weight:550; color:{{ kpi.deltaColor }};">{{ kpi.delta }}</span>
+            </div>
+            <div style="font-size:12px; font-weight:450; color:#9CA3AF; margin-top:8px;">{{ kpi.sub }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- TWO COLUMN -->
+      <div class="klx-grid" style="display:grid; grid-template-columns:1fr 392px; gap:16px; align-items:start;">
+
+        <!-- LEFT -->
+        <div style="display:flex; flex-direction:column; gap:16px; min-width:0;">
+
+          <!-- TEMPERATURE EXCURSION CHART -->
+          <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:16px; padding:24px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px;">
+              <div>
+                <h2 style="font-size:15px; font-weight:600; color:#111827; margin:0 0 4px; letter-spacing:-0.01em;">Sensor temperature — overnight hold</h2>
+                <p style="font-size:13px; font-weight:450; color:#6B7280; margin:0;">Cold unit 3 · Batch PX-2041 · 14 Jun, 22:00–02:00 IST</p>
+              </div>
+              <div style="display:flex; align-items:center; gap:16px;">
+                <div style="display:flex; align-items:center; gap:7px;">
+                  <span style="width:18px; height:3px; border-radius:2px; background:#4F46E5;"></span>
+                  <span style="font-size:12px; font-weight:500; color:#6B7280;">In spec</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:7px;">
+                  <span style="width:18px; height:3px; border-radius:2px; background:#DC2626;"></span>
+                  <span style="font-size:12px; font-weight:500; color:#6B7280;">Excursion</span>
+                </div>
+              </div>
+            </div>
+
+            <svg viewBox="0 0 790 272" width="100%" style="display:block; overflow:visible;">
+              <!-- out-of-spec faint zone -->
+              <rect x="50" y="30" width="690" height="90" fill="#FEF2F2"/>
+              <!-- gridlines -->
+              <line x1="50" y1="240" x2="740" y2="240" stroke="#E5E7EB" stroke-width="1"/>
+              <line x1="50" y1="180" x2="740" y2="180" stroke="#F3F4F6" stroke-width="1"/>
+              <line x1="50" y1="60"  x2="740" y2="60"  stroke="#F3F4F6" stroke-width="1"/>
+              <!-- y labels -->
+              <text x="40" y="244" text-anchor="end" font-family="Inter" font-size="11" fill="#9CA3AF">4°</text>
+              <text x="40" y="184" text-anchor="end" font-family="Inter" font-size="11" fill="#9CA3AF">6°</text>
+              <text x="40" y="124" text-anchor="end" font-family="Inter" font-size="11" fill="#9CA3AF">8°</text>
+              <text x="40" y="64"  text-anchor="end" font-family="Inter" font-size="11" fill="#9CA3AF">10°</text>
+              <!-- excursion window band -->
+              <rect x="504" y="30" width="130" height="210" fill="rgba(220,38,38,0.05)"/>
+              <text x="569" y="44" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#B91C1C">≈38 min excursion</text>
+              <!-- spec limit line -->
+              <line x1="50" y1="120" x2="740" y2="120" stroke="#DC2626" stroke-width="1.25" stroke-dasharray="5 4" opacity="0.55"/>
+              <text x="740" y="113" text-anchor="end" font-family="Inter" font-size="11" font-weight="600" fill="#B91C1C">Validated max · 8°C</text>
+              <!-- area fill indigo -->
+              <polygon points="50,240 50,207 136,210 222,204 309,210 395,201 452,177 504,120 539,78 582,48 613,87 634,120 677,168 740,204 740,240" fill="#4F46E5" opacity="0.06"/>
+              <!-- area fill red arc -->
+              <polygon points="504,120 539,78 582,48 613,87 634,120" fill="#DC2626" opacity="0.10"/>
+              <!-- line in-spec A -->
+              <polyline points="50,207 136,210 222,204 309,210 395,201 452,177 504,120" fill="none" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- line excursion -->
+              <polyline points="504,120 539,78 582,48 613,87 634,120" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- line in-spec C -->
+              <polyline points="634,120 677,168 740,204" fill="none" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- peak marker -->
+              <circle cx="582" cy="48" r="4.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2.5"/>
+              <g>
+                <rect x="540" y="14" width="84" height="22" rx="6" fill="#111827"/>
+                <text x="582" y="29" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="600" fill="#FFFFFF">10.4° · 01:05</text>
+              </g>
+              <!-- x labels -->
+              <text x="50"  y="262" text-anchor="middle" font-family="Inter" font-size="11" fill="#9CA3AF">22:00</text>
+              <text x="222" y="262" text-anchor="middle" font-family="Inter" font-size="11" fill="#9CA3AF">23:00</text>
+              <text x="395" y="262" text-anchor="middle" font-family="Inter" font-size="11" fill="#9CA3AF">00:00</text>
+              <text x="568" y="262" text-anchor="middle" font-family="Inter" font-size="11" fill="#9CA3AF">01:00</text>
+              <text x="740" y="262" text-anchor="middle" font-family="Inter" font-size="11" fill="#9CA3AF">02:00</text>
+            </svg>
+          </div>
+
+          <!-- ROOT CAUSE + EVIDENCE BREAKDOWN -->
+          <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:16px; padding:24px;">
+            <div style="display:flex; align-items:center; gap:9px; margin-bottom:14px;">
+              <div style="width:22px; height:22px; border-radius:7px; background:#EEF2FF; display:flex; align-items:center; justify-content:center;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2Z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+              </div>
+              <h2 style="font-size:15px; font-weight:600; color:#111827; margin:0; letter-spacing:-0.01em;">AI proposed root cause</h2>
+            </div>
+            <p style="font-size:15.5px; font-weight:450; line-height:1.62; color:#1F2937; margin:0 0 22px; max-width:640px; text-wrap:pretty;">A refrigeration valve on the primary cold-chain unit failed to fully close during the overnight hold, allowing intermittent warm-air ingress. The resulting temperature instability pushed Batch PX-2041 outside its validated storage range for approximately 38 minutes, producing the observed specification deviation. Sensor and maintenance evidence consistently point to mechanical valve malfunction rather than operator or process error.</p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#E5E7EB; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden;">
+                <div style="background:#F9FAFB; padding:14px 16px;">
+                  <div style="font-size:11.5px; font-weight:500; color:#9CA3AF; margin-bottom:6px;">Evidence strength</div>
+                  <div style="font-size:16px; font-weight:650; color:#111827;">Strong</div>
+                </div>
+                <div style="background:#F9FAFB; padding:14px 16px;">
+                  <div style="font-size:11.5px; font-weight:500; color:#9CA3AF; margin-bottom:6px;">Confidence</div>
+                  <div style="font-size:16px; font-weight:650; color:#111827;">94%</div>
+                </div>
+                <div style="background:#F9FAFB; padding:14px 16px;">
+                  <div style="font-size:11.5px; font-weight:500; color:#9CA3AF; margin-bottom:6px;">Residual risk</div>
+                  <div style="font-size:16px; font-weight:650; color:#B45309;">Medium</div>
+                </div>
+                <div style="background:#F9FAFB; padding:14px 16px;">
+                  <div style="font-size:11.5px; font-weight:500; color:#9CA3AF; margin-bottom:6px;">Supporting</div>
+                  <div style="font-size:16px; font-weight:650; color:#111827;">18 docs</div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11.5px; font-weight:600; color:#9CA3AF; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:14px;">Evidence reviewed by source</div>
+                <div style="display:flex; flex-direction:column; gap:11px;">
+                  <sc-for list="{{ evidenceBars }}" as="bar" hint-placeholder-count="5">
+                    <div>
+                      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;">
+                        <span style="font-size:12.5px; font-weight:500; color:#374151;">{{ bar.label }}</span>
+                        <span style="font-size:12px; font-weight:600; color:#6B7280;">{{ bar.count }}</span>
+                      </div>
+                      <div style="height:6px; border-radius:999px; background:#F3F4F6; overflow:hidden;">
+                        <div style="height:100%; width:{{ bar.pct }}; border-radius:999px; background:#4F46E5;"></div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI PROGRESS TIMELINE -->
+          <div style="background:#F9FAFB; border:1px solid #E5E7EB; border-radius:16px; padding:24px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+              <h2 style="font-size:14.5px; font-weight:600; color:#111827; margin:0; letter-spacing:-0.01em;">AI progress</h2>
+              <span style="font-size:12px; font-weight:500; color:#6B7280;">5 of 6 steps complete</span>
+            </div>
+            <div style="display:flex; flex-direction:column;">
+              <sc-for list="{{ steps }}" as="step" hint-placeholder-count="5">
+                <div style="display:flex; align-items:flex-start; gap:12px; padding-bottom:16px;">
+                  <div style="display:flex; flex-direction:column; align-items:center; align-self:stretch;">
+                    <div style="width:20px; height:20px; border-radius:999px; background:#111827; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div style="width:1.5px; flex:1; background:#E5E7EB; margin-top:4px;"></div>
+                  </div>
+                  <div style="padding-top:1px;">
+                    <div style="font-size:14px; font-weight:500; color:#374151;">{{ step.label }}</div>
+                  </div>
+                </div>
+              </sc-for>
+              <div style="display:flex; align-items:flex-start; gap:12px;">
+                <div style="width:20px; height:20px; border-radius:999px; background:#FFFFFF; border:2px solid #6366F1; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <span style="width:7px; height:7px; border-radius:999px; background:#6366F1; animation:klx-pulse 2s infinite;"></span>
+                </div>
+                <div style="padding-top:1px;">
+                  <div style="font-size:12px; font-weight:600; color:#6366F1; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:2px;">Current step</div>
+                  <div style="font-size:14px; font-weight:550; color:#111827;">Waiting for investigator approval</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EVIDENCE PREVIEW -->
+          <div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin:8px 4px 12px;">
+              <h2 style="font-size:14.5px; font-weight:600; color:#111827; margin:0; letter-spacing:-0.01em;">Evidence preview</h2>
+              <a href="#" style="font-size:13px; font-weight:500; color:#4F46E5; text-decoration:none;">View all 18</a>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+              <sc-for list="{{ docs }}" as="doc" hint-placeholder-count="3">
+                <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:14px; padding:18px; display:flex; flex-direction:column; gap:14px;">
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between;">
+                    <div style="width:34px; height:34px; border-radius:9px; background:#F3F4F6; display:flex; align-items:center; justify-content:center; color:#6B7280;">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+                    </div>
+                    <span style="font-size:11.5px; font-weight:600; color:#374151; background:#F9FAFB; border:1px solid #E5E7EB; border-radius:999px; padding:3px 8px;">{{ doc.confidence }}</span>
+                  </div>
+                  <div>
+                    <div style="font-size:14px; font-weight:600; color:#111827; line-height:1.3; margin-bottom:3px;">{{ doc.title }}</div>
+                    <div style="font-size:12px; color:#9CA3AF;">{{ doc.meta }}</div>
+                  </div>
+                  <button style="margin-top:2px; width:100%; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:9px; padding:8px; font-size:13px; font-weight:550; color:#374151; cursor:pointer; font-family:inherit;">Open</button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT — STICKY AI PANEL -->
+        <div style="position:sticky; top:88px;">
+          <div style="background:#F9FAFB; border:1px solid #E5E7EB; border-radius:16px; overflow:hidden;">
+            <div style="padding:20px 22px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #EEF0F2;">
+              <div style="display:flex; align-items:center; gap:9px;">
+                <div style="width:24px; height:24px; border-radius:7px; background:#111827; display:flex; align-items:center; justify-content:center;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M5 12H3M21 12h-2"/><rect x="7" y="7" width="10" height="10" rx="2.5"/></svg>
+                </div>
+                <span style="font-size:15px; font-weight:600; color:#111827; letter-spacing:-0.01em;">AI analysis</span>
+              </div>
+              <button onClick="{{ toggleReasoning }}" style="display:inline-flex; align-items:center; gap:6px; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:999px; padding:4px 10px; font-size:11.5px; font-weight:550; color:#374151; cursor:pointer; font-family:inherit;">
+                <span style="width:6px; height:6px; border-radius:999px; background:#10B981;"></span>{{ reasoningLabel }}
+              </button>
+            </div>
+
+            <sc-if value="{{ reasoningVisible }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:20px 22px;">
+                <div style="font-size:11.5px; font-weight:600; color:#9CA3AF; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:14px;">What I analyzed</div>
+                <div style="display:flex; flex-direction:column; gap:11px;">
+                  <sc-for list="{{ analyzed }}" as="item" hint-placeholder-count="5">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span style="font-size:13.5px; font-weight:450; color:#374151;">{{ item }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="height:1px; background:#EEF0F2; margin:0 22px;"></div>
+            </sc-if>
+
+            <div style="padding:20px 22px;">
+              <div style="font-size:11.5px; font-weight:600; color:#9CA3AF; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:14px;">Potential risks</div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <sc-for list="{{ risks }}" as="risk" hint-placeholder-count="3">
+                  <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden;">
+                    <div onClick="{{ risk.onToggle }}" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; cursor:pointer;">
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <span style="width:7px; height:7px; border-radius:999px; background:{{ risk.dot }};"></span>
+                        <span style="font-size:13.5px; font-weight:550; color:#111827;">{{ risk.title }}</span>
+                      </div>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ risk.rotate }}; transition:transform 180ms cubic-bezier(0.22,1,0.36,1);"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <sc-if value="{{ risk.expanded }}" hint-placeholder-val="{{ false }}">
+                      <div style="padding:0 14px 13px; margin-top:-2px;">
+                        <div style="font-size:12.5px; font-weight:450; line-height:1.55; color:#6B7280;">{{ risk.detail }}</div>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="height:1px; background:#EEF0F2; margin:0 22px;"></div>
+
+            <div style="padding:20px 22px;">
+              <div style="font-size:11.5px; font-weight:600; color:#9CA3AF; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:12px;">What needs human review</div>
+              <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:12px; padding:14px;">
+                <div style="display:flex; align-items:flex-start; gap:10px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <div style="font-size:13px; font-weight:500; line-height:1.5; color:#92400E;">Maintenance records from 14 June contain conflicting timestamps that should be confirmed before sign-off.</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <button style="flex:1; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:9px; padding:9px; font-size:12.5px; font-weight:550; color:#374151; cursor:pointer; font-family:inherit;">Review evidence</button>
+                <button style="flex:1; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:9px; padding:9px; font-size:12.5px; font-weight:550; color:#374151; cursor:pointer; font-family:inherit;">Ask AI to explain</button>
+              </div>
+            </div>
+
+            <div style="height:1px; background:#EEF0F2; margin:0 22px;"></div>
+
+            <div style="padding:18px 22px 22px; display:flex; flex-direction:column; gap:9px;">
+              <button style="width:100%; background:#111827; border:1px solid #111827; border-radius:11px; padding:13px; font-size:14px; font-weight:600; color:#FFFFFF; cursor:pointer; font-family:inherit;">Review investigation</button>
+              <button style="width:100%; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:11px; padding:12px; font-size:13.5px; font-weight:550; color:#374151; cursor:pointer; font-family:inherit;">Pause AI</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FLOATING AI STATUS PILL -->
+  <sc-if value="{{ showFloatingPill }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed; bottom:24px; right:24px; z-index:60; display:flex; align-items:center; gap:11px; background:#111827; border-radius:999px; padding:11px 16px 11px 14px; box-shadow:0 8px 24px rgba(17,24,39,0.18); animation:klx-fade 320ms ease-out;">
+      <span style="width:9px; height:9px; border-radius:999px; background:#10B981; animation:klx-pulse 2s infinite;"></span>
+      <div style="line-height:1.2;">
+        <div style="font-size:13px; font-weight:600; color:#FFFFFF;">AI agent active</div>
+        <div style="font-size:11.5px; font-weight:450; color:#9CA3AF;">Analyzing continuously</div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showFloatingPill&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Display&quot;}}">
+class Component extends DCLogic {
+  state = {
+    expanded: [false, false, false],
+    reasoningVisible: true,
+  };
+
+  toggleRisk(i) {
+    this.setState(s => {
+      const expanded = s.expanded.slice();
+      expanded[i] = !expanded[i];
+      return { expanded };
+    });
+  }
+
+  renderVals() {
+    const kpis = [
+      { label: "Investigation confidence", value: "94%", delta: "AI draft", deltaColor: "#6366F1", sub: "Evidence strength · Strong" },
+      { label: "Excursion duration", value: "38", delta: "min", deltaColor: "#9CA3AF", sub: "Above validated 8°C limit" },
+      { label: "Peak temperature", value: "10.4°", delta: "+2.4°", deltaColor: "#B91C1C", sub: "Validated max · 8°C" },
+      { label: "Linked evidence", value: "18", delta: "docs", deltaColor: "#9CA3AF", sub: "Across 5 sources" },
+    ];
+
+    const steps = [
+      { label: "Gathered manufacturing logs" },
+      { label: "Retrieved laboratory reports" },
+      { label: "Reviewed historical deviations" },
+      { label: "Compared SOP compliance" },
+      { label: "Proposed root cause" },
+    ];
+
+    const evidenceBars = [
+      { label: "Manufacturing logs", count: 6, pct: "100%" },
+      { label: "Sensor data", count: 4, pct: "67%" },
+      { label: "CAPA history", count: 3, pct: "50%" },
+      { label: "Lab reports", count: 3, pct: "50%" },
+      { label: "SOP revisions", count: 2, pct: "33%" },
+    ];
+
+    const analyzed = [
+      "Batch history",
+      "Equipment maintenance",
+      "Sensor logs",
+      "Previous CAPAs",
+      "SOP revisions",
+    ];
+
+    const docs = [
+      { title: "Manufacturing Log", meta: "PX-2041 · 14 Jun", confidence: "96%" },
+      { title: "Sensor Temperature Data", meta: "Cold unit 3 · 38 min", confidence: "94%" },
+      { title: "CAPA History", meta: "3 related records", confidence: "89%" },
+    ];
+
+    const riskData = [
+      { title: "Temperature drift", dot: "#DC2626", detail: "Sensor logs show a 2.4°C drift over 38 minutes during the overnight hold — the primary driver of the specification deviation." },
+      { title: "Equipment calibration overdue", dot: "#B45309", detail: "The cold-chain unit's last calibration is 11 days past its scheduled interval, which may affect the reliability of recorded readings." },
+      { title: "Operator delay", dot: "#6B7280", detail: "The excursion alarm was acknowledged 9 minutes after it triggered. Within tolerance, but worth noting for the timeline review." },
+    ];
+
+    const risks = riskData.map((r, i) => ({
+      ...r,
+      expanded: this.state.expanded[i],
+      rotate: this.state.expanded[i] ? "rotate(180deg)" : "rotate(0deg)",
+      onToggle: () => this.toggleRisk(i),
+    }));
+
+    const reasoningVisible = this.state.reasoningVisible;
+
+    return {
+      kpis, steps, evidenceBars, analyzed, docs, risks, reasoningVisible,
+      reasoningLabel: reasoningVisible ? "Reasoning visible" : "Reasoning hidden",
+      toggleReasoning: () => this.setState(s => ({ reasoningVisible: !s.reasoningVisible })),
+      showFloatingPill: this.props.showFloatingPill ?? true,
+    };
+  }
+}
+</script>
+</body>
+</html>

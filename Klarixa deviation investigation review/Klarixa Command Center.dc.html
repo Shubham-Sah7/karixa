@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #FFFFFF; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background: #E0E7FF; }
+  @keyframes cc-pulse { 0% { opacity:1; } 50% { opacity:0.35; } 100% { opacity:1; } }
+  .cc-rail:hover { color:#0A0A0A !important; background:#F4F4F5 !important; }
+  .cc-row:hover { background:#FAFAFA; }
+  .cc-tab { cursor:pointer; }
+  .cc-scroll::-webkit-scrollbar { width:9px; height:9px; }
+  .cc-scroll::-webkit-scrollbar-thumb { background:#E5E7EB; border-radius:999px; border:2px solid #fff; }
+  @media (max-width:1160px){ .cc-main{ grid-template-columns:1fr !important; } .cc-main > aside{ position:static !important; } .cc-insights{ grid-template-columns:repeat(2,1fr) !important; } .cc-insights > div:nth-child(5){ display:none; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#FFFFFF; font-family:'Geist',system-ui,sans-serif; color:#0A0A0A; display:flex;">
+
+  <!-- ICON RAIL -->
+  <nav style="width:60px; flex-shrink:0; height:100vh; position:sticky; top:0; border-right:1px solid #ECECEC; display:flex; flex-direction:column; align-items:center; padding:16px 0; gap:6px;">
+    <div style="width:30px; height:30px; border-radius:8px; background:#0A0A0A; display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+      <div style="width:11px; height:11px; border-radius:3px; background:#FFFFFF;"></div>
+    </div>
+    <a href="#" style="width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#FFFFFF; background:#0A0A0A;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    </a>
+    <a href="#" class="cc-rail" style="width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#9CA3AF;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+    </a>
+    <a href="#" class="cc-rail" style="width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#9CA3AF;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/></svg>
+    </a>
+    <a href="#" class="cc-rail" style="width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#9CA3AF;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="6" rx="1"/><rect x="13" y="7" width="3" height="10" rx="1"/></svg>
+    </a>
+    <a href="#" class="cc-rail" style="width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#9CA3AF;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+    </a>
+    <div style="margin-top:auto; width:32px; height:32px; border-radius:999px; background:#0A0A0A; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; font-family:'Geist Mono';">AR</div>
+  </nav>
+
+  <!-- MAIN -->
+  <div style="flex:1; min-width:0; height:100vh; overflow-y:auto;" class="cc-scroll">
+
+    <!-- HEADER -->
+    <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:26px 36px 22px; border-bottom:1px solid #ECECEC;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:9px;">
+          <span style="font-family:'Geist Mono'; font-size:12px; font-weight:500; color:#6B7280; letter-spacing:0.02em;">DV-24081</span>
+          <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+          <span style="font-family:'Geist Mono'; font-size:12px; font-weight:500; color:#6B7280;">BATCH PX-2041</span>
+          <span style="width:3px; height:3px; border-radius:999px; background:#D1D5DB;"></span>
+          <span style="font-family:'Geist Mono'; font-size:12px; font-weight:500; color:#B91C1C;">HIGH SEVERITY</span>
+        </div>
+        <h1 style="font-size:26px; font-weight:600; letter-spacing:-0.03em; color:#0A0A0A; margin:0 0 6px; line-height:1.1;">Temperature excursion investigation</h1>
+        <p style="font-size:14.5px; font-weight:400; color:#6B7280; margin:0; line-height:1.5;">AI investigation draft is ready — review the analysis and approve the proposed root cause.</p>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:500; color:#4F46E5;">
+          <span style="width:6px; height:6px; border-radius:999px; background:#4F46E5; animation:cc-pulse 1.8s infinite;"></span>AI agent active
+        </span>
+        <button style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:9px; padding:9px 15px; font-size:13px; font-weight:500; color:#374151; cursor:pointer; font-family:inherit;">Export</button>
+        <button style="background:#0A0A0A; border:1px solid #0A0A0A; border-radius:9px; padding:9px 18px; font-size:13px; font-weight:600; color:#FFFFFF; cursor:pointer; font-family:inherit;">Approve investigation</button>
+      </div>
+    </header>
+
+    <!-- INSIGHT STRIP -->
+    <div class="cc-insights" style="display:grid; grid-template-columns:repeat(5,1fr); border-bottom:1px solid #ECECEC;">
+      <!-- confidence -->
+      <div style="padding:22px 28px; border-right:1px solid #ECECEC;">
+        <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#9CA3AF; text-transform:uppercase; margin-bottom:14px;">Confidence</div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <svg width="46" height="46" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#EEEEEE" stroke-width="4"/><circle cx="20" cy="20" r="16" fill="none" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" pathLength="100" stroke-dasharray="94 100" transform="rotate(-90 20 20)"/></svg>
+          <div>
+            <div style="font-family:'Geist Mono'; font-size:26px; font-weight:500; letter-spacing:-0.02em; color:#0A0A0A; line-height:1;">94<span style="font-size:15px; color:#9CA3AF;">%</span></div>
+            <div style="font-size:11.5px; color:#9CA3AF; margin-top:5px;">Strong evidence</div>
+          </div>
+        </div>
+      </div>
+      <!-- excursion duration -->
+      <div style="padding:22px 28px; border-right:1px solid #ECECEC;">
+        <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#9CA3AF; text-transform:uppercase; margin-bottom:14px;">Excursion</div>
+        <div style="font-family:'Geist Mono'; font-size:26px; font-weight:500; letter-spacing:-0.02em; color:#0A0A0A; line-height:1;">38<span style="font-size:14px; color:#9CA3AF;"> min</span></div>
+        <svg width="100%" height="26" viewBox="0 0 110 26" preserveAspectRatio="none" style="margin-top:10px; display:block;"><polyline points="0,20 18,19 34,17 50,10 62,3 74,9 86,17 110,19" fill="none" stroke="#DC2626" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <!-- peak temp -->
+      <div style="padding:22px 28px; border-right:1px solid #ECECEC;">
+        <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#9CA3AF; text-transform:uppercase; margin-bottom:14px;">Peak temp</div>
+        <div style="display:flex; align-items:baseline; gap:8px;">
+          <div style="font-family:'Geist Mono'; font-size:26px; font-weight:500; letter-spacing:-0.02em; color:#0A0A0A; line-height:1;">10.4<span style="font-size:15px; color:#9CA3AF;">°</span></div>
+          <span style="font-family:'Geist Mono'; font-size:12px; font-weight:500; color:#B91C1C;">+2.4°</span>
+        </div>
+        <div style="font-size:11.5px; color:#9CA3AF; margin-top:11px;">Validated max · 8.0°</div>
+      </div>
+      <!-- evidence composition -->
+      <div style="padding:22px 28px; border-right:1px solid #ECECEC;">
+        <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#9CA3AF; text-transform:uppercase; margin-bottom:14px;">Evidence</div>
+        <div style="font-family:'Geist Mono'; font-size:26px; font-weight:500; letter-spacing:-0.02em; color:#0A0A0A; line-height:1;">18<span style="font-size:14px; color:#9CA3AF;"> docs</span></div>
+        <div style="display:flex; gap:3px; margin-top:13px;">
+          <div style="height:6px; border-radius:2px; background:#4F46E5; flex:6;"></div>
+          <div style="height:6px; border-radius:2px; background:#818CF8; flex:4;"></div>
+          <div style="height:6px; border-radius:2px; background:#C7D2FE; flex:3;"></div>
+          <div style="height:6px; border-radius:2px; background:#E0E7FF; flex:5;"></div>
+        </div>
+      </div>
+      <!-- review checkpoints -->
+      <div style="padding:22px 28px;">
+        <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#9CA3AF; text-transform:uppercase; margin-bottom:14px;">Progress</div>
+        <div style="font-family:'Geist Mono'; font-size:26px; font-weight:500; letter-spacing:-0.02em; color:#0A0A0A; line-height:1;">5<span style="font-size:15px; color:#9CA3AF;">/6</span></div>
+        <div style="display:flex; gap:4px; margin-top:13px;">
+          <div style="height:6px; border-radius:2px; background:#0A0A0A; flex:1;"></div>
+          <div style="height:6px; border-radius:2px; background:#0A0A0A; flex:1;"></div>
+          <div style="height:6px; border-radius:2px; background:#0A0A0A; flex:1;"></div>
+          <div style="height:6px; border-radius:2px; background:#0A0A0A; flex:1;"></div>
+          <div style="height:6px; border-radius:2px; background:#0A0A0A; flex:1;"></div>
+          <div style="height:6px; border-radius:2px; background:#E5E7EB; flex:1;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICAL GRID -->
+    <div class="cc-main" style="display:grid; grid-template-columns:1fr 360px; align-items:start;">
+
+      <!-- LEFT CANVAS -->
+      <section style="padding:28px 36px; border-right:1px solid #ECECEC; min-width:0;">
+
+        <!-- CHART -->
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:6px;">
+          <h2 style="font-size:15px; font-weight:600; letter-spacing:-0.01em; color:#0A0A0A; margin:0;">{{ chartTitle }}</h2>
+          <div style="display:flex; gap:2px; background:#F4F4F5; border-radius:9px; padding:3px;">
+            <button class="cc-tab" onClick="{{ showTemp }}" style="border:none; border-radius:7px; padding:6px 12px; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer; background:{{ tempTabBg }}; color:{{ tempTabColor }}; box-shadow:{{ tempTabShadow }};">Temperature</button>
+            <button class="cc-tab" onClick="{{ showConf }}" style="border:none; border-radius:7px; padding:6px 12px; font-size:12px; font-weight:500; font-family:inherit; cursor:pointer; background:{{ confTabBg }}; color:{{ confTabColor }}; box-shadow:{{ confTabShadow }};">Evidence confidence</button>
+          </div>
+        </div>
+        <p style="font-size:12.5px; font-family:'Geist Mono'; color:#9CA3AF; margin:0 0 18px;">{{ chartSub }}</p>
+
+        <sc-if value="{{ isTemp }}" hint-placeholder-val="{{ true }}">
+          <svg viewBox="0 0 820 290" width="100%" style="display:block; overflow:visible;">
+            <rect x="54" y="30" width="712" height="96" fill="#FCF4F4"/>
+            <line x1="54" y1="252" x2="766" y2="252" stroke="#ECECEC" stroke-width="1"/>
+            <line x1="54" y1="189" x2="766" y2="189" stroke="#F4F4F5" stroke-width="1"/>
+            <line x1="54" y1="63"  x2="766" y2="63"  stroke="#F4F4F5" stroke-width="1"/>
+            <text x="44" y="256" text-anchor="end" font-family="Geist Mono" font-size="11" fill="#9CA3AF">4°</text>
+            <text x="44" y="193" text-anchor="end" font-family="Geist Mono" font-size="11" fill="#9CA3AF">6°</text>
+            <text x="44" y="130" text-anchor="end" font-family="Geist Mono" font-size="11" fill="#9CA3AF">8°</text>
+            <text x="44" y="67"  text-anchor="end" font-family="Geist Mono" font-size="11" fill="#9CA3AF">10°</text>
+            <rect x="520" y="30" width="135" height="222" fill="rgba(220,38,38,0.045)"/>
+            <text x="587" y="46" text-anchor="middle" font-family="Geist Mono" font-size="10.5" font-weight="500" fill="#B91C1C">38 MIN ABOVE LIMIT</text>
+            <line x1="54" y1="126" x2="766" y2="126" stroke="#DC2626" stroke-width="1.25" stroke-dasharray="5 4" opacity="0.5"/>
+            <text x="766" y="119" text-anchor="end" font-family="Geist Mono" font-size="10.5" font-weight="500" fill="#B91C1C">VALIDATED MAX 8.0°</text>
+            <polygon points="54,252 54,216 144,219 234,212 324,219 414,210 470,183 520,126 556,81 600,50 632,90 655,126 700,176 766,213 766,252" fill="#4F46E5" opacity="0.05"/>
+            <polygon points="520,126 556,81 600,50 632,90 655,126" fill="#DC2626" opacity="0.09"/>
+            <polyline points="54,216 144,219 234,212 324,219 414,210 470,183 520,126" fill="none" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="520,126 556,81 600,50 632,90 655,126" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="655,126 700,176 766,213" fill="none" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="600" cy="50" r="4.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2.5"/>
+            <rect x="556" y="16" width="88" height="22" rx="6" fill="#0A0A0A"/>
+            <text x="600" y="31" text-anchor="middle" font-family="Geist Mono" font-size="11" font-weight="500" fill="#FFFFFF">10.4° · 01:05</text>
+            <text x="54"  y="276" text-anchor="middle" font-family="Geist Mono" font-size="11" fill="#9CA3AF">22:00</text>
+            <text x="234" y="276" text-anchor="middle" font-family="Geist Mono" font-size="11" fill="#9CA3AF">23:00</text>
+            <text x="414" y="276" text-anchor="middle" font-family="Geist Mono" font-size="11" fill="#9CA3AF">00:00</text>
+            <text x="588" y="276" text-anchor="middle" font-family="Geist Mono" font-size="11" fill="#9CA3AF">01:00</text>
+            <text x="766" y="276" text-anchor="middle" font-family="Geist Mono" font-size="11" fill="#9CA3AF">02:00</text>
+          </svg>
+        </sc-if>
+
+        <sc-if value="{{ isConf }}" hint-placeholder-val="{{ false }}">
+          <svg viewBox="0 0 820 290" width="100%" style="display:block; overflow:visible;">
+            <line x1="54" y1="50"  x2="766" y2="50"  stroke="#F4F4F5" stroke-width="1"/>
+            <line x1="54" y1="117" x2="766" y2="117" stroke="#F4F4F5" stroke-width="1"/>
+            <line x1="54" y1="184" x2="766" y2="184" stroke="#F4F4F5" stroke-width="1"/>
+            <line x1="54" y1="251" x2="766" y2="251" stroke="#ECECEC" stroke-width="1"/>
+            <text x="44" y="121" text-anchor="end" font-family="Geist Mono" font-size="11" fill="#9CA3AF">50</text>
+            <text x="44" y="54"  text-anchor="end" font-family="Geist Mono" font-size="11" fill="#9CA3AF">100</text>
+            <sc-for list="{{ confBars }}" as="b" hint-placeholder-count="6">
+              <rect x="{{ b.x }}" y="{{ b.y }}" width="78" height="{{ b.h }}" rx="6" fill="#4F46E5" opacity="0.9"/>
+              <text x="{{ b.cx }}" y="{{ b.ty }}" text-anchor="middle" font-family="Geist Mono" font-size="12" font-weight="500" fill="#0A0A0A">{{ b.pct }}</text>
+              <text x="{{ b.cx }}" y="271" text-anchor="middle" font-family="Geist" font-size="11" fill="#9CA3AF">{{ b.label }}</text>
+            </sc-for>
+          </svg>
+        </sc-if>
+
+        <!-- EVIDENCE TABLE -->
+        <div style="margin-top:34px;">
+          <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+            <h2 style="font-size:15px; font-weight:600; letter-spacing:-0.01em; color:#0A0A0A; margin:0;">Linked evidence</h2>
+            <span style="font-family:'Geist Mono'; font-size:12px; color:#9CA3AF;">18 documents · 5 sources</span>
+          </div>
+          <table style="width:100%; border-collapse:collapse;">
+            <thead>
+              <tr style="border-bottom:1px solid #E5E7EB;">
+                <th style="text-align:left; font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; padding:0 12px 10px 0;">Document</th>
+                <th style="text-align:left; font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; padding:0 12px 10px;">Source</th>
+                <th style="text-align:left; font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; padding:0 12px 10px;">Captured</th>
+                <th style="text-align:right; font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:#9CA3AF; padding:0 0 10px 12px;">Confidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ evidence }}" as="row" hint-placeholder-count="6">
+                <tr class="cc-row" style="border-bottom:1px solid #F4F4F5; cursor:pointer;">
+                  <td style="padding:13px 12px 13px 0;">
+                    <div style="display:flex; align-items:center; gap:11px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      <span style="font-size:13.5px; font-weight:500; color:#0A0A0A;">{{ row.title }}</span>
+                    </div>
+                  </td>
+                  <td style="padding:13px 12px; font-size:13px; color:#6B7280;">{{ row.source }}</td>
+                  <td style="padding:13px 12px; font-family:'Geist Mono'; font-size:12.5px; color:#6B7280;">{{ row.captured }}</td>
+                  <td style="padding:13px 0 13px 12px; text-align:right;">
+                    <div style="display:inline-flex; align-items:center; gap:8px;">
+                      <div style="width:48px; height:5px; border-radius:999px; background:#F0F0F1; overflow:hidden;"><div style="height:100%; width:{{ row.pct }}; background:#0A0A0A; border-radius:999px;"></div></div>
+                      <span style="font-family:'Geist Mono'; font-size:12.5px; font-weight:500; color:#0A0A0A; width:34px; display:inline-block;">{{ row.pct }}</span>
+                    </div>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RIGHT DECISION RAIL -->
+      <aside style="position:sticky; top:0; padding:28px 28px 36px;">
+
+        <!-- ROOT CAUSE -->
+        <div style="padding-bottom:24px; border-bottom:1px solid #ECECEC;">
+          <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#4F46E5; text-transform:uppercase; margin-bottom:12px;">AI proposed root cause</div>
+          <p style="font-size:15px; font-weight:400; line-height:1.6; color:#1F2937; margin:0; text-wrap:pretty;">A refrigeration valve failed to fully close during the overnight hold, allowing intermittent warm-air ingress. The resulting instability pushed Batch PX-2041 outside its validated range for ≈38 minutes, producing the specification deviation.</p>
+          <div style="display:flex; gap:24px; margin-top:18px;">
+            <div>
+              <div style="font-family:'Geist Mono'; font-size:18px; font-weight:500; color:#0A0A0A;">Strong</div>
+              <div style="font-size:11.5px; color:#9CA3AF; margin-top:2px;">Evidence</div>
+            </div>
+            <div>
+              <div style="font-family:'Geist Mono'; font-size:18px; font-weight:500; color:#B45309;">Medium</div>
+              <div style="font-size:11.5px; color:#9CA3AF; margin-top:2px;">Residual risk</div>
+            </div>
+            <div>
+              <div style="font-family:'Geist Mono'; font-size:18px; font-weight:500; color:#0A0A0A;">94%</div>
+              <div style="font-size:11.5px; color:#9CA3AF; margin-top:2px;">Confidence</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI STEPS -->
+        <div style="padding:22px 0 24px; border-bottom:1px solid #ECECEC;">
+          <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#9CA3AF; text-transform:uppercase; margin-bottom:14px;">Investigation steps</div>
+          <div style="display:flex; flex-direction:column; gap:0;">
+            <sc-for list="{{ steps }}" as="step" hint-placeholder-count="5">
+              <div style="display:flex; align-items:center; gap:11px; padding:7px 0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span style="font-size:13.5px; font-weight:450; color:#374151;">{{ step.label }}</span>
+              </div>
+            </sc-for>
+            <div style="display:flex; align-items:center; gap:11px; padding:7px 0;">
+              <span style="width:15px; display:flex; justify-content:center;"><span style="width:7px; height:7px; border-radius:999px; background:#4F46E5; animation:cc-pulse 1.8s infinite;"></span></span>
+              <span style="font-size:13.5px; font-weight:550; color:#0A0A0A;">Waiting for investigator approval</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RISKS -->
+        <div style="padding:22px 0 24px; border-bottom:1px solid #ECECEC;">
+          <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#9CA3AF; text-transform:uppercase; margin-bottom:6px;">Potential risks</div>
+          <sc-for list="{{ risks }}" as="risk" hint-placeholder-count="3">
+            <div style="border-bottom:1px solid #F4F4F5;">
+              <div onClick="{{ risk.onToggle }}" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:13px 0; cursor:pointer;">
+                <span style="font-size:13.5px; font-weight:500; color:#0A0A0A;">{{ risk.title }}</span>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="font-family:'Geist Mono'; font-size:11px; font-weight:500; color:{{ risk.tagColor }};">{{ risk.tag }}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ risk.rotate }}; transition:transform 180ms ease;"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </div>
+              <sc-if value="{{ risk.expanded }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 0 14px; font-size:12.5px; line-height:1.55; color:#6B7280;">{{ risk.detail }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- HUMAN REVIEW -->
+        <div style="padding:22px 0 22px; border-bottom:1px solid #ECECEC;">
+          <div style="font-family:'Geist Mono'; font-size:10.5px; font-weight:500; letter-spacing:0.08em; color:#B45309; text-transform:uppercase; margin-bottom:11px;">Needs human review</div>
+          <div style="display:flex; align-items:flex-start; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <p style="font-size:13px; font-weight:450; line-height:1.5; color:#374151; margin:0;">Maintenance records from 14 June contain conflicting timestamps that should be confirmed before sign-off.</p>
+          </div>
+        </div>
+
+        <!-- DECISION -->
+        <div style="padding-top:22px; display:flex; flex-direction:column; gap:9px;">
+          <button style="width:100%; background:#0A0A0A; border:1px solid #0A0A0A; border-radius:10px; padding:13px; font-size:14px; font-weight:600; color:#FFFFFF; cursor:pointer; font-family:inherit;">Approve investigation</button>
+          <div style="display:flex; gap:9px;">
+            <button style="flex:1; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; padding:11px; font-size:13px; font-weight:500; color:#374151; cursor:pointer; font-family:inherit;">Request changes</button>
+            <button style="flex:1; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:10px; padding:11px; font-size:13px; font-weight:500; color:#374151; cursor:pointer; font-family:inherit;">Pause AI</button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { chartView: "temp", expanded: [false, false, false] };
+
+  toggleRisk(i) {
+    this.setState(s => { const e = s.expanded.slice(); e[i] = !e[i]; return { expanded: e }; });
+  }
+
+  renderVals() {
+    const isTemp = this.state.chartView === "temp";
+    const isConf = !isTemp;
+
+    const tabOn = { bg: "#FFFFFF", color: "#0A0A0A", shadow: "0 1px 2px rgba(0,0,0,0.08)" };
+    const tabOff = { bg: "transparent", color: "#6B7280", shadow: "none" };
+    const tTab = isTemp ? tabOn : tabOff;
+    const cTab = isConf ? tabOn : tabOff;
+
+    const steps = [
+      { label: "Gathered manufacturing logs" },
+      { label: "Retrieved laboratory reports" },
+      { label: "Reviewed historical deviations" },
+      { label: "Compared SOP compliance" },
+      { label: "Proposed root cause" },
+    ];
+
+    const evidence = [
+      { title: "Manufacturing batch log", source: "MES · Line 4", captured: "14 Jun 22:10", pct: "96%" },
+      { title: "Sensor temperature trace", source: "Cold unit 3", captured: "14 Jun 23:58", pct: "94%" },
+      { title: "Valve maintenance record", source: "CMMS", captured: "14 Jun 14:02", pct: "78%" },
+      { title: "CAPA-2208 closure", source: "Quality system", captured: "02 May 09:30", pct: "89%" },
+      { title: "Stability lab report", source: "LIMS", captured: "16 Jun 11:20", pct: "92%" },
+      { title: "SOP-114 rev. history", source: "DMS", captured: "01 Apr 16:45", pct: "85%" },
+    ];
+
+    const confData = [
+      { label: "Mfg log", pct: 96 },
+      { label: "Sensor", pct: 94 },
+      { label: "Stability", pct: 92 },
+      { label: "CAPA", pct: 89 },
+      { label: "SOP", pct: 85 },
+      { label: "Valve", pct: 78 },
+    ];
+    // map 50..100% to y 251..50  (height 201 over 50 pts)
+    const confBars = confData.map((d, i) => {
+      const x = 70 + i * 116;
+      const h = ((d.pct - 50) / 50) * 201;
+      const y = 251 - h;
+      return { x, cx: x + 39, y, h, ty: y - 9, pct: d.pct + "%", label: d.label };
+    });
+
+    const riskData = [
+      { title: "Temperature drift", tag: "PRIMARY", tagColor: "#B91C1C", detail: "Sensor logs show a 2.4°C drift over 38 minutes during the overnight hold — the primary driver of the specification deviation." },
+      { title: "Calibration overdue", tag: "ELEVATED", tagColor: "#B45309", detail: "The cold-chain unit's last calibration is 11 days past its scheduled interval, which may affect reading reliability." },
+      { title: "Operator delay", tag: "LOW", tagColor: "#6B7280", detail: "The excursion alarm was acknowledged 9 minutes after it triggered — within tolerance, but noted for the timeline review." },
+    ];
+    const risks = riskData.map((r, i) => ({
+      ...r,
+      expanded: this.state.expanded[i],
+      rotate: this.state.expanded[i] ? "rotate(180deg)" : "rotate(0deg)",
+      onToggle: () => this.toggleRisk(i),
+    }));
+
+    return {
+      isTemp, isConf,
+      chartTitle: isTemp ? "Sensor temperature — overnight hold" : "Evidence confidence by document",
+      chartSub: isTemp ? "COLD UNIT 3 · 14 JUN · 22:00–02:00 IST" : "TOP 6 OF 18 LINKED DOCUMENTS · AI-SCORED",
+      showTemp: () => this.setState({ chartView: "temp" }),
+      showConf: () => this.setState({ chartView: "conf" }),
+      tempTabBg: tTab.bg, tempTabColor: tTab.color, tempTabShadow: tTab.shadow,
+      confTabBg: cTab.bg, confTabColor: cTab.color, confTabShadow: cTab.shadow,
+      steps, evidence, confBars, risks,
+    };
+  }
+}
+</script>
+</body>
+</html>

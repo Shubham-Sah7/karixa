@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  .cv-label { font-family:'Inter',system-ui,sans-serif; }
+  .cv-card { background:#fff; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.08); border:1px solid #E5E7EB; overflow:hidden; }
+  .cv-card iframe { display:block; border:0; width:1360px; height:880px; background:#fff; }
+</style>
+</helmet>
+
+<div style="position:absolute; left:0; top:0; width:1360px;">
+  <div class="cv-label" data-drags-parent="1" style="margin-bottom:14px; cursor:grab;">
+    <div style="font-size:13px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#6B7280;">Concept A</div>
+    <div style="font-size:22px; font-weight:600; letter-spacing:-0.02em; color:#111827; margin-top:3px;">Review Workspace</div>
+    <div style="font-size:14px; color:#9CA3AF; margin-top:2px;">Sidebar SaaS · KPI row · two-column with sticky AI panel</div>
+  </div>
+  <div class="cv-card"><iframe src="Klarixa Investigation.dc.html" title="Concept A"></iframe></div>
+</div>
+
+<div style="position:absolute; left:1480px; top:0; width:1360px;">
+  <div class="cv-label" data-drags-parent="1" style="margin-bottom:14px; cursor:grab;">
+    <div style="font-size:13px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#6B7280;">Concept B</div>
+    <div style="font-size:22px; font-weight:600; letter-spacing:-0.02em; color:#111827; margin-top:3px;">Command Center</div>
+    <div style="font-size:14px; color:#9CA3AF; margin-top:2px;">Data-first · insight strip · switchable chart · evidence table</div>
+  </div>
+  <div class="cv-card"><iframe src="Klarixa Command Center.dc.html" title="Concept B"></iframe></div>
+</div>
+
+<div style="position:absolute; left:2960px; top:0; width:1360px;">
+  <div class="cv-label" data-drags-parent="1" style="margin-bottom:14px; cursor:grab;">
+    <div style="font-size:13px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#6B7280;">Concept C</div>
+    <div style="font-size:22px; font-weight:600; letter-spacing:-0.02em; color:#111827; margin-top:3px;">Investigation Timeline</div>
+    <div style="font-size:14px; color:#9CA3AF; margin-top:2px;">Story-first · chronological spine · serif · embedded chart</div>
+  </div>
+  <div class="cv-card"><iframe src="Klarixa Timeline.dc.html" title="Concept C"></iframe></div>
+</div>
+</x-dc>
+</body>
+</html>
