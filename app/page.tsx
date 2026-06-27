@@ -357,6 +357,15 @@ export default function Page() {
   // --- Timeline States (Canvas 5) ---
   const [labOpen, setLabOpen] = useState<boolean>(false)
 
+  // Initialize view from URL param when embedded in showcase iframes
+  useEffect(() => {
+    const screen = new URLSearchParams(window.location.search).get('_screen')
+    const valid = ['home','review','timeline','evidence','knowledge','reports','settings']
+    if (screen && valid.includes(screen)) {
+      setViewMode(screen as typeof viewMode)
+    }
+  }, [])
+
   // Dynamically load Google Fonts (Newsreader for Serif timeline, Geist for UI elements)
   useEffect(() => {
     const link = document.createElement("link")
